@@ -4,13 +4,15 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
-import apoc from 'apoc';
+import apiRoute from './routes/api';
 
 // Load environment variables
 require('dotenv').config();
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
+
+// eslint-disable-next-line new-cap
 const server = require('http').Server(app);
 
 app
@@ -32,7 +34,7 @@ app
     saveUninitialized: false,
   }))
   .use(passport.initialize())
-  .use(passport.session());
+  .use(passport.session())
+  .use(apiRoute);
 
-server.listen(port);
-
+server.listen(port, host);
