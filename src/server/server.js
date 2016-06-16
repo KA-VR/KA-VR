@@ -6,9 +6,6 @@ import session from 'express-session';
 import passport from 'passport';
 import apoc from 'apoc';
 
-var query = apoc.query('MATCH (n) RETURN n');
-console.log('hi',query.statements);
-
 // Load environment variables
 require('dotenv').config();
 const host = process.env.HOST || 'localhost';
