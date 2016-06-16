@@ -1,0 +1,5 @@
+protocol: http
+host: 127.0.0.1
+port: 2902
+username: neo4j
+password: neo4j
