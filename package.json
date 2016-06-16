@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --quiet *",
     "watch-server": "babel --watch src/server -d dev/server",
-    "dev-server": "node dev/server/server.js",
+    "dev-server": "nodemon dev/server/server.js",
     "start": "",
-    "run-dev": "npm run watch-server && run dev-server"
+    "run-dev": "npm run watch-server & npm run dev-server"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/KA-VR/KA-VR#readme",
   "dependencies": {
+    "apoc": "^2.1.6",
     "body-parser": "^1.15.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.13.0",
     "passport": "^0.3.2",

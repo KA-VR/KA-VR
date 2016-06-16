@@ -4,8 +4,13 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
-// import apiRoute from './routes/api';
+import apoc from 'apoc';
 
+var query = apoc.query('MATCH (n) RETURN n');
+console.log('hi',query.statements);
+
+// Load environment variables
+require('dotenv').config();
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
