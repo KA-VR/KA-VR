@@ -1,15 +1,15 @@
-import { resolve } from 'path';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
-import apiRoute from './routes/api';
+// import apiRoute from './routes/api';
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
+const server = require('http').Server(app);
 
 app
   .use(cors({
@@ -30,9 +30,7 @@ app
     saveUninitialized: false,
   }))
   .use(passport.initialize())
-  .use(passport.session())
-  .use(apiRoute)
-  .use(homeRoute);
-  
+  .use(passport.session());
+
 server.listen(port);
 

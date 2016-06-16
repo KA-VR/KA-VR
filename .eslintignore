@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+.gitignore
+.eslintrc
+package.json
+README.md

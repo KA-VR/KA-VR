@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --quiet *",
+    "watch-server": "babel --watch src/server -d dev/server",
+    "dev-server": "node dev/server/server.js",
+    "start": "",
+    "run-dev": "npm run watch-server && run dev-server"
   },
   "repository": {
     "type": "git",
@@ -24,5 +29,13 @@
     "express-session": "^1.13.0",
     "passport": "^0.3.2",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "eslint": "^2.12.0",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^1.5.0",
+    "eslint-plugin-react": "^5.1.1"
   }
 }
