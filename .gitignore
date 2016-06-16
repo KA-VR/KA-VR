@@ -1,5 +1,13 @@
-# node_modules
+# Node Modules
 /node_modules
+
+# Development and Distribution Files
 /dev
 /dist
+
+# Configuration Files
+.env
+.apoc.yml
+
+# Log Files
 npm-debug.log
