@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import apiRoute from './routes/api';
+// import { resolve } from 'path';
+import indexRoute from './routes/index';
 
 // Load environment variables
 require('dotenv').config();
@@ -26,7 +28,7 @@ app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(cookieParser())
-  // .use(express.static(resolve(__dirname, '../')))
+  // .use(express.static(resolve(__dirname, '../../src/client')))
   // .use(express.static(resolve(__dirname, '../../src/client/assets')))
   .use(session({
     secret: 'wonky',
@@ -35,6 +37,7 @@ app
   }))
   .use(passport.initialize())
   .use(passport.session())
-  .use(apiRoute);
+  .use(apiRoute)
+  .use(indexRoute);
 
 server.listen(port, host);

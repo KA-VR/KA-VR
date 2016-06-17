@@ -7,9 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --quiet src/",
     "watch-server": "babel --watch src/server -d dev/server",
+    "watch-client": "webpack --watch --progress",
     "dev-server": "nodemon dev/server/server.js",
     "start": "",
-    "dev": "npm run lint && (npm run watch-server & npm run dev-server)"
+    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client)"
   },
   "repository": {
     "type": "git",
@@ -30,9 +31,12 @@
     "express": "^4.14.0",
     "express-session": "^1.13.0",
     "passport": "^0.3.2",
+    "passport-google-oauth2": "^0.1.6",
     "path": "^0.12.7",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
