@@ -8,9 +8,10 @@
     "lint": "eslint --quiet src/",
     "watch-server": "babel --watch src/server -d dev/server",
     "watch-client": "webpack --watch --progress",
-    "dev-server": "nodemon dev/server/server.js",
+    "dev-server": "nodemon --delay 1.5 dev/server/server.js",
     "start": "",
-    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client & npm run watch-client)"
+    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client )",
+    "dev:skip": "bash devskip.sh"
   },
   "repository": {
     "type": "git",
