@@ -10,7 +10,7 @@
     "watch-client": "webpack --watch --progress",
     "dev-server": "nodemon dev/server/server.js",
     "start": "",
-    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client)"
+    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client & npm run watch-client)"
   },
   "repository": {
     "type": "git",
