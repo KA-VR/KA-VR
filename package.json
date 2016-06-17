@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "nodemon --delay 1.5 dev/server/server.js",
+    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client)",
+    "dev:skip": "bash devskip.sh",
     "lint": "eslint --quiet src/",
+    "start": "",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "watch-server": "babel --watch src/server -d dev/server",
     "watch-client": "webpack --watch --progress",
-    "dev-server": "nodemon --delay 1.5 dev/server/server.js",
-    "start": "",
-    "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client )",
-    "dev:skip": "bash devskip.sh"
   },
   "repository": {
     "type": "git",
