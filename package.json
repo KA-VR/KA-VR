@@ -9,7 +9,6 @@
     "dev": "npm run lint && (npm run watch-server & npm run dev-server & npm run watch-client)",
     "dev:skip": "bash devskip.sh",
     "test": "mocha test/browser.js test/**/*",
-    "test:watch": "mocha tests/client/components/* --compilers js:babel-register --watch --reporter min",
     "test:watch": "mocha tests/client/components/* --compilers js:babel-core/register --watch --reporter min",
     "lint": "eslint --quiet src/",
     "start": "",
@@ -43,7 +42,8 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
     "react-validation": "^1.7.3",
-    "validator": "^5.4.0"
+    "validator": "^5.4.0",
+    "request": "^2.72.0"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
@@ -67,6 +67,7 @@
     "webpack": "^1.13.1",
     "karma": "^0.13.22",
     "sinon": "^1.17.4",
+    "mocha": "^2.5.3",
     "webpack": "^1.12.12"
   }
 }
