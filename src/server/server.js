@@ -14,6 +14,8 @@ const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
 
+app.use(express.static('../src/client'));
+
 // eslint-disable-next-line new-cap
 const server = require('http').Server(app);
 
