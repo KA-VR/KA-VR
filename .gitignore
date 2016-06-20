@@ -8,6 +8,7 @@
 # Configuration Files
 .env
 .apoc.yml
+config.js
 
 # Log Files
 npm-debug.log
