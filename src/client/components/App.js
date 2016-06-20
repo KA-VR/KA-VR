@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+// import Navigation from './Navigation';
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
 
-    this.logIn = this.logIn.bind(this);
-  }
-
-  logIn() {
-    console.log('loggin in! jk.');
+    };
   }
 
   render() {
     return (
       <div>
-        <h1>Am I here?</h1>
-        <button onClick={this.login}></button>
+        <SignUp />
+        <SignIn />
       </div>
     );
   }
