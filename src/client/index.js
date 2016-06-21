@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App.js';
+import Router from './utils/router';
 // import Index from '../server/index.js';
 
 // Stylesheets
 import './stylesheets/style.scss';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(Router, document.getElementById('app'));
