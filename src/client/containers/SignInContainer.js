@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignIn from '../components/SignIn';
+import { Link, browserHistory } from 'react-router';
 
 class SignInContainer extends Component {
   constructor(props) {
@@ -19,12 +20,13 @@ class SignInContainer extends Component {
     } else {
       // Make ajax call
       console.log('SUCCESSFULY LOGGED IN');
+      browserHistory.push('/dashboard');
     }
   }
 
   render() {
     return (
-      <SignIn />
+      <SignIn handleSubmit={this.handleSubmit}/>
     );
   }
 }
