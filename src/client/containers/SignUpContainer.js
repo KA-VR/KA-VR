@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignUp from '../components/SignUp';
+import { browserHistory } from 'react-router';
 
 class SignUpContainer extends Component {
   constructor(props) {
@@ -26,12 +27,13 @@ class SignUpContainer extends Component {
     } else {
       // Make AJAX Call
       console.log('Success');
+      browserHistory.push('/dashboard');
     }
   }
 
   render() {
     return (
-      <SignUp />
+      <SignUp handleSubmit={this.handleSubmit}/>
     );
   }
 }
