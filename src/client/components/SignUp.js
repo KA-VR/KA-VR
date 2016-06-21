@@ -1,7 +1,8 @@
 import React from 'react';
 import Validation from 'react-validation';
+import { Link } from 'react-router';
 
-const SignUp = () => (
+const SignUp = (props) => (
   <div>
     <Validation.Form id="signup">
       <input
@@ -30,8 +31,8 @@ const SignUp = () => (
         validations={[{ rule: 'isEmail' }]}
       />
     </Validation.Form>
-    <button className="submit-button" onClick={this.handleSubmit}>Submit</button>
-    <span className="signup-link">already have an account ? <b>sign in</b></span>
+    <button className="submit-button" onClick={props.handleSubmit}>Submit</button>
+    <Link to="/">already have an account ? <b>sign in</b></Link>
   </div>
 );
 

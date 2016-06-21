@@ -1,8 +1,10 @@
 import React from 'react';
 import Validation from 'react-validation';
+import { Link } from 'react-router';
 
-const SignIn = () => (
+const SignIn = (props) => (
   <div id="signin">
+  <h1>Sign In Page</h1>
     <Validation.Form id="signup">
       <Validation.Input
         name="email"
@@ -14,8 +16,14 @@ const SignIn = () => (
         name="password"
         placeholder="password"
       />
-      <button className="submit-button" onClick={this.handleSubmit}>Sign In</button>
+      <button className="submit-button" onClick={props.handleSubmit}>Sign In</button>
     </Validation.Form>
+    <div>
+      <Link to="signup">Not a user? Sign up</Link>
+    </div>
+    <div>
+      <Link to="dashboard">To Dashboard</Link>
+    </div>
   </div>
 );
 
