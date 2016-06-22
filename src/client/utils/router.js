@@ -9,6 +9,7 @@ import {
 // Layouts
 import MainLayout from '../layouts/MainLayout';
 import PortalLayout from '../layouts/PortalLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 // Pages
 import SignInContainer from '../containers/SignInContainer';
@@ -22,8 +23,10 @@ export default (
       <Route component={PortalLayout}>
         <Route path="/" component={SignInContainer} />
         <Route path="signup" component={SignUpContainer} />
-        <Route path="dashboard" component={DashboardContainer} />
         <Route path="speech" component={SpeechToTextContainer} />
+      </Route>
+      <Route component={DashboardLayout}>
+        <Route path="dashboard" component={DashboardContainer} />
       </Route>
     </Route>
   </Router>
