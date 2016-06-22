@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SpeechToText from './SpeechToText.js';
+import SpeechToText from '../components/SpeechToText.js';
 
 class SpeechToTextContainer extends Component {
   constructor(props) {
