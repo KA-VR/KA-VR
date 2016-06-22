@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import SpeechToText from './SpeechToText.js';
+import SpeechToText from '../components/SpeechToText.js';
 import $ from 'jquery';
 
 class SpeechToTextContainer extends Component {
