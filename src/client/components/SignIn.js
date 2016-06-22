@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 const SignIn = (props) => (
   <div id="signin">
-  <h1>Sign In Page</h1>
+    <h1>Sign In Page</h1>
     <Validation.Form id="signup">
       <Validation.Input
         name="email"
@@ -26,5 +26,9 @@ const SignIn = (props) => (
     </div>
   </div>
 );
+
+SignIn.propTypes = {
+  handleSubmit: React.PropTypes.func.isRequired,
+};
 
 export default SignIn;

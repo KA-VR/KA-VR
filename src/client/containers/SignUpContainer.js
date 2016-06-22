@@ -33,7 +33,7 @@ class SignUpContainer extends Component {
 
   render() {
     return (
-      <SignUp handleSubmit={this.handleSubmit}/>
+      <SignUp handleSubmit={this.handleSubmit} />
     );
   }
 }

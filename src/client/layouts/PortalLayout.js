@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 
 const PortalLayout = (props) => (
   <div className="portallayout">
@@ -9,5 +9,9 @@ const PortalLayout = (props) => (
     </main>
   </div>
 );
+
+PortalLayout.propTypes = {
+  children: React.PropTypes.element,
+};
 
 export default PortalLayout;

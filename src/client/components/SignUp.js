@@ -36,4 +36,8 @@ const SignUp = (props) => (
   </div>
 );
 
+SignUp.propTypes = {
+  handleSubmit: React.PropTypes.func.isRequired,
+};
+
 export default SignUp;

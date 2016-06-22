@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignIn from '../components/SignIn';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 class SignInContainer extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class SignInContainer extends Component {
 
   render() {
     return (
-      <SignIn handleSubmit={this.handleSubmit}/>
+      <SignIn handleSubmit={this.handleSubmit} />
     );
   }
 }

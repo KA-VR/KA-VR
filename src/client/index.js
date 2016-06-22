@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './utils/router';
 // import Index from '../server/index.js';
