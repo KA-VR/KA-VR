@@ -14,6 +14,7 @@ import PortalLayout from '../layouts/PortalLayout';
 import SignInContainer from '../containers/SignInContainer';
 import SignUpContainer from '../containers/SignUpContainer';
 import DashboardContainer from '../containers/DashboardContainer';
+import SpeechToTextContainer from '../containers/SpeechToTextContainer';
 
 export default (
   <Router history={browserHistory}>
@@ -22,6 +23,7 @@ export default (
         <Route path="/" component={SignInContainer} />
         <Route path="signup" component={SignUpContainer} />
         <Route path="dashboard" component={DashboardContainer} />
+        <Route path="speech" component={SpeechToTextContainer} />
       </Route>
     </Route>
   </Router>
