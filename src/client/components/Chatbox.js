@@ -2,7 +2,7 @@ import React from 'react';
 
 const Chatbox = () => (
   <div className="chatbox">
-    <input placeholder="Enter commands here"/>
+    <input placeholder="Enter commands here" />
   </div>
 );
 
