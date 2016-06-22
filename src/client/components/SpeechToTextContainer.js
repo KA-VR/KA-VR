@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import SpeechToText from './SpeechToText.js';
+import $ from 'jquery';
 
 class SpeechToTextContainer extends Component {
   constructor(props) {
@@ -22,28 +24,13 @@ class SpeechToTextContainer extends Component {
     } else {
       // Recogniser doesn't stop listening even if the user pauses
       this.state.recognizer = new window.SpeechRecognition();
-      // this.state.recognizer.interimResults = true;
-      // this.state.recognizer.start();
-      // console.log('recognizer has started');
       // Start recognising
       this.state.recognizer.onresult = (event) => {
-        // this.state.transcription = '';
         this.updateTranscription(event);
       };
-      // Fires when recognizable speech is detected
-      // this.state.recognizer.onspeechstart = (event) => {
-      //   console.log('Speech detected', event);
-      //   console.log(this.state.transcription);
-      // };
-      // Fires when recognizable speech is no longer detected
-      // this.state.recognizer.onspeechend = (event) => {
-      //   console.log('Speech has stopped', event);
-      //   console.log(this.state.transcription);
-      //   // this.state.transcription = '';
-      //   this.state.recognizer.stop();
-      // };
       // Listen for errors
       this.state.recognizer.onerror = (event) => {
+        console.log('NEW EVENT ERROR', event);
         this.setState({
           log: `Recognition error:  + ${event.message} + <br /> + ${this.state.log}`,
         });
@@ -53,14 +40,25 @@ class SpeechToTextContainer extends Component {
   updateTranscription(event) {
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
-        this.setState({
-          transcription: `${event.results[i][0].transcript} +
-            (Confidence:  + ${event.results[i][0].confidence} + )`,
+        $.ajax({
+          url: 'http://localhost:8000/api/analyze',
+          method: 'POST',
+          data: {
+            text: event.results[i][0].transcript,
+          },
+          success: data => {
+            console.log('REturned', data);
+            this.setState({
+              transcription: `
+                ${event.results[i][0].transcript}\n
+                VERB: ${data.verb}\n
+                OBJECT: ${data.object.join(', ')}
+              `,
+
+            });
+          },
         });
       }
-      // else {
-      //   this.state.transcription += event.results[i][0].transcript;
-      // }
     }
   }
   startListening() {
