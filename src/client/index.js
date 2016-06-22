@@ -2,6 +2,7 @@
 import ReactDOM from 'react-dom';
 import Router from './utils/router';
 // import Index from '../server/index.js';
+// import Speech from './components/SpeechToTextContainer.js';
 
 // Stylesheets
 import './stylesheets/style.scss';
