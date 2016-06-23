@@ -27,8 +27,8 @@ export default (
         <Route path="speech" component={SpeechToTextContainer} />
       </Route>
       <Route component={DashboardLayout}>
-        <Route path="dashboard" component={SettingsContainer} />
-        
+        <Route path="settings" component={SettingsContainer} />
+        <Route path="dashboard" component={DashboardContainer} />
       </Route>
     </Route>
   </Router>
