@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('Users', 'root', '', {
+const sequelize = new Sequelize('KAVR', 'root', 'pass', {
   host: 'localhost',
   dialect: 'mysql',
 });
@@ -14,8 +14,11 @@ sequelize
     console.log('Unable to connect to mysql database. Error is:', err);
   });
 
-const User = sequelize.define('user', {
+const Users = sequelize.define('user', {
   name: Sequelize.STRING,
+  email: Sequelize.STRING,
 });
 
-module.exports = User;
+sequelize.sync();
+
+module.exports = Users;
