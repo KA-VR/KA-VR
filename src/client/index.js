@@ -6,5 +6,9 @@ import Router from './utils/router';
 
 // Stylesheets
 import './stylesheets/style.scss';
+import './stylesheets/userstats.scss';
+import './stylesheets/widget.scss';
+import './stylesheets/chatbox.scss';
+import './stylesheets/avatar.scss';
 
 ReactDOM.render(Router, document.getElementById('app'));
