@@ -54,12 +54,32 @@ class SpeechToTextContainer extends Component {
                 VERB: ${data.verb}\n
                 OBJECT: ${data.object.join(', ')}
               `,
-
             });
+            this.callBrain(data);
           },
+          error: err => {
+            console.log('Error on Text Analyzer:', err);
+          }
         });
       }
     }
+  }
+  callBrain(dataObj){
+    console.log('data going into brain', dataObj);
+    $.ajax({
+      url: 'http://localhost:7750/api/think',
+      method: 'POST',
+      data: dataObj,
+      success: response => {
+        console.log('Brains response!', response);
+        const thing = dataObj.object.join(' ');
+        const action = response.code;
+        eval(action)(thing);
+      },
+      error: err => {
+        console.log('Error on Text Analyzer:', err);
+      }
+    })
   }
   startListening() {
     console.log('start listening was clicked', this);
