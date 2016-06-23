@@ -14,8 +14,6 @@ const clientSecret = keys.GOOGLE_CLIENT_SECRET;
 const db = redis.createClient();
 
 passport.serializeUser((user, done) => {
-  console.log('user issss', user);
-  console.log('done issss', done);
   done(null, user);
 });
 
@@ -39,28 +37,28 @@ passport.use(new GoogleStrategy.Strategy({
 
 /*
 refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, refreshToken) => {
-  console.log('refreshToken===!!', refreshToken);
-  console.log('accessToken===!!', accessToken);
 });
-*/
+  */
+    const profileObj = profile;
+    profileObj.accessToken = accessToken;
+
+    console.log('accessToken===!!', accessToken);
+    console.log('PROFILEEEEE:', profile);
+    console.log('NEWPROFILEEEE', profileObj);
 
     const val = {
       name: `${fullName}`,
       email: `${email}`,
     };
-    // console.log('val', val);
-    // console.log('profile:', profile);
 
     db.get('email', (error, result) => {
       if (error) {
         // there is no name key
         console.log('error: cannot find name key', error);
       } else {
-        console.log('111', JSON.parse(result));
-        console.log('111', val);
         // name is found so auth is successful
         if (_.isEqual(JSON.parse(result), val)) {
-          done(null, profile);
+          done(null, profileObj);
         } else {
           // name is not found but key exists
           // create new user
@@ -80,7 +78,7 @@ refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, r
             .then((user) => {
               console.log('user is:', user);
             });
-          done(null, profile);
+          done(null, profileObj);
         }
       }
     });
