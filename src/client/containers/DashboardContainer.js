@@ -8,6 +8,7 @@ class DashboardContainer extends Component {
   }
   handleUserProfile() {
     // Take in functions here
+    
   }
   render() {
     return (
