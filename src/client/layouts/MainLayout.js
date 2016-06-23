@@ -3,7 +3,6 @@ import React from 'react';
 
 const MainLayout = (props) => (
   <div>
-    <h1>MainLayout View File</h1>
     <main>
       {props.children}
     </main>
