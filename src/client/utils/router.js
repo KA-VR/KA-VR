@@ -15,6 +15,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import SignInContainer from '../containers/SignInContainer';
 import SignUpContainer from '../containers/SignUpContainer';
 import DashboardContainer from '../containers/DashboardContainer';
+import SettingsContainer from '../containers/SettingsContainer';
 import SpeechToTextContainer from '../containers/SpeechToTextContainer';
 
 export default (
@@ -26,7 +27,8 @@ export default (
         <Route path="speech" component={SpeechToTextContainer} />
       </Route>
       <Route component={DashboardLayout}>
-        <Route path="dashboard" component={DashboardContainer} />
+        <Route path="dashboard" component={SettingsContainer} />
+        
       </Route>
     </Route>
   </Router>
