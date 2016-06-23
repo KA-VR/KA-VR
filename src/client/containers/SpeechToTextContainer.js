@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-eval */
 import React, { Component } from 'react';
 import SpeechToText from '../components/SpeechToText.js';
 import $ from 'jquery';
@@ -59,12 +59,12 @@ class SpeechToTextContainer extends Component {
           },
           error: err => {
             console.log('Error on Text Analyzer:', err);
-          }
+          },
         });
       }
     }
   }
-  callBrain(dataObj){
+  callBrain(dataObj) {
     console.log('data going into brain', dataObj);
     $.ajax({
       url: 'http://localhost:7750/api/think',
@@ -74,12 +74,13 @@ class SpeechToTextContainer extends Component {
         console.log('Brains response!', response);
         const thing = dataObj.object.join(' ');
         const action = response.code;
+        /* eslint-disable-next-line no-eval */
         eval(action)(thing);
       },
       error: err => {
         console.log('Error on Text Analyzer:', err);
-      }
-    })
+      },
+    });
   }
   startListening() {
     console.log('start listening was clicked', this);
