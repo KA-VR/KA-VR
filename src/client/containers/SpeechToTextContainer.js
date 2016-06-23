@@ -1,7 +1,9 @@
+/* global $ */
 /* eslint-disable no-console, no-eval */
 import React, { Component } from 'react';
 import SpeechToText from '../components/SpeechToText.js';
-import $ from 'jquery';
+
+const KEY_SPACEBAR = 32;
 
 class SpeechToTextContainer extends Component {
   constructor(props) {
@@ -10,11 +12,26 @@ class SpeechToTextContainer extends Component {
     this.state = {
       recognizer: null,
       transcription: '',
-      log: '',
+      log: 'Recording: false',
+      recording: false,
     };
+    this.recording = false;
     this.startListening = this.startListening.bind(this);
     this.stopListening = this.stopListening.bind(this);
     this.clearLog = this.clearLog.bind(this);
+
+    $(document).on('keydown', event => {
+      switch (event.keyCode) {
+        case KEY_SPACEBAR:
+          if (this.recording) this.stopListening();
+          else this.startListening();
+          this.recording = !this.recording;
+          this.setState({ recording: this.recording });
+          break;
+        default:
+          break;
+      }
+    });
   }
   componentDidMount() {
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
@@ -50,8 +67,8 @@ class SpeechToTextContainer extends Component {
             console.log('REturned', data);
             this.setState({
               transcription: `
-                ${event.results[i][0].transcript}\n
-                VERB: ${data.verb}\n
+                TEXT: ${event.results[i][0].transcript}===
+                VERB: ${data.verb}===
                 OBJECT: ${data.object.join(', ')}
               `,
             });
@@ -91,7 +108,8 @@ class SpeechToTextContainer extends Component {
     try {
       this.state.recognizer.start();
       this.setState({
-        log: `Recognition started<br /> + ${this.state.log}`,
+        recording: true,
+        log: `Recording: ${this.state.recording}`,
       });
       console.log('Recognition started');
     } catch (ex) {
@@ -104,7 +122,8 @@ class SpeechToTextContainer extends Component {
   stopListening() {
     this.state.recognizer.stop();
     this.setState({
-      log: `Recognition stopped<br /> + ${this.state.log}`,
+      recording: false,
+      log: `Recording: ${this.state.recording}`,
     });
     console.log('Recognition stopped', this.state.transcription);
   }
@@ -118,6 +137,7 @@ class SpeechToTextContainer extends Component {
     return (
       < SpeechToText
         logs={this.state.log}
+        recordingState={this.state.recording}
         transcription={this.state.transcription}
         startListening={this.startListening}
         stopListening={this.stopListening}

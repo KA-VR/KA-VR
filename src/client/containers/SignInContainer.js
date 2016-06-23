@@ -7,10 +7,13 @@ class SignInContainer extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.redirectSignUp = this.redirectSignUp.bind(this);
   }
+  redirectSignUp() { browserHistory.push('/signup'); }
 
-  handleSubmit() {
-    const form = document.querySelector('#signin');
+  handleSubmit(e) {
+    e.preventDefault();
+    const form = document.querySelector('#signin-form');
     const formData = serialize(form, { hash: true });
     // check if the email supplied is valid
     if (formData.email === undefined) {
@@ -26,7 +29,7 @@ class SignInContainer extends Component {
 
   render() {
     return (
-      <SignIn handleSubmit={this.handleSubmit} />
+      <SignIn handleSubmit={this.handleSubmit} redirectSignUp={this.redirectSignUp} />
     );
   }
 }

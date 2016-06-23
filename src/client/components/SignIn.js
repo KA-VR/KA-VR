@@ -1,34 +1,37 @@
 import React from 'react';
-import Validation from 'react-validation';
-import { Link } from 'react-router';
 
 const SignIn = (props) => (
-  <div id="signin">
-    <h1>Sign In Page</h1>
-    <Validation.Form id="signup">
-      <Validation.Input
-        name="email"
-        placeholder="email"
-        validations={[{ rule: 'isEmail' }]}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-      />
-      <button className="submit-button" onClick={props.handleSubmit}>Sign In</button>
-    </Validation.Form>
-    <div>
-      <Link to="signup">Not a user? Sign up</Link>
-    </div>
-    <div>
-      <Link to="dashboard">To Dashboard</Link>
+  <div className="signin">
+    <h1 className="center-align">Sign In Page</h1>
+    <div className="row">
+      <form id="signin-form" className="col offset-m3 m6 s12">
+        <div className="input-field">
+          <input type="email" name="email" id="email" />
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="input-field">
+          <input
+            type="password"
+            id="password"
+            name="password"
+          />
+          <label htmlFor="password">Password</label>
+        </div>
+        <button
+          className="submit-button waves-effect waves-light btn"
+          onClick={props.handleSubmit}
+        >Sign In</button>
+      </form>
+      <div className="col s12 offset-m3 m6 link">
+        <a onClick={props.redirectSignUp}>Not a user? Sign up</a>
+      </div>
     </div>
   </div>
 );
 
 SignIn.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired,
+  redirectSignUp: React.PropTypes.func.isRequired,
 };
 
 export default SignIn;

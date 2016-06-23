@@ -10,5 +10,6 @@ import './stylesheets/userstats.scss';
 import './stylesheets/widget.scss';
 import './stylesheets/chatbox.scss';
 import './stylesheets/avatar.scss';
+import './stylesheets/signin.scss';
 
 ReactDOM.render(Router, document.getElementById('app'));

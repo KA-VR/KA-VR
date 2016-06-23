@@ -1,34 +1,41 @@
 import React, { PropTypes } from 'react';
 
 const SpeechToText = (props) =>
-  <div>
-    <h1>Web Speech API</h1>
-    <h2>Transcription</h2>
+  <div className="container">
+    <h1 className="center-align">Web Speech API</h1>
+    <h2 className="center-align">Transcription</h2>
     <div id="transcription">{props.transcription}</div>
-
-    <span>Results:</span>
-    <label>
-      <input type="radio" name="recognition-type" value="final" checked="checked" />
-      Final only
-    </label>
-    <label>
-      <input type="radio" name="recognition-type" value="interim" />
-      Interim
-    </label>
-
-    <h3>Log</h3>
-    <div id="log">{props.logs}</div>
-
-    <div className="buttons-wrapper">
-      <button id="button-play-ws" onClick={props.startListening} className="button-demo">
-        Play demo
-      </button>
-      <button id="button-stop-ws" onClick={props.stopListening} className="button-demo">
-        Stop demo
-      </button>
-      <button id="clear-all" onClick={props.clearLog} className="button-demo">Clear all</button>
+    <div id="log" className="row">
+      <div className="col s2"><span>Recording State:</span></div>
+      <div className="col s1">
+        <div className={`preloader-wrapper  ${(props.recordingState) ? 'active' : ''}`}>
+          <div className="spinner-layer spinner-red-only">
+            <div className="circle-clipper left">
+              <div className="circle"></div>
+            </div><div className="gap-patch">
+              <div className="circle"></div>
+            </div><div className="circle-clipper right">
+              <div className="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="progress col s6">
+        <div className={props.recordingState ? 'indeterminate' : 'determinate'}></div>
+      </div>
+      <div className="listen-buttons col s12">
+        <div className="col s3 offset-s2">
+          <button onClick={props.startListening} className="waves-effect waves-light btn right">
+            Start
+          </button>
+        </div>
+        <div className="col s3 offset-s2">
+          <button onClick={props.stopListening} className="waves-effect waves-light btn">
+            Stop
+          </button>
+        </div>
+      </div>
     </div>
-
   </div>;
 
 SpeechToText.propTypes = {
@@ -37,6 +44,7 @@ SpeechToText.propTypes = {
   clearLog: PropTypes.func,
   transcription: PropTypes.string,
   logs: PropTypes.string,
+  recordingState: PropTypes.bool,
 };
 
 export default SpeechToText;
