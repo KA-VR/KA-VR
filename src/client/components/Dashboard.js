@@ -15,4 +15,8 @@ const Dashboard = (props) => (
   </div>
 );
 
+Dashboard.propTypes = {
+  click: React.PropTypes.func,
+};
+
 export default Dashboard;

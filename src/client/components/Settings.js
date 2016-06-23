@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const Settings = (props) => (
   <div>
-    <Link to="dashboard">Back to Dashboard</Link> 
+    <Link to="dashboard">Back to Dashboard</Link>
     <h3> Change Password </h3>
     <div>
       <input

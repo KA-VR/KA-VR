@@ -17,7 +17,7 @@ class SettingsContainer extends Component {
   }
   render() {
     return (
-      <Settings click={this.saveSettings}/>
+      <Settings click={this.saveSettings} />
     );
   }
 }
