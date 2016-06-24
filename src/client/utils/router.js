@@ -6,6 +6,10 @@ import {
   // IndexRoute,
 } from 'react-router';
 
+// Redux
+import { Provider } from 'react-redux';
+import Store from '../store/configurateStore';
+
 // Layouts
 import MainLayout from '../layouts/MainLayout';
 import PortalLayout from '../layouts/PortalLayout';
@@ -19,17 +23,19 @@ import SettingsContainer from '../containers/SettingsContainer';
 import SpeechToTextContainer from '../containers/SpeechToTextContainer';
 
 export default (
-  <Router history={browserHistory}>
-    <Route component={MainLayout}>
-      <Route component={PortalLayout}>
-        <Route path="/" component={SignInContainer} />
-        <Route path="signup" component={SignUpContainer} />
-        <Route path="speech" component={SpeechToTextContainer} />
+  <Provider store={Store}>
+    <Router history={browserHistory}>
+      <Route component={MainLayout}>
+        <Route component={PortalLayout}>
+          <Route path="/" component={SignInContainer} />
+          <Route path="signup" component={SignUpContainer} />
+          <Route path="speech" component={SpeechToTextContainer} />
+        </Route>
+        <Route component={DashboardLayout}>
+          <Route path="settings" component={SettingsContainer} />
+          <Route path="dashboard" component={DashboardContainer} />
+        </Route>
       </Route>
-      <Route component={DashboardLayout}>
-        <Route path="settings" component={SettingsContainer} />
-        <Route path="dashboard" component={DashboardContainer} />
-      </Route>
-    </Route>
-  </Router>
+    </Router>
+  </Provider>
 );
