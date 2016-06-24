@@ -17,6 +17,7 @@ sequelize
 const Users = sequelize.define('user', {
   name: Sequelize.STRING,
   email: Sequelize.STRING,
+  refreshToken: Sequelize.STRING,
 });
 
 sequelize.sync();
