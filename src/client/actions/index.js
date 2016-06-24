@@ -1,16 +1,25 @@
-let nextTask = 0;
+import * as types from '../constants/ActionTypes';
 
-export const addTask = (text) => {
+export function addTask(text) {
   return {
-    type: 'ADD_TASK',
-    id: nextTask++,
-    text
+    type: types.ADD_TASK, text,
   };
-};
+}
 
-export const removeTask = () => {
+export function removeTask(id) {
   return {
-    type: 'REMOVE_TASK',
+    type: types.REMOVE_TASK, id,
   };
-};
+}
 
+export function editTask(id, text) {
+  return {
+    type: types.EDIT_TASK, id, text,
+  };
+}
+
+export function completeTask(id) {
+  return {
+    type: types.COMPLETE_TASK, id,
+  };
+}
