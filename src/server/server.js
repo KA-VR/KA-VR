@@ -5,11 +5,14 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import apiRoute from './routes/api';
+import connectRedis from 'connect-redis';
+
 import { resolve } from 'path';
 import indexRoute from './routes/index';
 
 // Load environment variables
 require('dotenv').config();
+const RedisStore = connectRedis(session);
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
@@ -35,8 +38,17 @@ app
   // .use(express.static(resolve(__dirname, '../../src/client/assets')))
   .use(session({
     secret: 'wonky',
-    resave: false,
+    resave: true,
+    cookie: { maxAge: 60000 },
     saveUninitialized: false,
+    store: new RedisStore(
+      {
+        host: '127.0.0.1',
+        port: 6379,
+        prefix: 'sess',
+        pass: '',
+      }
+    ),
   }))
   .use(passport.initialize())
   .use(passport.session())

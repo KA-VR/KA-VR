@@ -28,6 +28,7 @@
   "dependencies": {
     "apoc": "^2.1.6",
     "body-parser": "^1.15.2",
+    "connect-redis": "^3.1.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
     "dotenv": "^2.0.0",
