@@ -15,8 +15,10 @@ sequelize
   });
 
 const Users = sequelize.define('users', {
-  name: Sequelize.STRING,
+  firstname: Sequelize.STRING,
+  lastname: Sequelize.STRING,
   email: Sequelize.STRING,
+  password: Sequelize.STRING,
   refreshToken: Sequelize.STRING,
 });
 
