@@ -89,8 +89,8 @@ class SpeechToTextContainer extends Component {
       data: dataObj,
       success: response => {
         console.log('Brains response!', response);
-        const thing = dataObj.object.join(' ');
-        const action = response.code;
+        const thing = response.context;
+        const action = response.funct.code;
         /* eslint-disable-next-line no-eval */
         eval(action)(thing);
       },
