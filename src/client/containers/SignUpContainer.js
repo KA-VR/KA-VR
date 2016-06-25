@@ -1,7 +1,9 @@
+/* eslint-disable no-console*/
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignUp from '../components/SignUp';
 import { browserHistory } from 'react-router';
+import auth from '../services/auth';
 
 class SignUpContainer extends Component {
   constructor(props) {
@@ -25,9 +27,16 @@ class SignUpContainer extends Component {
     } else if (formData.lastname === undefined) {
       console.log('Please fill out last name');
     } else {
-      // Make AJAX Call
-      console.log('Success');
-      browserHistory.push('/dashboard');
+      // Successful form validation, check if user already exists
+      auth.signup(formData, (res) => {
+        console.log('RES on SIGNUP: ', res);
+        if (res.response === 'Email already exists') {
+          console.log('Email already exists');
+        } else if (res.response === 'Account Created') {
+          // Route user to dashboard upon successful signup
+          browserHistory.push('/dashboard');
+        }
+      });
     }
   }
 
