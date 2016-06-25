@@ -29,8 +29,10 @@ refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, r
     profileObj.accessToken = accessToken;
 
     const val = {
-      name: `${fullName}`,
+      firstname: `${firstName}`,
+      lastname: `${LastName}`,
       email: `${email}`,
+      password: `${password}`,
       refreshToken: `${refreshToken}`,
     };
 
@@ -51,8 +53,10 @@ refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, r
         });
 
         Users.create({
-          name: fullName,
-          email,
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          password: null,
           refreshToken: `${refreshToken}`,
         })
         .then((user) => {
