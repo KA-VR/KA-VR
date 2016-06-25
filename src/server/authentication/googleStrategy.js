@@ -19,7 +19,7 @@ const strategy = new GoogleStrategy.Strategy({
     const lastName = profile.name.familyName;
 
     const email = profile.email;
-    const fullName = `${firstName} ${lastName}`;
+    // const fullName = `${firstName} ${lastName}`;
 
 /*
 refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, refreshToken) => {
@@ -30,9 +30,9 @@ refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, r
 
     const val = {
       firstname: `${firstName}`,
-      lastname: `${LastName}`,
+      lastname: `${lastName}`,
       email: `${email}`,
-      password: `${password}`,
+      password: null,
       refreshToken: `${refreshToken}`,
     };
 
@@ -55,7 +55,7 @@ refresh.requestNewAccessToken('google', 'someRefreshToken', (err, accessToken, r
         Users.create({
           firstname: firstName,
           lastname: lastName,
-          email: email,
+          email,
           password: null,
           refreshToken: `${refreshToken}`,
         })
