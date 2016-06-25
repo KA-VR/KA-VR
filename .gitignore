@@ -12,3 +12,4 @@ config.js
 
 # Log Files
 npm-debug.log
+dump.rdb
