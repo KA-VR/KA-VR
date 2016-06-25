@@ -32,10 +32,7 @@ const signup = (userInfo, callback) => {
     dataType: 'json',
     data: userInfo,
   })
-  .done(res => {
-    return res;
-  })
-  .then(data => {
+  .done(data => {
     if (callback) {
       callback(data);
     }
