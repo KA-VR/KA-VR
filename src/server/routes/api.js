@@ -5,8 +5,12 @@ import authController from '../controllers/authController';
 import refresh from 'passport-oauth2-refresh';
 import strategy from '../authentication/googleStrategy';
 import Users from '../../../mysql.config';
+// import auth from 'passport-local-authenticate';
+import bcrypt from 'bcrypt';
 
 const router = new Router();
+
+const saltRounds = 10;
 
 refresh.use(strategy);
 
@@ -44,9 +48,94 @@ router.route('/api/token').get(isAuthenticated, (req, res) => { /* If user is au
 
 router.route('/auth/google/callback').get(authController.googleRedirect);
 
-// Handle SignUp routing/authentication
-
-
 // Handle SignIn routing/authentication
+router.route('/signin')
+  .post((req, res) => {
+    const userInfo = req.body;
+    Users.findAll({
+      where: {
+        email: userInfo.email,
+      },
+    })
+    .then(database => {
+      if (database.length === 0) {
+        res.send(JSON.stringify({
+          response: 'Email not found',
+        }));
+      } else { /* Case of email exist */
+        bcrypt.compare(userInfo.password, database[0].password, (err, samePW) => {
+          if (err) {
+            console.log('Error in comparing bcyrpt passwords: ', err);
+          }
+          if (samePW) {
+            // Send response back to user
+            res.send(JSON.stringify({
+              response: 'Password match',
+            }));
+          } else {
+            res.send(JSON.stringify({
+              response: 'Invalid email/password combination',
+            }));
+          }
+        });
+      } // Close else
+    })
+    .catch(error => {
+      console.error('Error: ', error);
+    });
+  }); /* Closes our post */
+
+// Handle SignUp routing/authentication
+router.route('/signup')
+  .post((req, res) => {
+    const userInfo = req.body;
+    console.log('REQ.BODY on SIGNUP: ', req.body);
+    // Check database to see if email already exist
+    Users.findAll({
+      where: {
+        email: userInfo.email,
+      },
+    })
+    .then(result => {
+      // If email already exist in database, send error message back to client
+      console.log('RESULT from SQL Query on API File: ', result);
+
+      if (result.length > 0) {
+        res.send(JSON.stringify({
+          response: 'Email already exists',
+        }));
+      } else { /* If email doesn't exist in our database */
+        // Salt user password
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+          if (err) {
+            console.log(err);
+          }
+          bcrypt.hash(userInfo.password, salt, (error, hash) => {
+            if (error) {
+              console.log(error);
+            }
+            // Save userinfo to database
+            Users.create({
+              firstname: userInfo.firstname,
+              lastname: userInfo.lastname,
+              password: hash,
+              email: userInfo.email,
+            })
+            .then(() => {
+              res.send(JSON.stringify({
+                response: 'Account Created',
+              }));
+            })
+            .catch(errors => {
+              console.error('Error: ', errors);
+            });
+          });
+        }); // Close hash
+      } // Close else
+    })
+    .catch(err => {
+      console.err('Error: ', err);
+    });
+  }); /* Closes our post */
 
 export default router;
