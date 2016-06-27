@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Validation from 'react-validation';
 import { Link } from 'react-router';
 
@@ -37,7 +37,7 @@ const SignUp = (props) => (
 );
 
 SignUp.propTypes = {
-  handleSubmit: React.PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default SignUp;
