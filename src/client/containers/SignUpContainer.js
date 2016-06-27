@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignUp from '../components/SignUp';
-import { browserHistory } from 'react-router';
 import auth from '../services/auth';
 
 class SignUpContainer extends Component {

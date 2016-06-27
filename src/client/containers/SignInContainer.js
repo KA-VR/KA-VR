@@ -27,8 +27,8 @@ class SignInContainer extends Component {
       // Make ajax call
       auth.signin(formData, (res) => {
         console.log('RES in SIGNIN CONTAINER', res);
-        if (res.response === 'Password match') {
-          browserHistory.push('/dashboard');
+        if (res.redirect === '/dashboard') {
+          window.location = res.redirect;
         }
       });
     }
