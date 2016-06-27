@@ -29,12 +29,11 @@ class SignUpContainer extends Component {
     } else {
       // Successful form validation, check if user already exists
       auth.signup(formData, (res) => {
-        console.log('RES on SIGNUP: ', res);
-        if (res.response === 'Email already exists') {
-          console.log('Email already exists');
-        } else if (res.response === 'Account Created') {
-          // Route user to dashboard upon successful signup
-          browserHistory.push('/dashboard');
+        console.log('RESPONSE on SIGNUP FROM SERVER: ', res);
+        if (res.response) {
+          console.log('Error signing up');
+        } else if (res.redirect === '/dashboard') {
+          window.location = res.redirect;
         }
       });
     }
