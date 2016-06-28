@@ -35585,14 +35585,20 @@
 
 	    _this.state = {
 	      recognizer: null,
-	      transcription: '',
+	      transcription: {
+	        text: '',
+	        verb: '',
+	        object: []
+	      },
 	      log: 'Recording: false',
-	      recording: false
+	      recording: false,
+	      actions: []
 	    };
 	    _this.recording = false;
 	    _this.startListening = _this.startListening.bind(_this);
 	    _this.stopListening = _this.stopListening.bind(_this);
 	    _this.clearLog = _this.clearLog.bind(_this);
+	    _this.surveyLearn = _this.surveyLearn.bind(_this);
 
 	    $(document).on('keydown', function (event) {
 	      switch (event.keyCode) {
@@ -35654,7 +35660,11 @@
 	                _this3.callBrain(data);
 	              }
 	              _this3.setState({
-	                transcription: '\n                TEXT: ' + event.results[i][0].transcript + '===\n                VERB: ' + (data.verb || 'None') + '===\n                OBJECT: ' + (data.object ? data.object.join(', ') : 'None') + '\n              '
+	                transcription: {
+	                  text: event.results[i][0].transcript,
+	                  verb: data.verb || 'None',
+	                  object: data.object ? data.object.join(', ') : 'None'
+	                }
 	              });
 	            },
 	            error: function error(err) {
@@ -35671,6 +35681,8 @@
 	  }, {
 	    key: 'callBrain',
 	    value: function callBrain(dataObj) {
+	      var _this4 = this;
+
 	      console.log('data going into brain', dataObj);
 	      $.ajax({
 	        url: 'http://localhost:7750/api/think',
@@ -35678,8 +35690,9 @@
 	        data: dataObj,
 	        success: function success(response) {
 	          console.log('Brains response!', response);
-	          if (response.found) {
+	          if (!response.found) {
 	            $('#survey').openModal();
+	            _this4.setState({ actions: response.actions });
 	          } else {
 	            var thing = response.context;
 	            var action = response.funct.code;
@@ -35691,6 +35704,44 @@
 	          console.log('Error on Text Analyzer:', err);
 	        }
 	      });
+	    }
+	  }, {
+	    key: 'surveyLearn',
+	    value: function surveyLearn(dataObj) {
+	      var newVerb = $('input[name="verbgroup"]:checked').val();
+	      var newKeyword = $('input[name="keywordgroup"]:checked').val();
+	      var newAction = $('input[name="actiongroup"]:checked').val();
+
+	      console.log('hihi', newVerb, newKeyword, newAction);
+	      if (newVerb && newKeyword && newAction) {
+	        $('input[name="contextgroup"]').attr('checked', false);
+	        $('input[name="actiongroup"]').attr('checked', false);
+	        $('input[name="verbgroup"]').attr('checked', false);
+	        $('#survey').closeModal();
+	        console.log('data going into brain. YOU GON LEARN TODAY', dataObj);
+	        // $.ajax({
+	        //   url: 'http://localhost:7750/api/think',
+	        //   method: 'POST',
+	        //   data: dataObj,
+	        //   success: response => {
+	        //     console.log('Brains response!', response);
+	        //     if (!response.found) {
+	        //       $('#survey').openModal();
+	        //       this.setState({ actions: response.actions });
+	        //     } else {
+	        //       const thing = response.context;
+	        //       const action = response.funct.code;
+	        //       /* eslint-disable-next-line no-eval */
+	        //       eval(action)(thing);
+	        //     }
+	        //   },
+	        //   error: err => {
+	        //     console.log('Error on Text Analyzer:', err);
+	        //   },
+	        // });
+	      } else {
+	          Materialize.toast('Please fill out the entire form.', 3000);
+	        }
 	    }
 	  }, {
 	    key: 'startListening',
@@ -35730,7 +35781,7 @@
 	    key: 'clearLog',
 	    value: function clearLog() {
 	      this.setState({
-	        transcription: '',
+	        transcription: {},
 	        log: ''
 	      });
 	    }
@@ -35743,7 +35794,9 @@
 	        transcription: this.state.transcription,
 	        startListening: this.startListening,
 	        stopListening: this.stopListening,
-	        clearLog: this.clearLog
+	        clearLog: this.clearLog,
+	        actions: this.state.actions,
+	        learn: this.surveyLearn
 	      });
 	    }
 	  }]);
@@ -35788,6 +35841,105 @@
 	          "p",
 	          null,
 	          "Could you help me understand what you meant?"
+	        ),
+	        _react2.default.createElement(
+	          "form",
+	          { action: "#" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col s12" },
+	            _react2.default.createElement(
+	              "span",
+	              null,
+	              "You said: ",
+	              props.transcription.text
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col s12" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "verb-find col s12" },
+	              _react2.default.createElement(
+	                "h6",
+	                null,
+	                "Choose a Verb:"
+	              ),
+	              props.transcription.text.split(' ').map(function (verb, index) {
+	                return _react2.default.createElement(
+	                  "p",
+	                  { key: verb },
+	                  _react2.default.createElement("input", {
+	                    className: "with-gap",
+	                    name: "verbgroup",
+	                    type: "radio",
+	                    id: "verb" + index,
+	                    value: verb
+	                  }),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { htmlFor: "verb" + index },
+	                    verb
+	                  )
+	                );
+	              })
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "keyword-find col s12" },
+	              _react2.default.createElement(
+	                "h6",
+	                null,
+	                "Choose a Keyword:"
+	              ),
+	              props.transcription.text.split(' ').map(function (keyword, index) {
+	                return _react2.default.createElement(
+	                  "p",
+	                  { key: keyword },
+	                  _react2.default.createElement("input", {
+	                    className: "with-gap",
+	                    name: "keywordgroup",
+	                    type: "radio",
+	                    id: "keyword" + index,
+	                    value: keyword
+	                  }),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { htmlFor: "keyword" + index },
+	                    keyword
+	                  )
+	                );
+	              })
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "action-find col s12" },
+	              _react2.default.createElement(
+	                "h6",
+	                null,
+	                "Choose an action:"
+	              ),
+	              props.actions.map(function (action, index) {
+	                return _react2.default.createElement(
+	                  "p",
+	                  { key: action },
+	                  _react2.default.createElement("input", {
+	                    className: "with-gap",
+	                    name: "actiongroup",
+	                    type: "radio",
+	                    id: "action" + index,
+	                    value: action
+	                  }),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { htmlFor: "action" + index },
+	                    action
+	                  )
+	                );
+	              })
+	            )
+	          )
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -35795,7 +35947,11 @@
 	        { className: "modal-footer" },
 	        _react2.default.createElement(
 	          "a",
-	          { href: "#!", className: "modal-action modal-close waves-effect waves-green btn-flat" },
+	          {
+	            href: "#!",
+	            onClick: props.learn,
+	            className: "waves-effect waves-green btn-flat"
+	          },
 	          "Send"
 	        )
 	      )
@@ -35843,7 +35999,24 @@
 	          null,
 	          "Log:"
 	        ),
-	        props.transcription
+	        _react2.default.createElement(
+	          "div",
+	          { className: "col s4" },
+	          "Text: ",
+	          props.transcription.text
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "col s4" },
+	          "Verb: ",
+	          props.transcription.verb
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "col s4" },
+	          "Object: ",
+	          props.transcription.object
+	        )
 	      ),
 	      _react2.default.createElement(
 	        "div",
@@ -35887,9 +36060,11 @@
 	  startListening: _react.PropTypes.func,
 	  stopListening: _react.PropTypes.func,
 	  clearLog: _react.PropTypes.func,
-	  transcription: _react.PropTypes.string,
+	  learn: _react.PropTypes.func,
+	  transcription: _react.PropTypes.object,
 	  logs: _react.PropTypes.string,
-	  recordingState: _react.PropTypes.bool
+	  recordingState: _react.PropTypes.bool,
+	  actions: _react.PropTypes.array
 	};
 
 	exports.default = SpeechToText;
