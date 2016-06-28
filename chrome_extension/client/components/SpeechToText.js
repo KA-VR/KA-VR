@@ -1,74 +1,13 @@
 import React, { PropTypes } from 'react';
+import Survey from './Survey';
 
 const SpeechToText = (props) =>
   <div className="container speechText">
-    <div id="survey" className="modal">
-      <div className="modal-content">
-        <h4>Sorry! Didn't understand what you said</h4>
-        <p>Could you help me understand what you meant?</p>
-        <form action="#">
-          <div className="col s12">
-            <span>You said: {props.transcription.text}</span>
-          </div>
-          <div className="col s12">
-            <div className="verb-find col s12">
-              <h6>Choose a Verb:</h6>
-              {props.transcription.text.split(' ').map((verb, index) => (
-                <p key={verb}>
-                  <input
-                    className="with-gap"
-                    name="verbgroup"
-                    type="radio"
-                    id={`verb${index}`}
-                    value={verb}
-                  />
-                  <label htmlFor={`verb${index}`}>{verb}</label>
-                </p>
-              ))}
-            </div>
-            <div className="keyword-find col s12">
-              <h6>Choose a Keyword:</h6>
-              {props.transcription.text.split(' ').map((keyword, index) => (
-                <p key={keyword}>
-                  <input
-                    className="with-gap"
-                    name="keywordgroup"
-                    type="radio"
-                    id={`keyword${index}`}
-                    value={keyword}
-                  />
-                  <label htmlFor={`keyword${index}`}>{keyword}</label>
-                </p>
-              ))}
-            </div>
-            <div className="action-find col s12">
-              <h6>Choose an action:</h6>
-              {props.actions.map((action, index) => (
-                <p key={action}>
-                  <input
-                    className="with-gap"
-                    name="actiongroup"
-                    type="radio"
-                    id={`action${index}`}
-                    value={action}
-                  />
-                  <label htmlFor={`action${index}`}>{action}</label>
-                </p>
-              ))}
-            </div>
-          </div>
-        </form>
-      </div>
-      <div className="modal-footer">
-        <a
-          href="#!"
-          onClick={props.learn}
-          className="waves-effect waves-green btn-flat"
-        >
-          Send
-        </a>
-      </div>
-    </div>
+    <Survey
+      transcription={props.transcription}
+      actions={props.actions}
+      learn={props.learn}
+    />
     <div id="displayInfo" className="modal">
       <div className="modal-content">
         <h4>Modal Header</h4>
