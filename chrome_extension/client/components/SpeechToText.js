@@ -8,6 +8,7 @@ const SpeechToText = (props) =>
       actions={props.actions}
       learn={props.learn}
     />
+
     <div id="displayInfo" className="modal">
       <div className="modal-content">
         <h4>Modal Header</h4>
@@ -27,8 +28,8 @@ const SpeechToText = (props) =>
         <div className="col s4">Verb: {props.transcription.verb}</div>
         <div className="col s4">Object: {props.transcription.object}</div>
       </div>
-      <div className="activity-bar progress col s6 offset-s3">
-        <div className={props.recordingState ? 'indeterminate' : 'determinate'}></div>
+      <div className="activity-bar theme2-bg progress col s6 offset-s3">
+        <div className={props.recordingState ? 'indeterminate theme3-bg' : 'determinate theme3-bg'}></div>
       </div>
       <div className="listen-buttons col s12">
         {props.recordingState ? (
@@ -36,7 +37,7 @@ const SpeechToText = (props) =>
             <button
               onClick={props.stopListening}
               id="stop"
-              className="waves-effect waves-light btn"
+              className="waves-effect theme2-bg waves-light btn"
             >
               Stop
             </button>
@@ -46,7 +47,7 @@ const SpeechToText = (props) =>
             <button
               onClick={props.startListening}
               id="start"
-              className="waves-effect waves-light btn right"
+              className="waves-effect waves-light theme1-bg btn right"
             >
               Start
             </button>

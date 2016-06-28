@@ -1,7 +1,7 @@
 /* global $, Materialize */
 /* eslint-disable no-console, no-eval */
 import React, { Component } from 'react';
-import SpeechToText from '../components/SpeechToText.js';
+import SpeechToText from '../components/SpeechToText';
 
 const KEY_SPACEBAR = 32;
 
@@ -63,6 +63,7 @@ class SpeechToTextContainer extends Component {
   updateTranscription(event) {
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
+        console.log('Going to text analyze');
         $.ajax({
           url: 'http://localhost:8000/api/analyze',
           method: 'POST',
@@ -188,16 +189,18 @@ class SpeechToTextContainer extends Component {
   }
   render() {
     return (
-      < SpeechToText
-        logs={this.state.log}
-        recordingState={this.state.recording}
-        transcription={this.state.transcription}
-        startListening={this.startListening}
-        stopListening={this.stopListening}
-        clearLog={this.clearLog}
-        actions={this.state.actions}
-        learn={this.surveyLearn}
-      />
+      <div>
+        <SpeechToText
+          logs={this.state.log}
+          recordingState={this.state.recording}
+          transcription={this.state.transcription}
+          startListening={this.startListening}
+          stopListening={this.stopListening}
+          clearLog={this.clearLog}
+          actions={this.state.actions}
+          learn={this.surveyLearn}
+        />
+      </div>
     );
   }
 }
