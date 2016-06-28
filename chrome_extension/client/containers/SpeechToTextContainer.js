@@ -72,6 +72,7 @@ class SpeechToTextContainer extends Component {
           success: data => {
             console.log('REturned', data);
             if (data.error) {
+              document.getElementById('moron').play();
               Materialize.toast('Sorry! Didn\'t understand that.', 3000);
             } else { this.callBrain(data); }
             this.setState({
@@ -99,8 +100,10 @@ class SpeechToTextContainer extends Component {
         console.log('Brains response!', response);
         if (!response.found) {
           $('#survey').openModal();
+          document.getElementById('stupid').play();
           this.setState({ actions: response.actions });
         } else {
+          document.getElementById('english').play();
           const thing = response.context;
           const action = response.funct.code;
           /* eslint-disable-next-line no-eval */
@@ -116,7 +119,6 @@ class SpeechToTextContainer extends Component {
     const newVerb = $('input[name="verbgroup"]:checked').val();
     const newKeyword = $('input[name="keywordgroup"]:checked').val();
     const newAction = $('input[name="actiongroup"]:checked').val();
-
     console.log('hihi', newVerb, newKeyword, newAction);
     if (newVerb && newKeyword && newAction) {
       $('input[name="contextgroup"]').attr('checked', false);

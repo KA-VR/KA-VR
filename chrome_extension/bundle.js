@@ -35655,6 +35655,7 @@
 	            success: function success(data) {
 	              console.log('REturned', data);
 	              if (data.error) {
+	                document.getElementById('moron').play();
 	                Materialize.toast('Sorry! Didn\'t understand that.', 3000);
 	              } else {
 	                _this3.callBrain(data);
@@ -35692,8 +35693,10 @@
 	          console.log('Brains response!', response);
 	          if (!response.found) {
 	            $('#survey').openModal();
+	            document.getElementById('stupid').play();
 	            _this4.setState({ actions: response.actions });
 	          } else {
+	            document.getElementById('english').play();
 	            var thing = response.context;
 	            var action = response.funct.code;
 	            /* eslint-disable-next-line no-eval */
@@ -35711,7 +35714,6 @@
 	      var newVerb = $('input[name="verbgroup"]:checked').val();
 	      var newKeyword = $('input[name="keywordgroup"]:checked').val();
 	      var newAction = $('input[name="actiongroup"]:checked').val();
-
 	      console.log('hihi', newVerb, newKeyword, newAction);
 	      if (newVerb && newKeyword && newAction) {
 	        $('input[name="contextgroup"]').attr('checked', false);
