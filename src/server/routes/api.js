@@ -5,10 +5,9 @@ import authController from '../controllers/authController';
 import refresh from 'passport-oauth2-refresh';
 import strategy from '../authentication/googleStrategy';
 import Users from '../../../mysql.config';
-// import auth from 'passport-local-authenticate';
 import bcrypt from 'bcrypt';
-import { LocalStrategy } from 'passport-local';
-
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
 
 const router = new Router();
 
@@ -18,8 +17,9 @@ refresh.use(strategy);
 
 // Middleware that checks if user is already authenticated
 const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-
+  if (req.isAuthenticated()) {
+    return next();
+  }
   return res.redirect('/');
 };
 
@@ -50,65 +50,10 @@ router.route('/api/token').get(isAuthenticated, (req, res) => { /* If user is au
 
 router.route('/auth/google/callback').get(authController.googleRedirect);
 
-// Handle SignIn routing/authentication
-
-router.route('/signin')
-  .post((req, res) => {
-    const userInfo = req.body;
-
-    // Validation
-    req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
-
-    const errors = req.validationErrors();
-
-    if (errors) {
-      console.log('ERRORS: ', errors);
-      res.send(JSON.stringify({
-        response: errors,
-      }));
-    } else {
-      Users.findAll({
-        where: {
-          email: userInfo.email,
-        },
-      })
-      .then(database => {
-        if (database.length === 0) {
-          res.send(JSON.stringify({
-            response: 'Email not found',
-          }));
-        } else { /* Case of email exist */
-          bcrypt.compare(userInfo.password, database[0].password, (err, samePW) => {
-            if (err) {
-              console.log('Error in comparing bcyrpt passwords: ', err);
-            }
-            if (samePW) {
-              // Send response back to user
-              res.send(JSON.stringify({
-                redirect: '/dashboard',
-              }));
-            } else {
-              res.send(JSON.stringify({
-                response: 'Invalid email/password combination',
-              }));
-            }
-          });
-        } // Close else
-      })
-      .catch(error => {
-        console.error('Error ', error);
-      });
-    } // Close else
-  }); // Close our post
-
-
 // Handle SignUp routing/authentication
 router.route('/signup')
   .post((req, res) => {
     const userInfo = req.body;
-
     // Validation of user information
     req.checkBody('firstname', 'First name is required').notEmpty();
     req.checkBody('lastname', 'Last name is required').notEmpty();
@@ -133,8 +78,6 @@ router.route('/signup')
       })
       .then(result => {
         // If email already exist in database, send error message back to client
-        console.log('RESULT from SQL Query on API File: ', result);
-
         if (result.length > 0) {
           res.send(JSON.stringify({
             response: 'Email already exists',
@@ -173,5 +116,75 @@ router.route('/signup')
       });
     } // Close else
   }); /* Closes our post */
+
+// Passport Local Authentication
+passport.use('local', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+}, (userEmail, password, done) => {
+  // Query database
+  Users.findOne({
+    where: {
+      email: userEmail,
+    },
+  })
+  .then(user => { // Check user credentials
+    if (!user) {
+      done(null, false, { message: 'Unknown User' });
+    }
+    bcrypt.compare(password, user.dataValues.password, (err, samePW) => {
+      if (err) {
+        throw err;
+      }
+      if (!samePW) {
+        return done(null, false, { message: 'Invalid password' });
+      }
+      return done(null, user);
+    });
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}));
+
+// Serialize user for session
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialize user from session
+passport.deserializeUser((id, done) => {
+  Users.findOne({
+    where: {
+      id,
+    },
+  })
+  .then((err, user) => {
+    if (user === null) {
+      done(new Error('Wrong user id'));
+    }
+    done(err, user);
+  });
+});
+
+router.post('/signin',
+  passport.authenticate('local'), (req, res) => {
+    req.session.save(err => {
+      if (err) {
+        console.log('ERROR: ', err);
+      } else {
+        res.send({
+          email: req.body.email,
+          redirect: '/dashboard',
+          session: req.session,
+        });
+      }
+    });
+  });
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 export default router;
