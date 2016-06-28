@@ -10,6 +10,6 @@
 .apoc.yml
 config.js
 
-# Log Files
+# MISC Files
+dumb.rdb
 npm-debug.log
-dump.rdb

@@ -1,7 +1,23 @@
+# Ignore Node Modules
 node_modules
+
+# Ignore Package JSON
+package.json
+
+# Ignore Webpack Configs
+webpack.config.js
+chrome.webpack.config.js
+
+# Ignore Chrome Extension Files
+chrome_extension/manifest.json
+chrome_extension/materialize.min.js
+chrome_extension/jquery.min.js
+chrome_extension/bundle.js
+
+# Ignore Read Me
+README.md
+
+#Ignore MISC Files
 npm-debug.log
 .gitignore
 .eslintrc
-package.json
-README.md
-webpack.config.js
