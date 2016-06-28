@@ -4,24 +4,21 @@ import $ from 'jquery';
 const signin = (userInfo, callback) => {
   $.ajax({
     url: '/signin',
-    type: 'POST',
-    dataType: 'json',
+    method: 'POST',
     data: userInfo,
-  })
-  .done(res => {
-    console.log('RES:', res);
-    // Apply additional actions to our response from server
-    return res;
-  })
-  .then(data => {
-    console.log('DATA in SIGNIN: ', data);
-    // Invoke our callback
-    if (callback) {
-      callback(data);
-    }
-  })
-  .catch(err => {
-    console.error('Error on signup', err);
+    success: (data) => {
+      const sess = data.session;
+      window.localStorage.setItem('KAVR', sess.cookie.expires);
+      window.localStorage.setItem('email', sess.passport.user.email);
+      window.localStorage.setItem('id', sess.passport.user.id);
+      document.cookie = `email=${sess.passport.user.email}expires${sess.cookie.expires}`;
+      if (callback) {
+        callback(data);
+      }
+    },
+    error: (req, status, err) => {
+      console.error('Error: ', req, status, err);
+    },
   });
 };
 
@@ -42,12 +39,7 @@ const signup = (userInfo, callback) => {
   });
 };
 
-const logout = () => {
-
-};
-
 export default {
   signin,
   signup,
-  logout,
 };
