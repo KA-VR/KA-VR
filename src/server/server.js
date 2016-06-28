@@ -9,6 +9,7 @@ import connectRedis from 'connect-redis';
 
 import { resolve } from 'path';
 import indexRoute from './routes/index';
+import expressValidator from 'express-validator';
 
 // Load environment variables
 require('dotenv').config();
@@ -32,6 +33,7 @@ app
   }))
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
+  .use(expressValidator()) // Add express validation
   .use(cookieParser())
   .use(express.static(resolve(__dirname, '../client')))
   // .use(express.static(resolve(__dirname, '../../src/client')))

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const SignIn = (props) => (
   <div className="signin">
@@ -30,8 +30,8 @@ const SignIn = (props) => (
 );
 
 SignIn.propTypes = {
-  handleSubmit: React.PropTypes.func.isRequired,
-  redirectSignUp: React.PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  redirectSignUp: PropTypes.func.isRequired,
 };
 
 export default SignIn;

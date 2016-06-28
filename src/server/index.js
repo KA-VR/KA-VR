@@ -8,7 +8,6 @@ export default `
     </head>
     <body>
       <div id="app"></div>
-      <div class="todoapp" id="root">
       <script src="bundle.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     </body>

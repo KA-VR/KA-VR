@@ -1,12 +1,20 @@
+/* eslint-disable no-console*/
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignUp from '../components/SignUp';
 import { browserHistory } from 'react-router';
+import auth from '../services/auth';
 
 class SignUpContainer extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    if (window.localStorage.getItem('KAVR')) {
+      browserHistory.push('/dashboard');
+    }
   }
 
   handleSubmit() {
@@ -25,9 +33,15 @@ class SignUpContainer extends Component {
     } else if (formData.lastname === undefined) {
       console.log('Please fill out last name');
     } else {
-      // Make AJAX Call
-      console.log('Success');
-      browserHistory.push('/dashboard');
+      // Successful form validation, check if user already exists
+      auth.signup(formData, (res) => {
+        console.log('RESPONSE on SIGNUP FROM SERVER: ', res);
+        if (res.response) {
+          console.log('Error signing up');
+        } else if (res.redirect === '/dashboard') {
+          window.location = res.redirect;
+        }
+      });
     }
   }
 
