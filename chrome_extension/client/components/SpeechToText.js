@@ -1,74 +1,14 @@
 import React, { PropTypes } from 'react';
+import Survey from './Survey';
 
 const SpeechToText = (props) =>
   <div className="container speechText">
-    <div id="survey" className="modal">
-      <div className="modal-content">
-        <h4>Sorry! Didn't understand what you said</h4>
-        <p>Could you help me understand what you meant?</p>
-        <form action="#">
-          <div className="col s12">
-            <span>You said: {props.transcription.text}</span>
-          </div>
-          <div className="col s12">
-            <div className="verb-find col s12">
-              <h6>Choose a Verb:</h6>
-              {props.transcription.text.split(' ').map((verb, index) => (
-                <p key={verb}>
-                  <input
-                    className="with-gap"
-                    name="verbgroup"
-                    type="radio"
-                    id={`verb${index}`}
-                    value={verb}
-                  />
-                  <label htmlFor={`verb${index}`}>{verb}</label>
-                </p>
-              ))}
-            </div>
-            <div className="keyword-find col s12">
-              <h6>Choose a Keyword:</h6>
-              {props.transcription.text.split(' ').map((keyword, index) => (
-                <p key={keyword}>
-                  <input
-                    className="with-gap"
-                    name="keywordgroup"
-                    type="radio"
-                    id={`keyword${index}`}
-                    value={keyword}
-                  />
-                  <label htmlFor={`keyword${index}`}>{keyword}</label>
-                </p>
-              ))}
-            </div>
-            <div className="action-find col s12">
-              <h6>Choose an action:</h6>
-              {props.actions.map((action, index) => (
-                <p key={action}>
-                  <input
-                    className="with-gap"
-                    name="actiongroup"
-                    type="radio"
-                    id={`action${index}`}
-                    value={action}
-                  />
-                  <label htmlFor={`action${index}`}>{action}</label>
-                </p>
-              ))}
-            </div>
-          </div>
-        </form>
-      </div>
-      <div className="modal-footer">
-        <a
-          href="#!"
-          onClick={props.learn}
-          className="waves-effect waves-green btn-flat"
-        >
-          Send
-        </a>
-      </div>
-    </div>
+    <Survey
+      transcription={props.transcription}
+      actions={props.actions}
+      learn={props.learn}
+    />
+
     <div id="displayInfo" className="modal">
       <div className="modal-content">
         <h4>Modal Header</h4>
@@ -88,8 +28,8 @@ const SpeechToText = (props) =>
         <div className="col s4">Verb: {props.transcription.verb}</div>
         <div className="col s4">Object: {props.transcription.object}</div>
       </div>
-      <div className="activity-bar progress col s6 offset-s3">
-        <div className={props.recordingState ? 'indeterminate' : 'determinate'}></div>
+      <div className="activity-bar theme2-bg progress col s6 offset-s3">
+        <div className={props.recordingState ? 'indeterminate theme3-bg' : 'determinate theme3-bg'}></div>
       </div>
       <div className="listen-buttons col s12">
         {props.recordingState ? (
@@ -97,7 +37,7 @@ const SpeechToText = (props) =>
             <button
               onClick={props.stopListening}
               id="stop"
-              className="waves-effect waves-light btn"
+              className="waves-effect theme2-bg waves-light btn"
             >
               Stop
             </button>
@@ -107,7 +47,7 @@ const SpeechToText = (props) =>
             <button
               onClick={props.startListening}
               id="start"
-              className="waves-effect waves-light btn right"
+              className="waves-effect waves-light theme1-bg btn right"
             >
               Start
             </button>

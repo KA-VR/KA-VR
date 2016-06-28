@@ -54,28 +54,32 @@
 
 	var _router2 = _interopRequireDefault(_router);
 
-	__webpack_require__(354);
+	__webpack_require__(359);
 
-	__webpack_require__(358);
+	__webpack_require__(363);
 
-	__webpack_require__(360);
+	__webpack_require__(365);
 
-	__webpack_require__(362);
+	__webpack_require__(367);
 
-	__webpack_require__(364);
+	__webpack_require__(369);
 
-	__webpack_require__(366);
+	__webpack_require__(371);
 
-	__webpack_require__(368);
+	__webpack_require__(373);
+
+	__webpack_require__(375);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_router2.default, document.getElementById('app'));
 	// import Index from '../server/index.js';
 	// import Speech from './components/SpeechToTextContainer.js';
 
 	// Stylesheets
 	// import React from 'react';
+
+
+	_reactDom2.default.render(_router2.default, document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -27193,7 +27197,7 @@
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -27203,16 +27207,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Canvas = __webpack_require__(358);
+
+	var _Canvas2 = _interopRequireDefault(_Canvas);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// import { Link } from 'react-router';
 
 	var PortalLayout = function PortalLayout(props) {
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "portallayout" },
+	    'div',
+	    { className: 'portallayout' },
+	    _react2.default.createElement(_Canvas2.default, null),
 	    _react2.default.createElement(
-	      "main",
+	      'main',
 	      null,
 	      props.children
 	    )
@@ -35646,6 +35655,7 @@
 
 	      var _loop = function _loop(i) {
 	        if (event.results[i].isFinal) {
+	          console.log('Going to text analyze');
 	          $.ajax({
 	            url: 'http://localhost:8000/api/analyze',
 	            method: 'POST',
@@ -35790,16 +35800,20 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(_SpeechToText2.default, {
-	        logs: this.state.log,
-	        recordingState: this.state.recording,
-	        transcription: this.state.transcription,
-	        startListening: this.startListening,
-	        stopListening: this.stopListening,
-	        clearLog: this.clearLog,
-	        actions: this.state.actions,
-	        learn: this.surveyLearn
-	      });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_SpeechToText2.default, {
+	          logs: this.state.log,
+	          recordingState: this.state.recording,
+	          transcription: this.state.transcription,
+	          startListening: this.startListening,
+	          stopListening: this.stopListening,
+	          clearLog: this.clearLog,
+	          actions: this.state.actions,
+	          learn: this.surveyLearn
+	        })
+	      );
 	    }
 	  }]);
 
@@ -35812,7 +35826,7 @@
 /* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -35822,235 +35836,114 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Survey = __webpack_require__(354);
+
+	var _Survey2 = _interopRequireDefault(_Survey);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var SpeechToText = function SpeechToText(props) {
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "container speechText" },
+	    'div',
+	    { className: 'container speechText' },
+	    _react2.default.createElement(_Survey2.default, {
+	      transcription: props.transcription,
+	      actions: props.actions,
+	      learn: props.learn
+	    }),
 	    _react2.default.createElement(
-	      "div",
-	      { id: "survey", className: "modal" },
+	      'div',
+	      { id: 'displayInfo', className: 'modal' },
 	      _react2.default.createElement(
-	        "div",
-	        { className: "modal-content" },
+	        'div',
+	        { className: 'modal-content' },
 	        _react2.default.createElement(
-	          "h4",
+	          'h4',
 	          null,
-	          "Sorry! Didn't understand what you said"
+	          'Modal Header'
 	        ),
 	        _react2.default.createElement(
-	          "p",
+	          'p',
 	          null,
-	          "Could you help me understand what you meant?"
-	        ),
-	        _react2.default.createElement(
-	          "form",
-	          { action: "#" },
-	          _react2.default.createElement(
-	            "div",
-	            { className: "col s12" },
-	            _react2.default.createElement(
-	              "span",
-	              null,
-	              "You said: ",
-	              props.transcription.text
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "col s12" },
-	            _react2.default.createElement(
-	              "div",
-	              { className: "verb-find col s12" },
-	              _react2.default.createElement(
-	                "h6",
-	                null,
-	                "Choose a Verb:"
-	              ),
-	              props.transcription.text.split(' ').map(function (verb, index) {
-	                return _react2.default.createElement(
-	                  "p",
-	                  { key: verb },
-	                  _react2.default.createElement("input", {
-	                    className: "with-gap",
-	                    name: "verbgroup",
-	                    type: "radio",
-	                    id: "verb" + index,
-	                    value: verb
-	                  }),
-	                  _react2.default.createElement(
-	                    "label",
-	                    { htmlFor: "verb" + index },
-	                    verb
-	                  )
-	                );
-	              })
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "keyword-find col s12" },
-	              _react2.default.createElement(
-	                "h6",
-	                null,
-	                "Choose a Keyword:"
-	              ),
-	              props.transcription.text.split(' ').map(function (keyword, index) {
-	                return _react2.default.createElement(
-	                  "p",
-	                  { key: keyword },
-	                  _react2.default.createElement("input", {
-	                    className: "with-gap",
-	                    name: "keywordgroup",
-	                    type: "radio",
-	                    id: "keyword" + index,
-	                    value: keyword
-	                  }),
-	                  _react2.default.createElement(
-	                    "label",
-	                    { htmlFor: "keyword" + index },
-	                    keyword
-	                  )
-	                );
-	              })
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "action-find col s12" },
-	              _react2.default.createElement(
-	                "h6",
-	                null,
-	                "Choose an action:"
-	              ),
-	              props.actions.map(function (action, index) {
-	                return _react2.default.createElement(
-	                  "p",
-	                  { key: action },
-	                  _react2.default.createElement("input", {
-	                    className: "with-gap",
-	                    name: "actiongroup",
-	                    type: "radio",
-	                    id: "action" + index,
-	                    value: action
-	                  }),
-	                  _react2.default.createElement(
-	                    "label",
-	                    { htmlFor: "action" + index },
-	                    action
-	                  )
-	                );
-	              })
-	            )
-	          )
+	          'A bunch of text'
 	        )
 	      ),
 	      _react2.default.createElement(
-	        "div",
-	        { className: "modal-footer" },
+	        'div',
+	        { className: 'modal-footer' },
 	        _react2.default.createElement(
-	          "a",
-	          {
-	            href: "#!",
-	            onClick: props.learn,
-	            className: "waves-effect waves-green btn-flat"
-	          },
-	          "Send"
+	          'a',
+	          { href: '#!', className: 'modal-action modal-close waves-effect waves-green btn-flat' },
+	          'Agree'
 	        )
 	      )
 	    ),
 	    _react2.default.createElement(
-	      "div",
-	      { id: "displayInfo", className: "modal" },
-	      _react2.default.createElement(
-	        "div",
-	        { className: "modal-content" },
-	        _react2.default.createElement(
-	          "h4",
-	          null,
-	          "Modal Header"
-	        ),
-	        _react2.default.createElement(
-	          "p",
-	          null,
-	          "A bunch of text"
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        { className: "modal-footer" },
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#!", className: "modal-action modal-close waves-effect waves-green btn-flat" },
-	          "Agree"
-	        )
-	      )
+	      'h1',
+	      { className: 'center-align' },
+	      'KA-VR'
 	    ),
 	    _react2.default.createElement(
-	      "h1",
-	      { className: "center-align" },
-	      "KA-VR"
-	    ),
-	    _react2.default.createElement(
-	      "div",
-	      { id: "log", className: "row" },
+	      'div',
+	      { id: 'log', className: 'row' },
 	      _react2.default.createElement(
-	        "div",
-	        { className: "col s8 offset-s2 command-log", id: "transcription" },
+	        'div',
+	        { className: 'col s8 offset-s2 command-log', id: 'transcription' },
 	        _react2.default.createElement(
-	          "h5",
+	          'h5',
 	          null,
-	          "Log:"
+	          'Log:'
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "col s4" },
-	          "Text: ",
+	          'div',
+	          { className: 'col s4' },
+	          'Text: ',
 	          props.transcription.text
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "col s4" },
-	          "Verb: ",
+	          'div',
+	          { className: 'col s4' },
+	          'Verb: ',
 	          props.transcription.verb
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "col s4" },
-	          "Object: ",
+	          'div',
+	          { className: 'col s4' },
+	          'Object: ',
 	          props.transcription.object
 	        )
 	      ),
 	      _react2.default.createElement(
-	        "div",
-	        { className: "activity-bar progress col s6 offset-s3" },
-	        _react2.default.createElement("div", { className: props.recordingState ? 'indeterminate' : 'determinate' })
+	        'div',
+	        { className: 'activity-bar theme2-bg progress col s6 offset-s3' },
+	        _react2.default.createElement('div', { className: props.recordingState ? 'indeterminate theme3-bg' : 'determinate theme3-bg' })
 	      ),
 	      _react2.default.createElement(
-	        "div",
-	        { className: "listen-buttons col s12" },
+	        'div',
+	        { className: 'listen-buttons col s12' },
 	        props.recordingState ? _react2.default.createElement(
-	          "div",
-	          { className: "col s2 offset-s5" },
+	          'div',
+	          { className: 'col s2 offset-s5' },
 	          _react2.default.createElement(
-	            "button",
+	            'button',
 	            {
 	              onClick: props.stopListening,
-	              id: "stop",
-	              className: "waves-effect waves-light btn"
+	              id: 'stop',
+	              className: 'waves-effect theme2-bg waves-light btn'
 	            },
-	            "Stop"
+	            'Stop'
 	          )
 	        ) : _react2.default.createElement(
-	          "div",
-	          { className: "col s2 offset-s5" },
+	          'div',
+	          { className: 'col s2 offset-s5' },
 	          _react2.default.createElement(
-	            "button",
+	            'button',
 	            {
 	              onClick: props.startListening,
-	              id: "start",
-	              className: "waves-effect waves-light btn right"
+	              id: 'start',
+	              className: 'waves-effect waves-light theme1-bg btn right'
 	            },
-	            "Start"
+	            'Start'
 	          )
 	        )
 	      )
@@ -36075,13 +35968,282 @@
 /* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ActionSurvey = __webpack_require__(355);
+
+	var _ActionSurvey2 = _interopRequireDefault(_ActionSurvey);
+
+	var _VerbSurvey = __webpack_require__(356);
+
+	var _VerbSurvey2 = _interopRequireDefault(_VerbSurvey);
+
+	var _KeywordSurvey = __webpack_require__(357);
+
+	var _KeywordSurvey2 = _interopRequireDefault(_KeywordSurvey);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Survey = function Survey(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { id: 'survey', className: 'modal' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'modal-content' },
+	      _react2.default.createElement(
+	        'h4',
+	        null,
+	        'Sorry! Didn\'t understand what you said'
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Could you help me understand what you meant?'
+	      ),
+	      _react2.default.createElement(
+	        'form',
+	        { action: '#' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col s12' },
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'You said: ',
+	            props.transcription.text
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col s12' },
+	          _react2.default.createElement(_VerbSurvey2.default, { transcription: props.transcription }),
+	          _react2.default.createElement(_KeywordSurvey2.default, { transcription: props.transcription }),
+	          _react2.default.createElement(_ActionSurvey2.default, { actions: props.actions })
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'modal-footer' },
+	      _react2.default.createElement(
+	        'a',
+	        {
+	          href: '#!',
+	          onClick: props.learn,
+	          className: 'waves-effect waves-green btn-flat'
+	        },
+	        'Send'
+	      )
+	    )
+	  );
+	};
+
+	Survey.propTypes = {
+	  learn: _react.PropTypes.func,
+	  transcription: _react.PropTypes.object,
+	  actions: _react.PropTypes.array
+	};
+
+	exports.default = Survey;
+
+/***/ },
+/* 355 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ActionSurvey = function ActionSurvey(props) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "action-find col s12" },
+	    _react2.default.createElement(
+	      "h6",
+	      null,
+	      "Choose an action:"
+	    ),
+	    props.actions.map(function (action, index) {
+	      return _react2.default.createElement(
+	        "p",
+	        { key: action },
+	        _react2.default.createElement("input", {
+	          className: "with-gap",
+	          name: "actiongroup",
+	          type: "radio",
+	          id: "action" + index,
+	          value: action
+	        }),
+	        _react2.default.createElement(
+	          "label",
+	          { htmlFor: "action" + index },
+	          action
+	        )
+	      );
+	    })
+	  );
+	};
+
+	ActionSurvey.propTypes = {
+	  actions: _react.PropTypes.array
+	};
+
+	exports.default = ActionSurvey;
+
+/***/ },
+/* 356 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var VerbSurvey = function VerbSurvey(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'verb-find col s12' },
+	    _react2.default.createElement(
+	      'h6',
+	      null,
+	      'Choose a Verb:'
+	    ),
+	    props.transcription.text.split(' ').map(function (verb, index) {
+	      return _react2.default.createElement(
+	        'p',
+	        { key: verb },
+	        _react2.default.createElement('input', {
+	          className: 'with-gap',
+	          name: 'verbgroup',
+	          type: 'radio',
+	          id: 'verb' + index,
+	          value: verb
+	        }),
+	        _react2.default.createElement(
+	          'label',
+	          { htmlFor: 'verb' + index },
+	          verb
+	        )
+	      );
+	    })
+	  );
+	};
+
+	VerbSurvey.propTypes = {
+	  transcription: _react.PropTypes.object
+	};
+
+	exports.default = VerbSurvey;
+
+/***/ },
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var KeywordSurvey = function KeywordSurvey(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'keyword-find col s12' },
+	    _react2.default.createElement(
+	      'h6',
+	      null,
+	      'Choose a Keyword:'
+	    ),
+	    props.transcription.text.split(' ').map(function (keyword, index) {
+	      return _react2.default.createElement(
+	        'p',
+	        { key: keyword },
+	        _react2.default.createElement('input', {
+	          className: 'with-gap',
+	          name: 'keywordgroup',
+	          type: 'radio',
+	          id: 'keyword' + index,
+	          value: keyword
+	        }),
+	        _react2.default.createElement(
+	          'label',
+	          { htmlFor: 'keyword' + index },
+	          keyword
+	        )
+	      );
+	    })
+	  );
+	};
+
+	KeywordSurvey.propTypes = {
+	  transcription: _react.PropTypes.object
+	};
+
+	exports.default = KeywordSurvey;
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var KAVR = function KAVR() {
+	  return _react2.default.createElement("div", { id: "kavr-canvas", className: "col s12" });
+	};
+
+	exports.default = KAVR;
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(355);
+	var content = __webpack_require__(360);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36098,21 +36260,21 @@
 	}
 
 /***/ },
-/* 355 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "body {\n  font-size: 12px; }\n", ""]);
+	exports.push([module.id, "html {\n  height: 100%;\n  color: #DED3F3; }\n\nbody {\n  height: 100%;\n  font-size: 12px;\n  background: #1f143c;\n  background: -moz-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f143c), color-stop(43%, #070a11), color-stop(100%, #070a11));\n  background: -webkit-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -o-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -ms-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: radial-gradient(ellipse at center, #1f143c 0%, #070a11 43%, #070a11 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f143c ', endColorstr='#070a11 ', GradientType=1 ); }\n\n#kavr-canvas {\n  position: absolute; }\n\n.theme1-bg, .btn.theme1-bg {\n  background-color: #D673CE; }\n  .theme1-bg :before, .theme1-bg :after, .btn.theme1-bg :before, .btn.theme1-bg :after {\n    background-color: #D673CE; }\n\n.theme2-bg, .btn.theme2-bg {\n  background-color: #BE8BF4; }\n  .theme2-bg :before, .theme2-bg :after, .btn.theme2-bg :before, .btn.theme2-bg :after {\n    background-color: #BE8BF4; }\n\n.theme3-bg, .btn.theme3-bg {\n  background-color: #3A295D; }\n  .theme3-bg :before, .theme3-bg :after, .btn.theme3-bg :before, .btn.theme3-bg :after {\n    background-color: #3A295D; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 356 */
+/* 361 */
 /***/ function(module, exports) {
 
 	/*
@@ -36168,7 +36330,7 @@
 
 
 /***/ },
-/* 357 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -36420,16 +36582,16 @@
 
 
 /***/ },
-/* 358 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(359);
+	var content = __webpack_require__(364);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36446,10 +36608,10 @@
 	}
 
 /***/ },
-/* 359 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
@@ -36460,16 +36622,16 @@
 
 
 /***/ },
-/* 360 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(361);
+	var content = __webpack_require__(366);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36486,10 +36648,10 @@
 	}
 
 /***/ },
-/* 361 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
@@ -36500,16 +36662,16 @@
 
 
 /***/ },
-/* 362 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(363);
+	var content = __webpack_require__(368);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36526,10 +36688,10 @@
 	}
 
 /***/ },
-/* 363 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
@@ -36540,16 +36702,16 @@
 
 
 /***/ },
-/* 364 */
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(365);
+	var content = __webpack_require__(370);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36566,10 +36728,10 @@
 	}
 
 /***/ },
-/* 365 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
@@ -36580,16 +36742,16 @@
 
 
 /***/ },
-/* 366 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(367);
+	var content = __webpack_require__(372);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36606,10 +36768,10 @@
 	}
 
 /***/ },
-/* 367 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
@@ -36620,16 +36782,16 @@
 
 
 /***/ },
-/* 368 */
+/* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(369);
+	var content = __webpack_require__(374);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(362)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36646,10 +36808,10 @@
 	}
 
 /***/ },
-/* 369 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(361)();
 	// imports
 
 
@@ -36658,6 +36820,12 @@
 
 	// exports
 
+
+/***/ },
+/* 375 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2aa3c29018be5e1f551048ea811b67c0.jpeg";
 
 /***/ }
 /******/ ]);
