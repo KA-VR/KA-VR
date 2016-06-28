@@ -2,12 +2,19 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import SignUp from '../components/SignUp';
+import { browserHistory } from 'react-router';
 import auth from '../services/auth';
 
 class SignUpContainer extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    if (window.localStorage.getItem('KAVR')) {
+      browserHistory.push('/dashboard');
+    }
   }
 
   handleSubmit() {
