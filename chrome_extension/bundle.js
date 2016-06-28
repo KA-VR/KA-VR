@@ -66,16 +66,16 @@
 
 	__webpack_require__(366);
 
+	__webpack_require__(368);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	_reactDom2.default.render(_router2.default, document.getElementById('app'));
 	// import Index from '../server/index.js';
 	// import Speech from './components/SpeechToTextContainer.js';
 
 	// Stylesheets
 	// import React from 'react';
-
-
-	_reactDom2.default.render(_router2.default, document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -35569,7 +35569,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global $ */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global $, Materialize */
 	/* eslint-disable no-console, no-eval */
 
 
@@ -35648,10 +35648,14 @@
 	            },
 	            success: function success(data) {
 	              console.log('REturned', data);
+	              if (data.error) {
+	                Materialize.toast('Sorry! Didn\'t understand that.', 3000);
+	              } else {
+	                _this3.callBrain(data);
+	              }
 	              _this3.setState({
-	                transcription: '\n                TEXT: ' + event.results[i][0].transcript + '===\n                VERB: ' + data.verb + '===\n                OBJECT: ' + data.object.join(', ') + '\n              '
+	                transcription: '\n                TEXT: ' + event.results[i][0].transcript + '===\n                VERB: ' + (data.verb || 'None') + '===\n                OBJECT: ' + (data.object ? data.object.join(', ') : 'None') + '\n              '
 	              });
-	              _this3.callBrain(data);
 	            },
 	            error: function error(err) {
 	              console.log('Error on Text Analyzer:', err);
@@ -35674,10 +35678,14 @@
 	        data: dataObj,
 	        success: function success(response) {
 	          console.log('Brains response!', response);
-	          var thing = response.context;
-	          var action = response.funct.code;
-	          /* eslint-disable-next-line no-eval */
-	          eval(action)(thing);
+	          if (response.found) {
+	            $('#survey').openModal();
+	          } else {
+	            var thing = response.context;
+	            var action = response.funct.code;
+	            /* eslint-disable-next-line no-eval */
+	            eval(action)(thing);
+	          }
 	        },
 	        error: function error(err) {
 	          console.log('Error on Text Analyzer:', err);
@@ -35687,6 +35695,7 @@
 	  }, {
 	    key: 'startListening',
 	    value: function startListening() {
+	      Materialize.toast('KA-VR is listening!', 3000);
 	      console.log('start listening was clicked', this);
 	      // Set if we need interim results
 	      this.state.recognizer.continuous = true;
@@ -35709,6 +35718,7 @@
 	  }, {
 	    key: 'stopListening',
 	    value: function stopListening() {
+	      Materialize.toast('KA-VR has stopped listening!', 3000);
 	      this.state.recognizer.stop();
 	      this.setState({
 	        recording: false,
@@ -35762,85 +35772,110 @@
 	var SpeechToText = function SpeechToText(props) {
 	  return _react2.default.createElement(
 	    "div",
-	    { className: "container" },
+	    { className: "container speechText" },
 	    _react2.default.createElement(
-	      "h1",
-	      { className: "center-align" },
-	      "Web Speech API"
-	    ),
-	    _react2.default.createElement(
-	      "h2",
-	      { className: "center-align" },
-	      "Transcription"
+	      "div",
+	      { id: "survey", className: "modal" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "modal-content" },
+	        _react2.default.createElement(
+	          "h4",
+	          null,
+	          "Sorry! Didn't understand what you said"
+	        ),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "Could you help me understand what you meant?"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "modal-footer" },
+	        _react2.default.createElement(
+	          "a",
+	          { href: "#!", className: "modal-action modal-close waves-effect waves-green btn-flat" },
+	          "Send"
+	        )
+	      )
 	    ),
 	    _react2.default.createElement(
 	      "div",
-	      { id: "transcription" },
-	      props.transcription
+	      { id: "displayInfo", className: "modal" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "modal-content" },
+	        _react2.default.createElement(
+	          "h4",
+	          null,
+	          "Modal Header"
+	        ),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "A bunch of text"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "modal-footer" },
+	        _react2.default.createElement(
+	          "a",
+	          { href: "#!", className: "modal-action modal-close waves-effect waves-green btn-flat" },
+	          "Agree"
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "h1",
+	      { className: "center-align" },
+	      "KA-VR"
 	    ),
 	    _react2.default.createElement(
 	      "div",
 	      { id: "log", className: "row" },
 	      _react2.default.createElement(
 	        "div",
-	        { className: "col s2" },
+	        { className: "col s8 offset-s2 command-log", id: "transcription" },
 	        _react2.default.createElement(
-	          "span",
+	          "h5",
 	          null,
-	          "Recording State:"
-	        )
+	          "Log:"
+	        ),
+	        props.transcription
 	      ),
 	      _react2.default.createElement(
 	        "div",
-	        { className: "col s1" },
-	        _react2.default.createElement(
-	          "div",
-	          { className: "preloader-wrapper  " + (props.recordingState ? 'active' : '') },
-	          _react2.default.createElement(
-	            "div",
-	            { className: "spinner-layer spinner-red-only" },
-	            _react2.default.createElement(
-	              "div",
-	              { className: "circle-clipper left" },
-	              _react2.default.createElement("div", { className: "circle" })
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "gap-patch" },
-	              _react2.default.createElement("div", { className: "circle" })
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "circle-clipper right" },
-	              _react2.default.createElement("div", { className: "circle" })
-	            )
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        { className: "progress col s6" },
+	        { className: "activity-bar progress col s6 offset-s3" },
 	        _react2.default.createElement("div", { className: props.recordingState ? 'indeterminate' : 'determinate' })
 	      ),
 	      _react2.default.createElement(
 	        "div",
 	        { className: "listen-buttons col s12" },
-	        _react2.default.createElement(
+	        props.recordingState ? _react2.default.createElement(
 	          "div",
-	          { className: "col s3 offset-s2" },
+	          { className: "col s2 offset-s5" },
 	          _react2.default.createElement(
 	            "button",
-	            { onClick: props.startListening, className: "waves-effect waves-light btn right" },
-	            "Start"
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { className: "col s3 offset-s2" },
-	          _react2.default.createElement(
-	            "button",
-	            { onClick: props.stopListening, className: "waves-effect waves-light btn" },
+	            {
+	              onClick: props.stopListening,
+	              id: "stop",
+	              className: "waves-effect waves-light btn"
+	            },
 	            "Stop"
+	          )
+	        ) : _react2.default.createElement(
+	          "div",
+	          { className: "col s2 offset-s5" },
+	          _react2.default.createElement(
+	            "button",
+	            {
+	              onClick: props.startListening,
+	              id: "start",
+	              className: "waves-effect waves-light btn right"
+	            },
+	            "Start"
 	          )
 	        )
 	      )
@@ -35894,7 +35929,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, "body {\n  font-size: 12px; }\n", ""]);
 
 	// exports
 
@@ -36403,6 +36438,46 @@
 
 	// module
 	exports.push([module.id, ".signin .link {\n  margin-top: 20px;\n  cursor: pointer; }\n  .signin .link :hover {\n    text-decoration: underline; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 368 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(369);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(357)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./speechText.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./speechText.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 369 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(356)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".speechText .activity-bar {\n  margin: 20px 0; }\n\n.speechText .listen-buttons {\n  margin-top: 30px; }\n\n.speechText .command-log {\n  height: 100px;\n  margin: 30px 0 50px 0; }\n\n.speechText #start, .speechText #stop {\n  width: 100%; }\n", ""]);
 
 	// exports
 

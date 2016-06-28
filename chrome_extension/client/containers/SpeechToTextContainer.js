@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, Materialize */
 /* eslint-disable no-console, no-eval */
 import React, { Component } from 'react';
 import SpeechToText from '../components/SpeechToText.js';
@@ -11,7 +11,7 @@ class SpeechToTextContainer extends Component {
 
     this.state = {
       recognizer: null,
-      transcription: '',
+      transcription: {},
       log: 'Recording: false',
       recording: false,
     };
@@ -65,14 +65,16 @@ class SpeechToTextContainer extends Component {
           },
           success: data => {
             console.log('REturned', data);
+            if (data.error) {
+              Materialize.toast('Sorry! Didn\'t understand that.', 3000);
+            } else { this.callBrain(data); }
             this.setState({
-              transcription: `
-                TEXT: ${event.results[i][0].transcript}===
-                VERB: ${data.verb}===
-                OBJECT: ${data.object.join(', ')}
-              `,
+              transcription: {
+                text: event.results[i][0].transcript,
+                verb: data.verb || 'None',
+                object: data.object ? data.object.join(', ') : 'None',
+              },
             });
-            this.callBrain(data);
           },
           error: err => {
             console.log('Error on Text Analyzer:', err);
@@ -89,10 +91,14 @@ class SpeechToTextContainer extends Component {
       data: dataObj,
       success: response => {
         console.log('Brains response!', response);
-        const thing = response.context;
-        const action = response.funct.code;
-        /* eslint-disable-next-line no-eval */
-        eval(action)(thing);
+        if (response.found) {
+          $('#survey').openModal();
+        } else {
+          const thing = response.context;
+          const action = response.funct.code;
+          /* eslint-disable-next-line no-eval */
+          eval(action)(thing);
+        }
       },
       error: err => {
         console.log('Error on Text Analyzer:', err);
@@ -100,6 +106,7 @@ class SpeechToTextContainer extends Component {
     });
   }
   startListening() {
+    Materialize.toast('KA-VR is listening!', 3000);
     console.log('start listening was clicked', this);
     // Set if we need interim results
     this.state.recognizer.continuous = true;
@@ -120,6 +127,7 @@ class SpeechToTextContainer extends Component {
     }
   }
   stopListening() {
+    Materialize.toast('KA-VR has stopped listening!', 3000);
     this.state.recognizer.stop();
     this.setState({
       recording: false,
