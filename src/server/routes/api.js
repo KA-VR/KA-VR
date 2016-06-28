@@ -42,6 +42,7 @@ router.route('/api/token').get(isAuthenticated, (req, res) => { /* If user is au
   .then(token => {
     // This method gets a new access token upon expiration of token every hour
     refresh.requestNewAccessToken('google', token, (err, accessToken) => {
+      // eslint-disable-next-line
       req.user.accessToken = accessToken;
       res.send({ accessToken });
     });

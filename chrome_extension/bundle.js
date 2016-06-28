@@ -66,16 +66,16 @@
 
 	__webpack_require__(366);
 
+	__webpack_require__(368);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	_reactDom2.default.render(_router2.default, document.getElementById('app'));
 	// import Index from '../server/index.js';
 	// import Speech from './components/SpeechToTextContainer.js';
 
 	// Stylesheets
 	// import React from 'react';
-
-
-	_reactDom2.default.render(_router2.default, document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -35569,7 +35569,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global $ */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global $, Materialize */
 	/* eslint-disable no-console, no-eval */
 
 
@@ -35585,14 +35585,20 @@
 
 	    _this.state = {
 	      recognizer: null,
-	      transcription: '',
+	      transcription: {
+	        text: '',
+	        verb: '',
+	        object: []
+	      },
 	      log: 'Recording: false',
-	      recording: false
+	      recording: false,
+	      actions: []
 	    };
 	    _this.recording = false;
 	    _this.startListening = _this.startListening.bind(_this);
 	    _this.stopListening = _this.stopListening.bind(_this);
 	    _this.clearLog = _this.clearLog.bind(_this);
+	    _this.surveyLearn = _this.surveyLearn.bind(_this);
 
 	    $(document).on('keydown', function (event) {
 	      switch (event.keyCode) {
@@ -35648,10 +35654,19 @@
 	            },
 	            success: function success(data) {
 	              console.log('REturned', data);
+	              if (data.error) {
+	                document.getElementById('moron').play();
+	                Materialize.toast('Sorry! Didn\'t understand that.', 3000);
+	              } else {
+	                _this3.callBrain(data);
+	              }
 	              _this3.setState({
-	                transcription: '\n                TEXT: ' + event.results[i][0].transcript + '===\n                VERB: ' + data.verb + '===\n                OBJECT: ' + data.object.join(', ') + '\n              '
+	                transcription: {
+	                  text: event.results[i][0].transcript,
+	                  verb: data.verb || 'None',
+	                  object: data.object ? data.object.join(', ') : 'None'
+	                }
 	              });
-	              _this3.callBrain(data);
 	            },
 	            error: function error(err) {
 	              console.log('Error on Text Analyzer:', err);
@@ -35667,6 +35682,8 @@
 	  }, {
 	    key: 'callBrain',
 	    value: function callBrain(dataObj) {
+	      var _this4 = this;
+
 	      console.log('data going into brain', dataObj);
 	      $.ajax({
 	        url: 'http://localhost:7750/api/think',
@@ -35674,10 +35691,17 @@
 	        data: dataObj,
 	        success: function success(response) {
 	          console.log('Brains response!', response);
-	          var thing = response.context;
-	          var action = response.funct.code;
-	          /* eslint-disable-next-line no-eval */
-	          eval(action)(thing);
+	          if (!response.found) {
+	            $('#survey').openModal();
+	            document.getElementById('stupid').play();
+	            _this4.setState({ actions: response.actions });
+	          } else {
+	            document.getElementById('english').play();
+	            var thing = response.context;
+	            var action = response.funct.code;
+	            /* eslint-disable-next-line no-eval */
+	            eval(action)(thing);
+	          }
 	        },
 	        error: function error(err) {
 	          console.log('Error on Text Analyzer:', err);
@@ -35685,8 +35709,46 @@
 	      });
 	    }
 	  }, {
+	    key: 'surveyLearn',
+	    value: function surveyLearn(dataObj) {
+	      var newVerb = $('input[name="verbgroup"]:checked').val();
+	      var newKeyword = $('input[name="keywordgroup"]:checked').val();
+	      var newAction = $('input[name="actiongroup"]:checked').val();
+	      console.log('hihi', newVerb, newKeyword, newAction);
+	      if (newVerb && newKeyword && newAction) {
+	        $('input[name="contextgroup"]').attr('checked', false);
+	        $('input[name="actiongroup"]').attr('checked', false);
+	        $('input[name="verbgroup"]').attr('checked', false);
+	        $('#survey').closeModal();
+	        console.log('data going into brain. YOU GON LEARN TODAY', dataObj);
+	        // $.ajax({
+	        //   url: 'http://localhost:7750/api/think',
+	        //   method: 'POST',
+	        //   data: dataObj,
+	        //   success: response => {
+	        //     console.log('Brains response!', response);
+	        //     if (!response.found) {
+	        //       $('#survey').openModal();
+	        //       this.setState({ actions: response.actions });
+	        //     } else {
+	        //       const thing = response.context;
+	        //       const action = response.funct.code;
+	        //       /* eslint-disable-next-line no-eval */
+	        //       eval(action)(thing);
+	        //     }
+	        //   },
+	        //   error: err => {
+	        //     console.log('Error on Text Analyzer:', err);
+	        //   },
+	        // });
+	      } else {
+	          Materialize.toast('Please fill out the entire form.', 3000);
+	        }
+	    }
+	  }, {
 	    key: 'startListening',
 	    value: function startListening() {
+	      Materialize.toast('KA-VR is listening!', 3000);
 	      console.log('start listening was clicked', this);
 	      // Set if we need interim results
 	      this.state.recognizer.continuous = true;
@@ -35709,6 +35771,7 @@
 	  }, {
 	    key: 'stopListening',
 	    value: function stopListening() {
+	      Materialize.toast('KA-VR has stopped listening!', 3000);
 	      this.state.recognizer.stop();
 	      this.setState({
 	        recording: false,
@@ -35720,7 +35783,7 @@
 	    key: 'clearLog',
 	    value: function clearLog() {
 	      this.setState({
-	        transcription: '',
+	        transcription: {},
 	        log: ''
 	      });
 	    }
@@ -35733,7 +35796,9 @@
 	        transcription: this.state.transcription,
 	        startListening: this.startListening,
 	        stopListening: this.stopListening,
-	        clearLog: this.clearLog
+	        clearLog: this.clearLog,
+	        actions: this.state.actions,
+	        learn: this.surveyLearn
 	      });
 	    }
 	  }]);
@@ -35762,85 +35827,230 @@
 	var SpeechToText = function SpeechToText(props) {
 	  return _react2.default.createElement(
 	    "div",
-	    { className: "container" },
-	    _react2.default.createElement(
-	      "h1",
-	      { className: "center-align" },
-	      "Web Speech API"
-	    ),
-	    _react2.default.createElement(
-	      "h2",
-	      { className: "center-align" },
-	      "Transcription"
-	    ),
+	    { className: "container speechText" },
 	    _react2.default.createElement(
 	      "div",
-	      { id: "transcription" },
-	      props.transcription
-	    ),
-	    _react2.default.createElement(
-	      "div",
-	      { id: "log", className: "row" },
+	      { id: "survey", className: "modal" },
 	      _react2.default.createElement(
 	        "div",
-	        { className: "col s2" },
+	        { className: "modal-content" },
 	        _react2.default.createElement(
-	          "span",
+	          "h4",
 	          null,
-	          "Recording State:"
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        { className: "col s1" },
+	          "Sorry! Didn't understand what you said"
+	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "preloader-wrapper  " + (props.recordingState ? 'active' : '') },
+	          "p",
+	          null,
+	          "Could you help me understand what you meant?"
+	        ),
+	        _react2.default.createElement(
+	          "form",
+	          { action: "#" },
 	          _react2.default.createElement(
 	            "div",
-	            { className: "spinner-layer spinner-red-only" },
+	            { className: "col s12" },
+	            _react2.default.createElement(
+	              "span",
+	              null,
+	              "You said: ",
+	              props.transcription.text
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col s12" },
 	            _react2.default.createElement(
 	              "div",
-	              { className: "circle-clipper left" },
-	              _react2.default.createElement("div", { className: "circle" })
+	              { className: "verb-find col s12" },
+	              _react2.default.createElement(
+	                "h6",
+	                null,
+	                "Choose a Verb:"
+	              ),
+	              props.transcription.text.split(' ').map(function (verb, index) {
+	                return _react2.default.createElement(
+	                  "p",
+	                  { key: verb },
+	                  _react2.default.createElement("input", {
+	                    className: "with-gap",
+	                    name: "verbgroup",
+	                    type: "radio",
+	                    id: "verb" + index,
+	                    value: verb
+	                  }),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { htmlFor: "verb" + index },
+	                    verb
+	                  )
+	                );
+	              })
 	            ),
 	            _react2.default.createElement(
 	              "div",
-	              { className: "gap-patch" },
-	              _react2.default.createElement("div", { className: "circle" })
+	              { className: "keyword-find col s12" },
+	              _react2.default.createElement(
+	                "h6",
+	                null,
+	                "Choose a Keyword:"
+	              ),
+	              props.transcription.text.split(' ').map(function (keyword, index) {
+	                return _react2.default.createElement(
+	                  "p",
+	                  { key: keyword },
+	                  _react2.default.createElement("input", {
+	                    className: "with-gap",
+	                    name: "keywordgroup",
+	                    type: "radio",
+	                    id: "keyword" + index,
+	                    value: keyword
+	                  }),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { htmlFor: "keyword" + index },
+	                    keyword
+	                  )
+	                );
+	              })
 	            ),
 	            _react2.default.createElement(
 	              "div",
-	              { className: "circle-clipper right" },
-	              _react2.default.createElement("div", { className: "circle" })
+	              { className: "action-find col s12" },
+	              _react2.default.createElement(
+	                "h6",
+	                null,
+	                "Choose an action:"
+	              ),
+	              props.actions.map(function (action, index) {
+	                return _react2.default.createElement(
+	                  "p",
+	                  { key: action },
+	                  _react2.default.createElement("input", {
+	                    className: "with-gap",
+	                    name: "actiongroup",
+	                    type: "radio",
+	                    id: "action" + index,
+	                    value: action
+	                  }),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { htmlFor: "action" + index },
+	                    action
+	                  )
+	                );
+	              })
 	            )
 	          )
 	        )
 	      ),
 	      _react2.default.createElement(
 	        "div",
-	        { className: "progress col s6" },
+	        { className: "modal-footer" },
+	        _react2.default.createElement(
+	          "a",
+	          {
+	            href: "#!",
+	            onClick: props.learn,
+	            className: "waves-effect waves-green btn-flat"
+	          },
+	          "Send"
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { id: "displayInfo", className: "modal" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "modal-content" },
+	        _react2.default.createElement(
+	          "h4",
+	          null,
+	          "Modal Header"
+	        ),
+	        _react2.default.createElement(
+	          "p",
+	          null,
+	          "A bunch of text"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "modal-footer" },
+	        _react2.default.createElement(
+	          "a",
+	          { href: "#!", className: "modal-action modal-close waves-effect waves-green btn-flat" },
+	          "Agree"
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "h1",
+	      { className: "center-align" },
+	      "KA-VR"
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { id: "log", className: "row" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "col s8 offset-s2 command-log", id: "transcription" },
+	        _react2.default.createElement(
+	          "h5",
+	          null,
+	          "Log:"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "col s4" },
+	          "Text: ",
+	          props.transcription.text
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "col s4" },
+	          "Verb: ",
+	          props.transcription.verb
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "col s4" },
+	          "Object: ",
+	          props.transcription.object
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "activity-bar progress col s6 offset-s3" },
 	        _react2.default.createElement("div", { className: props.recordingState ? 'indeterminate' : 'determinate' })
 	      ),
 	      _react2.default.createElement(
 	        "div",
 	        { className: "listen-buttons col s12" },
-	        _react2.default.createElement(
+	        props.recordingState ? _react2.default.createElement(
 	          "div",
-	          { className: "col s3 offset-s2" },
+	          { className: "col s2 offset-s5" },
 	          _react2.default.createElement(
 	            "button",
-	            { onClick: props.startListening, className: "waves-effect waves-light btn right" },
-	            "Start"
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { className: "col s3 offset-s2" },
-	          _react2.default.createElement(
-	            "button",
-	            { onClick: props.stopListening, className: "waves-effect waves-light btn" },
+	            {
+	              onClick: props.stopListening,
+	              id: "stop",
+	              className: "waves-effect waves-light btn"
+	            },
 	            "Stop"
+	          )
+	        ) : _react2.default.createElement(
+	          "div",
+	          { className: "col s2 offset-s5" },
+	          _react2.default.createElement(
+	            "button",
+	            {
+	              onClick: props.startListening,
+	              id: "start",
+	              className: "waves-effect waves-light btn right"
+	            },
+	            "Start"
 	          )
 	        )
 	      )
@@ -35852,9 +36062,11 @@
 	  startListening: _react.PropTypes.func,
 	  stopListening: _react.PropTypes.func,
 	  clearLog: _react.PropTypes.func,
-	  transcription: _react.PropTypes.string,
+	  learn: _react.PropTypes.func,
+	  transcription: _react.PropTypes.object,
 	  logs: _react.PropTypes.string,
-	  recordingState: _react.PropTypes.bool
+	  recordingState: _react.PropTypes.bool,
+	  actions: _react.PropTypes.array
 	};
 
 	exports.default = SpeechToText;
@@ -35894,7 +36106,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, "body {\n  font-size: 12px; }\n", ""]);
 
 	// exports
 
@@ -36403,6 +36615,46 @@
 
 	// module
 	exports.push([module.id, ".signin .link {\n  margin-top: 20px;\n  cursor: pointer; }\n  .signin .link :hover {\n    text-decoration: underline; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 368 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(369);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(357)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./speechText.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./speechText.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 369 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(356)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".speechText .activity-bar {\n  margin: 20px 0; }\n\n.speechText .listen-buttons {\n  margin-top: 30px; }\n\n.speechText .command-log {\n  height: 100px;\n  margin: 30px 0 50px 0; }\n\n.speechText #start, .speechText #stop {\n  width: 100%; }\n", ""]);
 
 	// exports
 

@@ -11,5 +11,6 @@ import './stylesheets/widget.scss';
 import './stylesheets/chatbox.scss';
 import './stylesheets/avatar.scss';
 import './stylesheets/signin.scss';
+import './stylesheets/speechText.scss';
 
 ReactDOM.render(Router, document.getElementById('app'));
