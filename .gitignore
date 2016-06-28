@@ -11,5 +11,5 @@
 config.js
 
 # MISC Files
-dumb.rdb
+dump.rdb
 npm-debug.log
