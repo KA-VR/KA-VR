@@ -11,24 +11,31 @@ class SignInContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.redirectSignUp = this.redirectSignUp.bind(this);
   }
+
+  componentWillMount() {
+    if (!window.localStorage.getItem('KAVR')) {
+      browserHistory.push('/');
+    } else {
+      browserHistory.push('/dashboard');
+    }
+  }
+
   redirectSignUp() { browserHistory.push('/signup'); }
 
   handleSubmit(e) {
     e.preventDefault();
     const form = document.querySelector('#signin-form');
     const formData = serialize(form, { hash: true });
-    console.log('USER FORM DATA ON SIGNUP CONTAINER: ', formData);
     // check if the email supplied is valid
     if (formData.email === undefined) {
-      console.log('email invalid');
+      console.error('email invalid');
     } else if (formData.password === undefined) {
       console.log('Please input password');
     } else {
       // Make ajax call
       auth.signin(formData, (res) => {
-        console.log('RES in SIGNIN CONTAINER', res);
         if (res.redirect === '/dashboard') {
-          window.location = res.redirect;
+          browserHistory.push('/dashboard');
         }
       });
     }
