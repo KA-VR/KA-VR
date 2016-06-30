@@ -5,6 +5,8 @@ import $ from 'jquery';
 
 const _MIN_DIST = 5;
 const _MAX_DIST = 50;
+const KEY_SPACEBAR = 32;
+
 
 class KAVR extends Component {
   constructor(props) {
@@ -14,19 +16,21 @@ class KAVR extends Component {
     this.expansionSizeMax = 120;
     this.sizeChange = 0.001;
     this.time = 0;
+    this.center_speed = 0.01;
+    this.center_pulse = false;
 
     this.scene = new THREE.Scene();
     this.WIDTH = window.innerWidth;
     this.HEIGHT = window.innerHeight;
     this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     this.renderer.setSize(this.WIDTH, this.HEIGHT);
-    this.camera = new THREE.PerspectiveCamera(45, this.WIDTH / this.HEIGHT, 1, 10000);
+    this.camera = new THREE.PerspectiveCamera(45, this.WIDTH / this.HEIGHT, 1, 10000000);
     this.camera.position.z = 1000;
+    this.scene.add(this.camera);
     this.light = new THREE.PointLight(0xffffff);
     this.light.position.set(-100, 200, 100);
     this.scene.add(this.light);
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-    this.scene.add(this.camera);
 
     this.outerBall = new THREE.Object3D();
     this.scene.add(this.outerBall);
@@ -51,6 +55,18 @@ class KAVR extends Component {
       centerSphere: null,
       labels: ['Verb', 'Context', 'Action', 'Keyword', 'Function', 'Native'],
     };
+
+    $(document).on('keydown', event => {
+      switch (event.keyCode) {
+        case KEY_SPACEBAR:
+          this.center_speed = (this.center_speed === 0.01) ? 0.1 : 0.01;
+          this.center_radius = Math.sin(this.time);
+          this.center_pulse = !this.center_pulse;
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   componentDidMount() {
@@ -102,7 +118,7 @@ class KAVR extends Component {
 
   labelSphereMaker(x, y, z) {
     const sphereGeometry = new THREE.SphereGeometry(15, 8, 6, 0, 6.3, 0, 3.1);
-    const sphereMaterial = new THREE.MeshBasicMaterial({ color: 'purple' });
+    const sphereMaterial = new THREE.MeshBasicMaterial({ color: 'purple', morphTargets: true });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = x;
     sphere.position.y = y;
@@ -111,8 +127,8 @@ class KAVR extends Component {
   }
 
   centerSphere() {
-    const sphereGeometry = new THREE.SphereGeometry(300, 8, 6, 0, 6.3, 0, 3.1);
-    const sphereMaterial = new THREE.MeshBasicMaterial({ color: '#83F1F2', wireframe: true });
+    const sphereGeometry = new THREE.SphereGeometry(180, 20, 20, 5, 6.3, 0, 3.1);
+    const sphereMaterial = new THREE.MeshNormalMaterial({ wireframe: true, wireframeLinewidth: 3  });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = 0;
     sphere.position.y = 0;
@@ -174,8 +190,17 @@ class KAVR extends Component {
       this.expansionDirection = this.expansionDirection * -1;
     }
 
-    this.state.centerSphere.rotation.x += 0.01;
-    this.state.centerSphere.rotation.y += 0.01;
+    this.state.centerSphere.rotation.x += this.center_speed;
+    this.state.centerSphere.rotation.y += this.center_speed;
+    if (this.center_pulse) {
+      this.state.centerSphere.scale.x = Math.sin(this.time / 100) / 3.5 + 1;
+      this.state.centerSphere.scale.y = Math.sin(this.time / 100) / 3.5 + 1;
+      this.state.centerSphere.scale.z = Math.sin(this.time / 100) / 3.5 + 1;
+    } else {
+      this.state.centerSphere.scale.x = 1;
+      this.state.centerSphere.scale.y = 1;
+      this.state.centerSphere.scale.z = 1;
+    }
 
     this.outerBall.rotation.z += 0.01;
     this.outerBall.rotation.x += 0.01;
