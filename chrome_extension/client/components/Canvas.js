@@ -58,8 +58,11 @@ class KAVR extends Component {
     this.container.appendChild(this.renderer.domElement);
 
     window.addEventListener('resize', () => {
-      this.renderer.setSize(this.WIDTH, this.HEIGHT);
-      this.camera.aspect = this.WIDTH / this.HEIGHT;
+      console.log('aahahaha');
+      const WIDTH = window.innerWidth;
+      const HEIGHT = window.innerHeight;
+      this.renderer.setSize(WIDTH, HEIGHT);
+      this.camera.aspect = WIDTH / HEIGHT;
       this.camera.updateProjectionMatrix();
     });
 
