@@ -68,7 +68,7 @@ function init() {
   controls = new THREE.OrbitControls(camera, renderer.domElement);
 };
 
-function sphereMaker(x, y, z, color) {
+function SphereMaker(x, y, z, color) {
   sphereGeometry = new THREE.SphereGeometry(5, 8, 6, 0, 6.3, 0, 3.1);
   sphereMaterial = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
   sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -91,7 +91,7 @@ function lineMaker() {
   lineGeometry2.vertices.push(lineGeometry2.vertices[0]);
 };
 
-function animate(sphere) {
+function animate() {
   time++;
   requestAnimationFrame(animate);
   if(time % expansionSizeMax === 0) {
