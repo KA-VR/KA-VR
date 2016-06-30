@@ -64,7 +64,7 @@ class SpeechToTextContainer extends Component {
   updateTranscription(event) {
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
-        console.log('Going to text analyze');
+        console.log('Going to text analyze', event.results[i][0].transcript);
         $.ajax({
           url: 'http://localhost:8000/api/analyze',
           method: 'POST',
@@ -181,7 +181,6 @@ class SpeechToTextContainer extends Component {
       recording: false,
       log: `Recording: ${this.state.recording}`,
     });
-    console.log('Recognition stopped', this.state.transcription);
   }
   clearLog() {
     this.setState({
