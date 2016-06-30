@@ -1,15 +1,11 @@
 .speechText {
-  .activity-bar {
-    margin: 20px 0;
-  }
   .listen-buttons {
     margin-top: 30px;
   }
-  .command-log {
-    height: 100px;
-    margin: 30px 0 50px 0;
-  }
   #start, #stop {
     width: 100%;
+  }
+  .speech-title {
+    padding-top: 150px;
   }
 }

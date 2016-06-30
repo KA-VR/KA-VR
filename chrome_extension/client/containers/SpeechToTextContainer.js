@@ -19,6 +19,7 @@ class SpeechToTextContainer extends Component {
       log: 'Recording: false',
       recording: false,
       actions: [],
+      calculation: 0,
     };
     this.recording = false;
     this.startListening = this.startListening.bind(this);
@@ -105,10 +106,11 @@ class SpeechToTextContainer extends Component {
           this.setState({ actions: response.actions });
         } else {
           document.getElementById('english').play();
-          const thing = response.context;
+          const thing = response.contexts.join(' ');
+          console.log(thing);
           const action = response.funct.code;
           /* eslint-disable-next-line no-eval */
-          eval(action)(thing);
+          eval(action)($, thing);
         }
       },
       error: err => {
@@ -199,6 +201,7 @@ class SpeechToTextContainer extends Component {
           clearLog={this.clearLog}
           actions={this.state.actions}
           learn={this.surveyLearn}
+          calculation={this.state.calculation}
         />
       </div>
     );

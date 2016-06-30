@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Survey from './Survey';
+import CalculationModal from './CalculationModal';
 
 const SpeechToText = (props) =>
   <div className="container speechText">
@@ -8,28 +9,11 @@ const SpeechToText = (props) =>
       actions={props.actions}
       learn={props.learn}
     />
-
-    <div id="displayInfo" className="modal">
-      <div className="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
-      </div>
-      <div className="modal-footer">
-        <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">
-          Agree
-        </a>
-      </div>
-    </div>
-    <h1 className="center-align">KA-VR</h1>
-    <div id="log" className="row">
-      <div className="col s8 offset-s2 command-log" id="transcription">
-        <h5>Log:</h5>
-        <div className="col s4">Text: {props.transcription.text}</div>
-        <div className="col s4">Verb: {props.transcription.verb}</div>
-        <div className="col s4">Object: {props.transcription.object}</div>
-      </div>
+    <CalculationModal calculation={props.calculation} />
+    <h1 className="speech-title center-align">KA-VR</h1>
+    <div className="row">
       <div className="activity-bar theme2-bg progress col s6 offset-s3">
-        <div className={props.recordingState ? 'indeterminate theme3-bg' : 'determinate theme3-bg'}></div>
+        <div className={props.recordingState ? 'indeterminate' : 'determinate'}></div>
       </div>
       <div className="listen-buttons col s12">
         {props.recordingState ? (
@@ -66,6 +50,7 @@ SpeechToText.propTypes = {
   logs: PropTypes.string,
   recordingState: PropTypes.bool,
   actions: PropTypes.array,
+  calculation: PropTypes.number,
 };
 
 export default SpeechToText;
