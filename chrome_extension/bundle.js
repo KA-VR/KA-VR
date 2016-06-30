@@ -27409,6 +27409,7 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global THREE */
+	/* eslint-disable no-console */
 
 
 	var _MIN_DIST = 5;
@@ -27439,27 +27440,22 @@
 	    _this.scene.add(_this.light);
 	    _this.controls = new THREE.OrbitControls(_this.camera, _this.renderer.domElement);
 	    _this.scene.add(_this.camera);
+
+	    _this.outerBall = new THREE.Object3D();
+	    _this.scene.add(_this.outerBall);
+
+	    _this.animate = _this.animate.bind(_this);
+
 	    _this.colors = { Verb: 'green', Context: 'yellow', Action: 'red',
 	      Keyword: 'orange', Function: 'blue', Native: 'pink' };
 
-	    _this.getNeo4jFuncs = _this.getNeo4jFuncs.bind(_this);
-	    _this.mapSpheres = _this.mapSpheres.bind(_this);
-	    _this.mapLabels = _this.mapLabels.bind(_this);
-	    _this.sphereMaker = _this.sphereMaker.bind(_this);
-	    _this.lineMaker = _this.lineMaker.bind(_this);
-	    _this.animate = _this.animate.bind(_this);
-	    _this.renderCanvas = _this.renderCanvas.bind(_this);
-	    _this.randomCoordinates = _this.randomCoordinates.bind(_this);
-	    _this.fatSphere = _this.fatSphere.bind(_this);
 	    _this.mainPositions = [[0, 0, 500], [0, 500, 0], [500, 0, 0], [-500, 0, 0], [0, -500, 0], [0, 0, -500]];
 
 	    _this.state = {
 	      allSpheres: [],
-	      eachSphere: [],
+	      innerBallArray: [],
 	      centerSphere: null,
-
-	      labels: ['Verb', 'Context', 'Action', 'Keyword', 'Function', 'Native'],
-	      lines: []
+	      labels: ['Verb', 'Context', 'Action', 'Keyword', 'Function', 'Native']
 	    };
 	    return _this;
 	  }
@@ -27471,24 +27467,18 @@
 
 	      this.container = document.getElementById('kavr-canvas');
 	      this.container.appendChild(this.renderer.domElement);
-	      this.container = document.getElementById('kavr-canvas');
-	      this.container.appendChild(this.renderer.domElement);
 
 	      window.addEventListener('resize', function () {
-	        var WIDTH = window.innerWidth;
-	        var HEIGHT = window.innerHeight;
-	        _this2.renderer.setSize(WIDTH, HEIGHT);
-	        _this2.camera.aspect = WIDTH / HEIGHT;
+	        _this2.renderer.setSize(_this2.WIDTH, _this2.HEIGHT);
+	        _this2.camera.aspect = _this2.WIDTH / _this2.HEIGHT;
 	        _this2.camera.updateProjectionMatrix();
 	      });
-	      this.getNeo4jFuncs('Verb');
-	      this.getNeo4jFuncs('Context');
-	      this.getNeo4jFuncs('Action');
-	      this.getNeo4jFuncs('Keyword');
-	      this.getNeo4jFuncs('Function');
-	      this.getNeo4jFuncs('Native');
+
+	      this.state.labels.forEach(function (label) {
+	        _this2.getNeo4jFuncs(label);
+	      });
+
 	      this.state.centerSphere = this.centerSphere();
-	      this.animate();
 	    }
 	  }, {
 	    key: 'getNeo4jFuncs',
@@ -27522,19 +27512,17 @@
 	      sphere.position.x = x;
 	      sphere.position.y = y;
 	      sphere.position.z = z;
-	      this.scene.add(sphere);
 	      return sphere;
 	    }
 	  }, {
-	    key: 'fatSphere',
-	    value: function fatSphere(x, y, z, color) {
+	    key: 'labelSphereMaker',
+	    value: function labelSphereMaker(x, y, z) {
 	      var sphereGeometry = new THREE.SphereGeometry(15, 8, 6, 0, 6.3, 0, 3.1);
 	      var sphereMaterial = new THREE.MeshBasicMaterial({ color: 'purple' });
 	      var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 	      sphere.position.x = x;
 	      sphere.position.y = y;
 	      sphere.position.z = z;
-	      this.scene.add(sphere);
 	      return sphere;
 	    }
 	  }, {
@@ -27546,7 +27534,7 @@
 	      sphere.position.x = 0;
 	      sphere.position.y = 0;
 	      sphere.position.z = 0;
-	      this.scene.add(sphere);
+	      this.outerBall.add(sphere);
 	      return sphere;
 	    }
 	  }, {
@@ -27574,87 +27562,49 @@
 	    value: function mapSpheres() {
 	      var _this4 = this;
 
-	      var context = this;
 	      this.state.allSpheres.forEach(function (node, index) {
 	        var color = _this4.colors[node.name];
-	        if (!_this4.state.eachSphere[index]) {
-	          _this4.state.eachSphere[index] = [];
-	        }
-	        if (!_this4.state.lines[index]) {
-	          _this4.state.lines[index] = new THREE.Geometry();
-	        }
+	        var innerBall = new THREE.Object3D();
+	        innerBall.position.x = _this4.mainPositions[index][0];
+	        innerBall.position.y = _this4.mainPositions[index][1];
+	        innerBall.position.z = _this4.mainPositions[index][2];
 
-	        var fat = _this4.fatSphere.apply(_this4, _toConsumableArray(_this4.mainPositions[index]).concat([color]));
-	        console.log(fat.position);
+	        var labelSphere = _this4.labelSphereMaker(0, 0, 0);
+	        labelSphere.name = node.name;
+	        _this4.state.innerBallArray.push(innerBall);
+	        innerBall.add(labelSphere);
+	        _this4.outerBall.add(innerBall);
 
-	        _this4.state.eachSphere[index].push(fat);
-	        _this4.state.lines[index].vertices.push(fat.position);
-
-	        node.values.forEach(function () {
-	          var firstSphere = _this4.state.eachSphere[index][0].position;
+	        node.values.forEach(function (value) {
+	          var firstSphere = labelSphere.position;
 	          var pos = [firstSphere.x, firstSphere.y, firstSphere.z];
 
 	          var newSphere = _this4.sphereMaker.apply(_this4, _toConsumableArray(_this4.randomCoordinates.apply(_this4, pos.concat([_MIN_DIST, _MAX_DIST]))).concat([color]));
-	          _this4.state.eachSphere[index].push(newSphere);
-
-	          _this4.state.lines[index].vertices.push(newSphere.position);
-	          context.lineMaker();
+	          newSphere.name = value;
+	          innerBall.add(newSphere);
 	        });
 	      });
-	    }
-	  }, {
-	    key: 'mapLabels',
-	    value: function mapLabels() {
-	      var _this5 = this;
-
-	      this.state.labels.map(function (node) {
-	        var randomX = Math.random() * 100 - 1;
-	        var randomY = Math.random() * 100 - 1;
-	        var randomZ = Math.random() * 100 - 1;
-	        var color = _this5.colors[node];
-	        var newSphere = _this5.sphereMaker(randomX, randomY, randomZ, color);
-	        return newSphere;
-	      });
-	    }
-	  }, {
-	    key: 'lineMaker',
-	    value: function lineMaker() {
-	      var _this6 = this;
-
-	      this.state.lines.forEach(function (sphere, index) {
-	        _this6.state.lines[index].vertices.push(_this6.state.lines[index].vertices[0]);
-	        var lineMaterial = new THREE.Line(_this6.state.lines[index], new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 1 }));
-	        _this6.scene.add(lineMaterial);
-	      });
+	      this.animate();
 	    }
 	  }, {
 	    key: 'animate',
 	    value: function animate() {
-	      var _this7 = this;
-
 	      this.time++;
 	      requestAnimationFrame(this.animate);
+
 	      if (this.time % this.expansionSizeMax === 0) {
 	        this.expansionDirection = this.expansionDirection * -1;
 	      }
-	      this.state.eachSphere.forEach(function (spheres) {
-	        spheres.forEach(function (sphere) {
-	          // eslint-disable-next-line
-	          sphere.rotation.x += 0.01;
-	          // eslint-disable-next-line
-	          sphere.rotation.y += 0.01;
-
-	          // eslint-disable-next-line
-	          sphere.scale.x += _this7.sizeChange * _this7.expansionDirection;
-	          // eslint-disable-next-line
-	          sphere.scale.y += _this7.sizeChange * _this7.expansionDirection;
-	          // eslint-disable-next-line
-	          sphere.scale.z += _this7.sizeChange * _this7.expansionDirection;
-	        });
-	      });
 
 	      this.state.centerSphere.rotation.x += 0.01;
 	      this.state.centerSphere.rotation.y += 0.01;
+
+	      this.outerBall.rotation.z += 0.01;
+	      this.outerBall.rotation.x += 0.01;
+
+	      for (var i = 0; i < this.state.innerBallArray.length; i++) {
+	        this.state.innerBallArray[i].rotation.z -= 0.05;
+	      }
 
 	      this.controls.update();
 	      this.renderCanvas();
@@ -36689,7 +36639,7 @@
 
 
 	// module
-	exports.push([module.id, "html {\n  height: 100%;\n  color: #DED3F3; }\n\nbody {\n  height: 100%;\n  font-size: 12px;\n  background: #1f143c;\n  background: -moz-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f143c), color-stop(43%, #070a11), color-stop(100%, #070a11));\n  background: -webkit-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -o-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -ms-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: radial-gradient(ellipse at center, #1f143c 0%, #070a11 43%, #070a11 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f143c ', endColorstr='#070a11 ', GradientType=1 ); }\n\n#kavr-canvas {\n  position: absolute; }\n\n.theme1-bg, .btn.theme1-bg {\n  background-color: #D673CE; }\n  .theme1-bg :before, .theme1-bg :after, .btn.theme1-bg :before, .btn.theme1-bg :after {\n    background-color: #D673CE; }\n\n.theme2-bg, .btn.theme2-bg {\n  background-color: #BE8BF4; }\n  .theme2-bg :before, .theme2-bg :after, .btn.theme2-bg :before, .btn.theme2-bg :after {\n    background-color: #BE8BF4; }\n\n.theme3-bg, .btn.theme3-bg {\n  background-color: #3A295D; }\n  .theme3-bg :before, .theme3-bg :after, .btn.theme3-bg :before, .btn.theme3-bg :after {\n    background-color: #3A295D; }\n", ""]);
+	exports.push([module.id, "html {\n  height: 100%;\n  color: #DED3F3; }\n\nbody {\n  font-family: 'Black Ops One', cursive;\n  height: 100%;\n  font-size: 12px;\n  background: #1f143c;\n  background: -moz-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f143c), color-stop(43%, #070a11), color-stop(100%, #070a11));\n  background: -webkit-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -o-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: -ms-radial-gradient(center, ellipse cover, #1f143c 0%, #070a11 43%, #070a11 100%);\n  background: radial-gradient(ellipse at center, #1f143c 0%, #070a11 43%, #070a11 100%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f143c ', endColorstr='#070a11 ', GradientType=1 ); }\n\n#kavr-canvas {\n  position: absolute; }\n\n.theme1-bg, .btn.theme1-bg {\n  background-color: #D673CE; }\n  .theme1-bg :before, .theme1-bg :after, .btn.theme1-bg :before, .btn.theme1-bg :after {\n    background-color: #D673CE; }\n\n.theme2-bg, .btn.theme2-bg {\n  background-color: #BE8BF4; }\n  .theme2-bg :before, .theme2-bg :after, .btn.theme2-bg :before, .btn.theme2-bg :after {\n    background-color: #BE8BF4; }\n\n.theme3-bg, .btn.theme3-bg {\n  background-color: #3A295D; }\n  .theme3-bg :before, .theme3-bg :after, .btn.theme3-bg :before, .btn.theme3-bg :after {\n    background-color: #3A295D; }\n", ""]);
 
 	// exports
 

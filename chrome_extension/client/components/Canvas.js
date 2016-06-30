@@ -1,4 +1,5 @@
 /* global THREE */
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import $ from 'jquery';
 
@@ -26,18 +27,15 @@ class KAVR extends Component {
     this.scene.add(this.light);
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
     this.scene.add(this.camera);
+
+    this.outerBall = new THREE.Object3D();
+    this.scene.add(this.outerBall);
+
+    this.animate = this.animate.bind(this);
+
     this.colors = { Verb: 'green', Context: 'yellow', Action: 'red',
       Keyword: 'orange', Function: 'blue', Native: 'pink' };
 
-    this.getNeo4jFuncs = this.getNeo4jFuncs.bind(this);
-    this.mapSpheres = this.mapSpheres.bind(this);
-    this.mapLabels = this.mapLabels.bind(this);
-    this.sphereMaker = this.sphereMaker.bind(this);
-    this.lineMaker = this.lineMaker.bind(this);
-    this.animate = this.animate.bind(this);
-    this.renderCanvas = this.renderCanvas.bind(this);
-    this.randomCoordinates = this.randomCoordinates.bind(this);
-    this.fatSphere = this.fatSphere.bind(this);
     this.mainPositions = [
       [0, 0, 500],
       [0, 500, 0],
@@ -49,35 +47,27 @@ class KAVR extends Component {
 
     this.state = {
       allSpheres: [],
-      eachSphere: [],
+      innerBallArray: [],
       centerSphere: null,
-
       labels: ['Verb', 'Context', 'Action', 'Keyword', 'Function', 'Native'],
-      lines: [],
     };
   }
 
   componentDidMount() {
     this.container = document.getElementById('kavr-canvas');
     this.container.appendChild(this.renderer.domElement);
-    this.container = document.getElementById('kavr-canvas');
-    this.container.appendChild(this.renderer.domElement);
 
     window.addEventListener('resize', () => {
-      const WIDTH = window.innerWidth;
-      const HEIGHT = window.innerHeight;
-      this.renderer.setSize(WIDTH, HEIGHT);
-      this.camera.aspect = WIDTH / HEIGHT;
+      this.renderer.setSize(this.WIDTH, this.HEIGHT);
+      this.camera.aspect = this.WIDTH / this.HEIGHT;
       this.camera.updateProjectionMatrix();
     });
-    this.getNeo4jFuncs('Verb');
-    this.getNeo4jFuncs('Context');
-    this.getNeo4jFuncs('Action');
-    this.getNeo4jFuncs('Keyword');
-    this.getNeo4jFuncs('Function');
-    this.getNeo4jFuncs('Native');
+
+    this.state.labels.forEach(label => {
+      this.getNeo4jFuncs(label);
+    });
+
     this.state.centerSphere = this.centerSphere();
-    this.animate();
   }
 
   getNeo4jFuncs(type) {
@@ -107,18 +97,16 @@ class KAVR extends Component {
     sphere.position.x = x;
     sphere.position.y = y;
     sphere.position.z = z;
-    this.scene.add(sphere);
     return sphere;
   }
 
-  fatSphere(x, y, z, color) {
+  labelSphereMaker(x, y, z) {
     const sphereGeometry = new THREE.SphereGeometry(15, 8, 6, 0, 6.3, 0, 3.1);
     const sphereMaterial = new THREE.MeshBasicMaterial({ color: 'purple' });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = x;
     sphere.position.y = y;
     sphere.position.z = z;
-    this.scene.add(sphere);
     return sphere;
   }
 
@@ -129,7 +117,7 @@ class KAVR extends Component {
     sphere.position.x = 0;
     sphere.position.y = 0;
     sphere.position.z = 0;
-    this.scene.add(sphere);
+    this.outerBall.add(sphere);
     return sphere;
   }
 
@@ -152,80 +140,49 @@ class KAVR extends Component {
   }
 
   mapSpheres() {
-    const context = this;
     this.state.allSpheres.forEach((node, index) => {
       const color = this.colors[node.name];
-      if (!this.state.eachSphere[index]) {
-        this.state.eachSphere[index] = [];
-      }
-      if (!this.state.lines[index]) {
-        this.state.lines[index] = new THREE.Geometry();
-      }
+      const innerBall = new THREE.Object3D();
+      innerBall.position.x = this.mainPositions[index][0];
+      innerBall.position.y = this.mainPositions[index][1];
+      innerBall.position.z = this.mainPositions[index][2];
 
-      const fat = this.fatSphere(...this.mainPositions[index], color);
-      console.log(fat.position);
+      const labelSphere = this.labelSphereMaker(0, 0, 0);
+      labelSphere.name = node.name;
+      this.state.innerBallArray.push(innerBall);
+      innerBall.add(labelSphere);
+      this.outerBall.add(innerBall);
 
-      this.state.eachSphere[index].push(fat);
-      this.state.lines[index].vertices.push(fat.position);
-
-      node.values.forEach(() => {
-        const firstSphere = this.state.eachSphere[index][0].position;
+      node.values.forEach((value) => {
+        const firstSphere = labelSphere.position;
         const pos = [firstSphere.x, firstSphere.y, firstSphere.z];
 
         const newSphere = this.sphereMaker(
           ...this.randomCoordinates(...pos, _MIN_DIST, _MAX_DIST), color);
-        this.state.eachSphere[index].push(newSphere);
-
-        this.state.lines[index].vertices.push(newSphere.position);
-        context.lineMaker();
+        newSphere.name = value;
+        innerBall.add(newSphere);
       });
     });
-  }
-
-  mapLabels() {
-    this.state.labels.map(node => {
-      const randomX = Math.random() * 100 - 1;
-      const randomY = Math.random() * 100 - 1;
-      const randomZ = Math.random() * 100 - 1;
-      const color = this.colors[node];
-      const newSphere = this.sphereMaker(randomX, randomY, randomZ, color);
-      return newSphere;
-    });
-  }
-
-  lineMaker() {
-    this.state.lines.forEach((sphere, index) => {
-      this.state.lines[index].vertices.push(this.state.lines[index].vertices[0]);
-      const lineMaterial = new THREE.Line(this.state.lines[index],
-        new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 1 }));
-      this.scene.add(lineMaterial);
-    });
+    this.animate();
   }
 
   animate() {
     this.time++;
     requestAnimationFrame(this.animate);
+
     if (this.time % this.expansionSizeMax === 0) {
       this.expansionDirection = this.expansionDirection * -1;
     }
-    this.state.eachSphere.forEach(spheres => {
-      spheres.forEach(sphere => {
-        // eslint-disable-next-line
-        sphere.rotation.x += 0.01;
-        // eslint-disable-next-line
-        sphere.rotation.y += 0.01;
-
-        // eslint-disable-next-line
-        sphere.scale.x += this.sizeChange * this.expansionDirection;
-        // eslint-disable-next-line
-        sphere.scale.y += this.sizeChange * this.expansionDirection;
-        // eslint-disable-next-line
-        sphere.scale.z += this.sizeChange * this.expansionDirection;
-      });
-    });
 
     this.state.centerSphere.rotation.x += 0.01;
     this.state.centerSphere.rotation.y += 0.01;
+
+    this.outerBall.rotation.z += 0.01;
+    this.outerBall.rotation.x += 0.01;
+
+    for (let i = 0; i < this.state.innerBallArray.length; i++) {
+      this.state.innerBallArray[i].rotation.z -= 0.05;
+    }
 
     this.controls.update();
     this.renderCanvas();
