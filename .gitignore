@@ -13,3 +13,6 @@ config.js
 # MISC Files
 dump.rdb
 npm-debug.log
+
+# Ignore CHrome Bundle JS
+/chrome_extension/bundle.js
