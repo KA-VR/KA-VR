@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('KAVR', 'root', '', {
+const sequelize = new Sequelize('KAVR', 'root', 'pass', {
   host: 'localhost',
   dialect: 'mysql',
 });
