@@ -9,6 +9,8 @@
 .env
 .apoc.yml
 config.js
+mysql.config.js
+
 
 # MISC Files
 dump.rdb
