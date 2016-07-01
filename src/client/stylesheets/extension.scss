@@ -1,0 +1,18 @@
+#extension {
+  height: 300px;
+  width:  500px;
+  .speechText {
+    .listen-buttons {
+    }
+    #start, #stop {
+      position: fixed;
+      width: 30%;
+      left: 35%;
+      top: 10%;
+    }
+    .speech-title {
+      padding-top: 100px;
+    }
+  }
+}
+
