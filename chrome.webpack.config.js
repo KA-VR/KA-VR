@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './chrome_extension/client',
+  entry: './src/client',
   output: { 
     path: path.join(__dirname, './chrome_extension'),
     filename: 'bundle.js'
