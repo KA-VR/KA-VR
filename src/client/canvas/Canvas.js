@@ -113,7 +113,10 @@ class Canvas extends Component {
 
   labelSphereMaker(x, y, z) {
     const sphereGeometry = new THREE.SphereGeometry(15, 8, 6, 0, 6.3, 0, 3.1);
-    const sphereMaterial = new THREE.MeshBasicMaterial({ color: 'purple', morphTargets: true });
+    const sphereMaterial = new THREE.MeshBasicMaterial({
+      color: 'purple',
+      morphTargets: true,
+    });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = x;
     sphere.position.y = y;
