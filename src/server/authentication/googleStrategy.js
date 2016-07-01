@@ -18,7 +18,7 @@ const strategy = new GoogleStrategy.Strategy({
     const email = profile.email;
     const profileObj = profile;
     profileObj.accessToken = accessToken;
-    
+
     Users.findOne({
       where: {
         email: `${email}`,
