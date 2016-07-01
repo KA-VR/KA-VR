@@ -1,15 +1,14 @@
-// import React from 'react';
-import ReactDOM from 'react-dom';
-import Router from './utils/router';
-// import Index from '../server/index.js';
-// import Speech from './components/SpeechToTextContainer.js';
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import configureStore from './configureStore';
+import AppContainer from './app/AppContainer';
 
-// Stylesheets
-import './stylesheets/style.scss';
-import './stylesheets/userstats.scss';
-import './stylesheets/widget.scss';
-import './stylesheets/chatbox.scss';
-import './stylesheets/avatar.scss';
-import './stylesheets/signin.scss';
+const store = configureStore();
 
-ReactDOM.render(Router, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>
+  , document.getElementById('app')
+);
