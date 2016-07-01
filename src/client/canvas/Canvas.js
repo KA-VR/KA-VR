@@ -75,6 +75,8 @@ class Canvas extends Component {
     this.container.appendChild(this.renderer.domElement);
 
     window.addEventListener('resize', () => {
+      this.WIDTH = window.innerWidth;
+      this.HEIGHT = window.innerHeight;
       this.renderer.setSize(this.WIDTH, this.HEIGHT);
       this.camera.aspect = this.WIDTH / this.HEIGHT;
       this.camera.updateProjectionMatrix();
