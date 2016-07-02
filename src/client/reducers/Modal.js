@@ -4,6 +4,7 @@ import {
   OPEN_SURVEY_MODAL,
   OPEN_SEARCH_MODAL,
   OPEN_IMAGE_MODAL,
+  OPEN_VIDEO_MODAL,
   COMPLETE_OPEN_MODAL,
   SUBMIT_MODAL,
 } from '../actions/ActionTypes';
@@ -14,6 +15,7 @@ const modalState = (state = {
   text: '',
   search: [],
   images: [],
+  video: '59Zcx9YbZxI',
 }, action) => {
   switch (action.type) {
     case OPEN_STANDARD_MODAL:
@@ -36,6 +38,11 @@ const modalState = (state = {
         state: action.state,
         actions: action.data.actions,
         text: action.data.text,
+      });
+    case OPEN_VIDEO_MODAL:
+      return Object.assign({}, state, {
+        state: action.state,
+        video: action.data,
       });
     case OPEN_CALCULATION_MODAL:
       return action.state;

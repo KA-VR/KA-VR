@@ -72,9 +72,17 @@ const callBrain = dataObj =>
       } else {
         dispatch(receiveAction(dataObj, response));
         document.getElementById('english').play();
-        const thing = response.contexts.join(' ');
+        console.log('Contexts are: ', response.contexts);
+        let thing;
+        if (response.contexts.length !== 0) {
+          thing = response.contexts.join(' ');
+        } else {
+          thing = response.keyword.name;
+        }
         console.log(thing);
         const action = response.funct.code;
+        console.log('executing function:', action);
+        // Calls function from brain here!
         eval(action)($, thing, dispatch, executeModal);
       }
     })
