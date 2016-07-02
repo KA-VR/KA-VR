@@ -6,5 +6,6 @@ import '../stylesheets/chatbox.scss';
 import '../stylesheets/avatar.scss';
 import '../stylesheets/signin.scss';
 import '../stylesheets/speechText.scss';
+import '../stylesheets/extension.scss';
 
 export default App;

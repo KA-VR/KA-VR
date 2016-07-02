@@ -11,12 +11,14 @@ class Canvas extends Component {
   constructor(props) {
     super(props);
 
+    // Center Sphere Settings
+    this.center_pulse = true;
+
     this.expansionDirection = 1;
     this.expansionSizeMax = 120;
     this.sizeChange = 0.001;
     this.time = 0;
     this.center_speed = 0.01;
-    this.center_pulse = false;
 
     this.scene = new THREE.Scene();
     this.WIDTH = window.innerWidth;
@@ -58,9 +60,7 @@ class Canvas extends Component {
     $(document).on('keydown', event => {
       switch (event.keyCode) {
         case KEY_SPACEBAR:
-          this.center_speed = (this.center_speed === 0.01) ? 0.1 : 0.01;
-          this.center_radius = Math.sin(this.time);
-          this.center_pulse = !this.center_pulse;
+          // this.center_speed = (this.center_speed === 0.01) ? 0.1 : 0.01;
           break;
         default:
           break;
@@ -127,7 +127,7 @@ class Canvas extends Component {
   }
 
   centerSphere() {
-    const sphereGeometry = new THREE.SphereGeometry(180, 20, 20, 5, 6.3, 0, 3.1);
+    const sphereGeometry = new THREE.SphereGeometry(180, 10, 10, 5, 6.3, 0, 3.1);
     const sphereMaterial = new THREE.MeshNormalMaterial(
       { wireframe: true, wireframeLinewidth: 3  }
     );
@@ -196,10 +196,11 @@ class Canvas extends Component {
 
     this.state.centerSphere.rotation.x += this.center_speed;
     this.state.centerSphere.rotation.y += this.center_speed;
+
     if (this.center_pulse) {
-      this.state.centerSphere.scale.x = Math.sin(this.time / 100) / 3.5 + 1;
-      this.state.centerSphere.scale.y = Math.sin(this.time / 100) / 3.5 + 1;
-      this.state.centerSphere.scale.z = Math.sin(this.time / 100) / 3.5 + 1;
+      this.state.centerSphere.scale.x = Math.sin(this.time / 30) / 10.5 + 1;
+      this.state.centerSphere.scale.y = Math.sin(this.time / 30) / 10.5 + 1;
+      this.state.centerSphere.scale.z = Math.sin(this.time / 30) / 10.5 + 1;
     } else {
       this.state.centerSphere.scale.x = 1;
       this.state.centerSphere.scale.y = 1;

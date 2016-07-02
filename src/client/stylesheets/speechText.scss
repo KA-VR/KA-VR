@@ -1,11 +1,13 @@
 .speechText {
   .listen-buttons {
-    margin-top: 30px;
   }
   #start, #stop {
-    width: 100%;
+    position: fixed;
+    width: 10%;
+    bottom: 10%;
+    left: 45%;
   }
   .speech-title {
-    padding-top: 150px;
+    padding-top: 100px;
   }
 }
