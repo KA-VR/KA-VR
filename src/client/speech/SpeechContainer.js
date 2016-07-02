@@ -9,6 +9,7 @@ import {
   callTextAnalyzer,
   updateSurvey,
 } from '../actions';
+const KEY_SPACEBAR = 32;
 
 class SpeechContainer extends Component {
   constructor(props) {
@@ -32,6 +33,15 @@ class SpeechContainer extends Component {
         Materialize.toast(`Recognizer Error: ${event.message}`, 3000);
       };
     }
+    $(document).on('keydown', event => {
+      switch (event.keyCode) {
+        case KEY_SPACEBAR:
+          this.toggleRecording();
+          return false;
+        default:
+          return true;
+      }
+    });
   }
 
   updateTranscription(event) {
