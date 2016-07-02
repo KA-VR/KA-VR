@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StandardModal = (props) => (
+const StandardModal = () => (
   <div>
     <div id="standard" className="modal">
       <div className="modal-content">
