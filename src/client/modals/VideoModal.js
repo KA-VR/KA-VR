@@ -1,14 +1,11 @@
-import React, { PropType } from 'react';
+import React, { PropTypes } from 'react';
 
 const VideoModal = (props) => (
-  <div>
-    <div id="video" className="modal">
-      <div className="modal-content row">
+    <div id="video" className="modal bottom-sheet">
+      <div className="modal-content">
         <h4>Video Modal</h4>
         <p>Standard</p>
-        {props.modalState.search.map(videoID => (
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/{videoID}" frameborder="0" allowfullscreen></iframe>
-        ))}
+          <iframe width="560" height="315" src={props.modalState.video} frameborder="0" allowfullscreen></iframe>
         <div className="col s3">
         </div>
       </div>
@@ -18,11 +15,10 @@ const VideoModal = (props) => (
         </a>
       </div>
     </div>
-  </div>
 );
 
-ImageModal.propTypes = {
-  modalState: PropType.object.isRequired,
+VideoModal.propTypes = {
+  modalState: PropTypes.object.isRequired,
 };
 
 export default VideoModal;

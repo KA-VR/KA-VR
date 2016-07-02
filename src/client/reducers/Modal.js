@@ -15,7 +15,7 @@ const modalState = (state = {
   text: '',
   search: [],
   images: [],
-  video: '59Zcx9YbZxI',
+  video: '',
 }, action) => {
   switch (action.type) {
     case OPEN_STANDARD_MODAL:
