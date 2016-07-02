@@ -105,6 +105,8 @@ const callTextAnalyzer = transcript =>
       if (data.error) {
         document.getElementById('moron').play();
         Materialize.toast('Sorry! Didn\'t understand that.', 3000);
+        const u = new SpeechSynthesisUtterance('Sorry! Didn\'t understand that.');
+        speechSynthesis.speak(u);
       } else {
         dispatch(receiveAnalysis(data.text, data));
         dispatch(callBrain(data));
