@@ -196,6 +196,7 @@ class Canvas extends Component {
 
     this.state.centerSphere.rotation.x += this.center_speed;
     this.state.centerSphere.rotation.y += this.center_speed;
+
     if (this.center_pulse) {
       this.state.centerSphere.scale.x = Math.sin(this.time / 30) / 10.5 + 1;
       this.state.centerSphere.scale.y = Math.sin(this.time / 30) / 10.5 + 1;

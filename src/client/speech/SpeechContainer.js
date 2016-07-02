@@ -24,9 +24,7 @@ class SpeechContainer extends Component {
     } else {
       this.recognizer = new window.SpeechRecognition();
       this.recognizer.continuous = true;
-      console.log(this.recognizer);
       this.recognizer.onresult = (event) => {
-        console.log('ON RESULT');
         this.updateTranscription(event);
       };
       // Listen for errors
