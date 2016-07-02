@@ -5,7 +5,6 @@ import React, { Component, PropTypes } from 'react';
 
 const _MIN_DIST = 5;
 const _MAX_DIST = 50;
-const KEY_SPACEBAR = 32;
 
 class Canvas extends Component {
   constructor(props) {
@@ -13,13 +12,14 @@ class Canvas extends Component {
 
     // Center Sphere Settings
     this.center_pulse = true;
+    this.center_speed = 0.01;
 
     this.expansionDirection = 1;
     this.expansionSizeMax = 120;
     this.sizeChange = 0.001;
     this.time = 0;
     this.center_speed = 0.01;
-
+    this.initRender = true;
     this.scene = new THREE.Scene();
     this.WIDTH = window.innerWidth;
     this.HEIGHT = window.innerHeight;
@@ -56,16 +56,6 @@ class Canvas extends Component {
       centerSphere: null,
       labels: ['Verb', 'Context', 'Action', 'Keyword', 'Function', 'Native'],
     };
-
-    $(document).on('keydown', event => {
-      switch (event.keyCode) {
-        case KEY_SPACEBAR:
-          // this.center_speed = (this.center_speed === 0.01) ? 0.1 : 0.01;
-          break;
-        default:
-          break;
-      }
-    });
   }
 
   componentDidMount() {
@@ -90,9 +80,12 @@ class Canvas extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.center_speed = nextProps.isRecording ? 0.05 : 0.01;
     const { dispatch, labelSpheres, labelsStatus, toggleLabelStatus } = nextProps;
-    if (labelSpheres.length === this.state.labels.length && labelsStatus === false) {
+    if (labelSpheres.length === this.state.labels.length
+        && labelsStatus === false && this.initRender) {
       this.mapSpheres();
+      this.initRender = false;
     } else if (labelSpheres.length === this.state.labels.length) {
       dispatch(toggleLabelStatus(false));
     }
