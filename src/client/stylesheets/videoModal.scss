@@ -1,9 +1,18 @@
 #video {
 	background-color: black;
 	box-radius: 2px;
+  height: 100%;
+  min-width: 85%;
 	-webkit-box-shadow: 2px -3px 55px 7px rgba(240, 235, 240, 0.45);
 	-moz-box-shadow: 2px -3px 55px 7px rgba(240, 235, 240, 0.45);
 	box-shadow: 2px -3px 55px 7px rgba(240, 235, 240, 0.45);
+  .modal-content {
+    height: 100%;
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
 	.modal-footer {
 		color: white;
 		background-color: black;
