@@ -22,6 +22,11 @@ const OPEN_NEWS_MODAL = 'OPEN_NEWS_MODAL';
 
 const SUBMIT_MODAL = 'SUBMIT_MODAL';
 
+// Action types for authentication
+const USER_SIGNIN = 'USER_SIGNIN';
+const USER_SIGNUP = 'USER_SIGNUP';
+const USER_SIGNOUT = 'USER_SIGNOUT';
+
 export {
   TOGGLE_RECORDING,
   ADD_TRANSCRIPTION,
