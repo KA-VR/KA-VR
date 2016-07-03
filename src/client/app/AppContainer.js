@@ -11,5 +11,6 @@ import '../stylesheets/modal.scss';
 import '../stylesheets/surveyModal.scss';
 import '../stylesheets/videoModal.scss';
 import '../stylesheets/imageModal.scss';
+import '../stylesheets/dashboard.scss';
 
 export default App;
