@@ -1,0 +1,18 @@
+.dashboardlayout {
+  height: 100%;
+  
+  .leftdashboard {
+    background-color: teal;
+    float: left;
+    width: 20%;
+    z-index: 1;
+  }
+
+  .rightdashboard {
+    background-color: teal;
+    float: right;
+    height: 100%;
+    width: 20%;
+    z-index: 1;
+  }
+}
