@@ -1,6 +1,7 @@
 /* global $, Materialize */
 import { SUBMIT_MODAL } from './ActionTypes';
 
+// Action Creators
 const openModal = (type, data, state) => ({
   type,
   data,
@@ -12,6 +13,7 @@ const modalSubmission = (type, data) => ({
   data,
 });
 
+// Action Functions: invoked when a survey gets sent, which then calls the dispatch method
 const submitSurvey = () =>
   (dispatch, getState) => {
     const newVerb = $('input[name="verbgroup"]:checked').val();
