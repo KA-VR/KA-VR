@@ -7,5 +7,6 @@ import '../stylesheets/avatar.scss';
 import '../stylesheets/signin.scss';
 import '../stylesheets/speechText.scss';
 import '../stylesheets/extension.scss';
+import '../stylesheets/videoModal.scss';
 
 export default App;

@@ -34,7 +34,13 @@ const submitSurvey = () =>
 const executeModal = (type, data) =>
   dispatch => {
     const modal = type.split('_')[1].toLowerCase();
-    $(`#${modal}`).openModal();
+    if (modal === 'video') {
+      $(`#${modal}`).openModal({
+        complete: () => $('iframe').attr('src', ''),
+      });
+    } else {
+      $(`#${modal}`).openModal();
+    }
     dispatch(openModal(type, data, modal));
   };
 
