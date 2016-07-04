@@ -5,21 +5,41 @@ import {
 } from '../actions/ActionTypes';
 
 // Create auth action creators
-const userSignin = (type, data, state) => {
+const userSignin = (type, data, state) => ({
+  type,
+  data,
+  state,
+});
 
+const userSignup = (type, data, state) => ({
+  type,
+  data,
+  state,
+});
+
+const userSignout = (type, data, state) => ({
+  type,
+  data,
+  state,
+});
+
+const submitSignin = () =>
+  dispatch => {
+
+  };
+
+const submitSignup = () =>
+  dispatch => {
+
+  };
+
+const executeSignout = () =>
+  dispatch => {
+
+  };
+
+export {
+  submitSignin,
+  submitSignup,
+  executeSignout,
 };
-
-const userSignup = (type, data, state) => {
-
-};
-
-const userSignout = (type, data, state) => {
-
-};
-
-// Create auth action functions
-  // Signin
-
-  // Signup
-
-  // Logout
