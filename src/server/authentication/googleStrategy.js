@@ -20,14 +20,11 @@ const strategy = new GoogleStrategy.Strategy({
     const profileObj = profile;
     profileObj.accessToken = accessToken;
 
-<<<<<<< HEAD
-=======
     calendarHelper.events(accessToken)
     .then(res => {
       console.log(res);
     });
 
->>>>>>> c7bff21f53f139d33adc11d42a208edcb3d06089
     Users.findOne({
       where: {
         email: `${email}`,
