@@ -57,9 +57,7 @@ const SurveyModal = (props) => (
           onClick={props.modalSubmit}
           className=" waves-effect waves-green btn-flat"
         >
-          {props.modalSubmit.toString()}
-          Agree
-          }
+          Submit
         </button>
       </div>
     </div>

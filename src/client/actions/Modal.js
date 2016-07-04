@@ -13,18 +13,25 @@ const modalSubmission = (type, data) => ({
 });
 
 const submitSurvey = () =>
-  dispatch => {
-    console.log('aklsjdfas;fjad;lkfsadjlk');
+  (dispatch, getState) => {
     const newVerb = $('input[name="verbgroup"]:checked').val();
     const newKeyword = $('input[name="keywordgroup"]:checked').val();
     const newAction = $('input[name="actiongroup"]:checked').val();
-    console.log('hihi', newVerb, newKeyword, newAction);
+    const textArr = getState().modalState.text.split(' ');
+    const context = textArr.filter(word => word !== newVerb || word !== newAction);
+    const data = {
+      verb: newVerb,
+      keyword: newKeyword,
+      action: newAction,
+      context,
+    };
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:7750/api/learn',
+      data,
+    });
     if (newVerb && newKeyword && newAction) {
-      dispatch(modalSubmission(SUBMIT_MODAL, {
-        verb: newVerb,
-        keyword: newKeyword,
-        action: newAction,
-      }));
+      dispatch(modalSubmission(SUBMIT_MODAL, data));
       $('#survey').closeModal();
     } else {
       Materialize.toast('Please fill out the form.', 3000);
