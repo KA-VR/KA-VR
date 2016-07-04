@@ -8,6 +8,7 @@ const App = () => (
   <div>
     <CanvasContainer />
     <DashboardLayout />
+    <SpeechContainer />
     <ModalContainer />
   </div>
 );
