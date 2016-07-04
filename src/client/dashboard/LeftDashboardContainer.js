@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import LeftDashboard from './LeftDashboard';
 
-class LeftDashboardContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <LeftDashboard />
-    );
-  }
-}
+const mapStateToProps = (state) => {
+  const { leftDashboardState } = state;
+  return {
+    leftDashboardState,
+  };
+};
 
-export default LeftDashboardContainer;
+export default connect(mapStateToProps)(LeftDashboard);

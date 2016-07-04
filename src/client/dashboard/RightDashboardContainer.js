@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import RightDashboard from './RightDashboard';
 
-class RightDashboardContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <RightDashboard />
-    );
-  }
-}
+const mapStateToProps = (state) => {
+  const { rightDashboardState } = state;
+  return {
+    rightDashboardState,
+  };
+};
 
-export default RightDashboardContainer;
+export default connect(mapStateToProps)(RightDashboard);
