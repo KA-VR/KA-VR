@@ -2,6 +2,7 @@
 import GoogleStrategy from 'passport-google-oauth2';
 import keys from '../../../config.js';
 import Users from '../../../mysql.config';
+import calendarHelper from '../helper/calendarHelper';
 
 const clientID = keys.GOOGLE_CLIENT_ID;
 const clientSecret = keys.GOOGLE_CLIENT_SECRET;
@@ -19,6 +20,14 @@ const strategy = new GoogleStrategy.Strategy({
     const profileObj = profile;
     profileObj.accessToken = accessToken;
 
+<<<<<<< HEAD
+=======
+    calendarHelper.events(accessToken)
+    .then(res => {
+      console.log(res);
+    });
+
+>>>>>>> c7bff21f53f139d33adc11d42a208edcb3d06089
     Users.findOne({
       where: {
         email: `${email}`,
