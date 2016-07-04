@@ -16,6 +16,7 @@ const modalState = (state = {
   search: [],
   images: [],
   video: '',
+  calculation: '',
 }, action) => {
   switch (action.type) {
     case OPEN_STANDARD_MODAL:
@@ -45,7 +46,10 @@ const modalState = (state = {
         video: action.data,
       });
     case OPEN_CALCULATION_MODAL:
-      return action.state;
+      return Object.assign({}, state, {
+        state: action.state,
+        calculation: action.data,
+      });
     case COMPLETE_OPEN_MODAL:
       return action.state;
     default:
