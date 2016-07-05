@@ -68,6 +68,7 @@ class Canvas extends Component {
       this.HEIGHT = window.innerHeight;
       this.renderer.setSize(this.WIDTH, this.HEIGHT);
       this.camera.aspect = this.WIDTH / this.HEIGHT;
+
       this.camera.updateProjectionMatrix();
     });
 
