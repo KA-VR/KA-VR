@@ -21,23 +21,24 @@ const authState = (state = {
     case USER_SIGNUP:
       return Object.assign({}, state, {
         state: action.state,
+        userData: action.userData,
         signedIn: action.signedIn,
+        currentPage: action.currentPage,
       });
     case USER_SIGNOUT:
       return Object.assign({}, state, {
         state: action.state,
         signedIn: action.signedIn,
+        currentPage: action.currentPage,
       });
     case REDIRECT_SIGNUP:
       return Object.assign({}, state, {
-        // state: action.state,
-        // signedIn: action.signedIn,
+        state: action.state,
         currentPage: action.currentPage,
       });
     case REDIRECT_SIGNIN:
       return Object.assign({}, state, {
-        // state: action.state,
-        // signedIn: action.signedIn,
+        state: action.state,
         currentPage: action.currentPage,
       });
     default:
