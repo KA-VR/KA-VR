@@ -1,13 +1,13 @@
 import React from 'react';
-import LeftDashboard from './LeftDashboard';
-import RightDashboard from './RightDashboard';
+import LeftDashboardContainer from './LeftDashboardContainer';
+import RightDashboardContainer from './RightDashboardContainer';
 import SpeechContainer from '../speech/SpeechContainer';
 
 const DashboardLayout = () => (
   <div className="dashboardlayout row">
-    <LeftDashboard />
+    <LeftDashboardContainer />
     <SpeechContainer />
-    <RightDashboard />
+    <RightDashboardContainer />
   </div>
 );
 
