@@ -8,10 +8,9 @@ const getQuoteAction = data => ({
   data,
 });
 
-const getQuote = quoteObj =>
-  dispatch => {
-    dispatch(getQuoteAction(quoteObj));
-    return fetch('http://localhost:8080/api/quote', {
+const getQuote = () =>
+  dispatch => (
+    fetch('http://localhost:8080/api/quote', {
       method: 'POST',
     })
     .then(data => data.json())
@@ -22,7 +21,7 @@ const getQuote = quoteObj =>
         dispatch(getQuoteAction(data));
       }
     })
-    .catch(err => console.log('Error on getQuote', err));
-  };
+    .catch(err => console.log('Error on getQuote', err))
+  );
 
 export { getQuoteAction, getQuote };

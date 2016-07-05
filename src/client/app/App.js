@@ -5,7 +5,6 @@ import ModalContainer from '../modals/ModalContainer';
 import DashboardLayout from '../dashboard/DashboardLayout';
 import SignInContainer from '../auth/SignInContainer';
 import SignUpContainer from '../auth/SignUpContainer';
-import QuotesContainer from '../quotes/QuotesContainer';
 
 const App = ({ authState }) => {
   console.log('Auth State: ', authState);
@@ -16,7 +15,6 @@ const App = ({ authState }) => {
   if (authState.currentPage === 'dashboard' || localStorage.getItem('KAVR')) {
     return (
       <div>
-        <QuotesContainer />
         <CanvasContainer />
         <DashboardLayout />
         <ModalContainer />

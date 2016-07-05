@@ -18,12 +18,17 @@ class QuotesContainer extends React.Component {
     dispatch(getQuote());
   }
   render() {
-    const quote = this.props.state.quoteState.state;
+    const { quoteState } = this.props;
+    const quote = quoteState.state;
     return (
       <div className="quotes">
-        <input type="submit" onClick={this.updateQuote} />
+        <input
+          className="waves-effect theme2-bg waves-light"
+          type="submit" onClick={this.updateQuote}
+        />
         <span>
-          {quote.quoteAuthor}{quote.quoteText}
+          {quote.quoteAuthor ? `${quote.quoteAuthor}: ` : null}
+          {quote.quoteText}
         </span>
       </div>
     );
@@ -32,14 +37,15 @@ class QuotesContainer extends React.Component {
 
 QuotesContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
-  'state.quoteState': PropTypes.object.isRequired,
-  'state.quoteState.state': PropTypes.string.isRequired,
+  quoteState: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  state,
-});
+const mapStateToProps = state => {
+  const { quoteState } = state;
+  return {
+    quoteState,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
