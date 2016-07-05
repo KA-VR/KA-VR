@@ -7,7 +7,7 @@
 // Incorporating Redux
 import { connect } from 'react-redux';
 import SignIn from './SignIn';
-import { submitSignin } from '../actions/Auth';
+import { submitSignin, redirectSignUp } from '../actions/Auth';
 
 const mapStateToProps = (state) => {
   const { authState } = state;
@@ -22,9 +22,10 @@ const mapDispatchToProps = dispatch => ({
     e.preventDefault();
     return dispatch(submitSignin());
   },
-  redirectSignUp: e => {
+  redirSignUp: e => {
     e.preventDefault();
     console.log('clicked');
+    return dispatch(redirectSignUp());
   },
 });
 
