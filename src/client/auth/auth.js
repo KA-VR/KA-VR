@@ -8,9 +8,6 @@ const signin = (userInfo, callback) => {
     data: userInfo,
     success: (data) => {
       const sess = data.session;
-      window.localStorage.setItem('KAVR', sess.cookie.expires);
-      window.localStorage.setItem('email', sess.passport.user.email);
-      window.localStorage.setItem('id', sess.passport.user.id);
       document.cookie = `email=${sess.passport.user.email}expires${sess.cookie.expires}`;
       if (callback) {
         callback(data);
