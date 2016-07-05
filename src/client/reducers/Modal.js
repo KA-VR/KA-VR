@@ -5,6 +5,7 @@ import {
   OPEN_SEARCH_MODAL,
   OPEN_IMAGE_MODAL,
   OPEN_VIDEO_MODAL,
+  OPEN_NEWS_MODAL,
   COMPLETE_OPEN_MODAL,
   SUBMIT_MODAL,
 } from '../actions/ActionTypes';
@@ -30,6 +31,11 @@ const modalState = (state = {
         images: action.data,
       });
     case OPEN_SEARCH_MODAL:
+      return Object.assign({}, state, {
+        state: action.state,
+        search: action.data,
+      });
+    case OPEN_NEWS_MODAL:
       return Object.assign({}, state, {
         state: action.state,
         search: action.data,

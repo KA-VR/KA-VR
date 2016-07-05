@@ -5,9 +5,11 @@ import SearchModal from './SearchModal';
 import VideoModal from './VideoModal';
 import ImageModal from './ImageModal';
 import CalculationModal from './CalculationModal';
+import NewsModal from './NewsModal';
 
 const Modal = (props) => (
   <div>
+    <NewsModal modalState={props.modalState} />
     <ImageModal modalState={props.modalState} />
     <SurveyModal modalState={props.modalState} modalSubmit={props.modalSubmit} />
     <StandardModal modalState={props.modalState} />

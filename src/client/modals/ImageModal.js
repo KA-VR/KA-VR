@@ -27,11 +27,6 @@ const ImageModal = (props) => {
           <p>Standard</p>
           {rows}
         </div>
-        <div className="modal-footer">
-          <a href="#!" className=" modal-action modal-close waves-effect waves-green btn-flat">
-            Agree
-          </a>
-        </div>
       </div>
     </div>
   );

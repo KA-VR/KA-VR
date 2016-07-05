@@ -7,6 +7,8 @@ import '../stylesheets/avatar.scss';
 import '../stylesheets/signin.scss';
 import '../stylesheets/speechText.scss';
 import '../stylesheets/extension.scss';
+import '../stylesheets/modal.scss';
+import '../stylesheets/surveyModal.scss';
 import '../stylesheets/videoModal.scss';
 import '../stylesheets/imageModal.scss';
 
