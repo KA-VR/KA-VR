@@ -69,6 +69,8 @@ const callBrain = dataObj =>
           object: dataObj.object,
           synonyms: dataObj.synonyms,
         }));
+        const u = new SpeechSynthesisUtterance('Didn\'t understand that. Can you clarify?');
+        speechSynthesis.speak(u);
       } else {
         dispatch(receiveAction(dataObj, response));
         document.getElementById('english').play();
@@ -84,7 +86,7 @@ const callBrain = dataObj =>
         console.log('executing function:', action);
         // Calls function from brain here!
         eval(action)($, thing, dispatch, executeModal);
-        const u = new SpeechSynthesisUtterance('Here you go!');
+        const u = new SpeechSynthesisUtterance('Okay!');
         speechSynthesis.speak(u);
       }
     })
@@ -136,4 +138,4 @@ const updateHistory = transcription => (
   dispatch => dispatch(addTranscription(transcription))
 );
 
-export { toggleRecording, updateHistory, callTextAnalyzer };
+export { toggleRecording, updateHistory, callTextAnalyzer, };
