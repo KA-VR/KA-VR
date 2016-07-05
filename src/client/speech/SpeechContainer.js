@@ -10,6 +10,7 @@ import {
   updateSurvey,
 } from '../actions';
 const KEY_SPACEBAR = 32;
+const KEY_ENTER = 13;
 
 class SpeechContainer extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class SpeechContainer extends Component {
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
     if (!window.SpeechRecognition) {
       Materialize.toast('Speech Recognition not supported', 3000);
@@ -33,11 +35,26 @@ class SpeechContainer extends Component {
         Materialize.toast(`Recognizer Error: ${event.message}`, 3000);
       };
     }
+    $(document).on('mousedown', event => {
+      if (event.target !== $('#command')) {
+        $('#command').blur();
+      }
+    });
     $(document).on('keydown', event => {
+      const command = $('#command').val();
       switch (event.keyCode) {
         case KEY_SPACEBAR:
-          this.toggleRecording();
-          return false;
+          if (!$('#command').is(':focus')) {
+            this.toggleRecording();
+          }
+          return true;
+        case KEY_ENTER:
+          if ($('#command').is(':focus') && command.length) {
+            $('#command').val('');
+            dispatch(callTextAnalyzer(command));
+            dispatch(updateHistory(command));
+          }
+          return true;
         default:
           return true;
       }
