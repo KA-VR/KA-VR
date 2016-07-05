@@ -18,10 +18,13 @@ class QuotesContainer extends React.Component {
     dispatch(getQuote());
   }
   render() {
+    const quote = this.props.state.quoteState.state;
     return (
       <div className="quotes">
         <input type="submit" onClick={this.updateQuote} />
-        <span>{this.props.state.quoteState.state.quoteAuthor} {this.props.state.quoteState.state.quoteText}</span>
+        <span>
+          {quote.quoteAuthor}{quote.quoteText}
+        </span>
       </div>
     );
   }
