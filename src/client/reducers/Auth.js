@@ -5,42 +5,29 @@ import {
 } from '../actions/ActionTypes';
 
 const authState = (state = {
-  state: 'none',
-  signedIn: null,
+  signedIn: Boolean(localStorage.getItem('KAVR')),
+  // signUpView: false,
 }, action) => {
   switch (action.type) {
     case USER_SIGNIN:
       return Object.assign({}, state, {
         state: action.state,
-        data: action.data,
+        userData: action.userData,
+        signedIn: action.signedIn,
       });
     case USER_SIGNUP:
       return Object.assign({}, state, {
         state: action.state,
-        data: action.data,
+        signedIn: action.signedIn,
       });
     case USER_SIGNOUT:
       return Object.assign({}, state, {
         state: action.state,
-        data: action.data,
+        signedIn: action.signedIn,
       });
     default:
       return state;
   }
 };
 
-const leftDashboardState = (state = {
-  state: 'none',
-  signedIn: false,
-}, action) => {
-
-};
-
-const rightDashboardState = (state = {
-  state: 'none',
-  signedIn: false,
-}, action) => {
-
-};
-
-export { authState, leftDashboardState, rightDashboardState };
+export { authState };
