@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Validation from 'react-validation';
-import { Link } from 'react-router';
 
-const SignUp = () => (
+const SignUp = ({ signUp, redirSignIn}) => (
   <div>
     <Validation.Form id="signup">
       <input
@@ -31,13 +30,14 @@ const SignUp = () => (
         validations={[{ rule: 'isEmail' }]}
       />
     </Validation.Form>
-    <button className="submit-button" onClick={() => console.log('clicked')}>Submit</button>
-    <Link to="/">already have an account ? <b>sign in</b></Link>
+    <button className="submit-button" onClick={signUp}>Submit</button>
+    <a onClick={redirSignIn}>already have an account ? Sign in</a>
   </div>
 );
 
-// SignUp.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-// };
+SignUp.propTypes = {
+  signUp: PropTypes.func.isRequired,
+  redirSignIn: PropTypes.func.isRequired,
+};
 
 export default SignUp;
