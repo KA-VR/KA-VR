@@ -8,12 +8,12 @@ import SignUpContainer from '../auth/SignUpContainer';
 // import SignUpContainer from '../auth/SignUpContainer';
 
 const App = ({ authState }) => {
-  console.log(authState);
+  console.log('Auth State: ', authState);
   // If the sign up view is true, render
   if (authState.currentPage === 'signUp') {
     return <SignUpContainer />;
   }
-  if (authState.signedIn && authState.currentPage === 'dashboard') {
+  if (authState.currentPage === 'dashboard' || localStorage.getItem('KAVR')) {
     return (
       <div>
         <CanvasContainer />
