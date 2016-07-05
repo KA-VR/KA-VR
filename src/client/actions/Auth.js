@@ -2,15 +2,18 @@ import {
   USER_SIGNIN,
   USER_SIGNUP,
   USER_SIGNOUT,
+  REDIRECT_SIGNIN,
+  REDIRECT_SIGNUP,
 } from '../actions/ActionTypes';
 import serialize from 'form-serialize';
 import auth from '../auth/auth';
 
 // Create auth action creators
-const userSignin = (type, userData, signedIn) => ({
+const userSignin = (type, userData, signedIn, currentPage) => ({
   type,
   userData,
   signedIn,
+  currentPage,
 });
 
 const userSignup = (type, data, state) => ({
@@ -25,6 +28,17 @@ const userSignout = (type, data, state) => ({
   state,
 });
 
+const viewSignIn = (type, currentPage) => ({
+  type,
+  currentPage,
+});
+
+const viewSignUp = (type, currentPage) => ({
+  type,
+  currentPage,
+});
+
+// Auth Actions
 const submitSignin = () =>
   dispatch => {
     const form = document.querySelector('#signin-form');
@@ -36,13 +50,16 @@ const submitSignin = () =>
         console.log('Error signing up');
       } else if (res.redirect === '/dashboard') {
         // window.location = res.redirect;
-        dispatch(userSignin(USER_SIGNIN, formData, true));
+        dispatch(userSignin(USER_SIGNIN, formData, true, 'dashboard'));
       }
     });
   };
 
 const submitSignup = () =>
   dispatch => {
+    const form = document.querySelector('#signup');
+    const formData = serialize(form, { hash: true });
+    console.log(form, formData);
     dispatch(userSignup());
   };
 
@@ -51,8 +68,20 @@ const executeSignout = () =>
     dispatch(userSignout());
   };
 
+const redirectSignIn = () =>
+  dispatch => {
+    dispatch(viewSignUp(REDIRECT_SIGNIN, 'signIn'));
+  };
+
+const redirectSignUp = () =>
+  dispatch => {
+    dispatch(viewSignUp(REDIRECT_SIGNUP, 'signUp'));
+  };
+
 export {
   submitSignin,
   submitSignup,
   executeSignout,
+  redirectSignIn,
+  redirectSignUp,
 };
