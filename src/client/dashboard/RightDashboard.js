@@ -9,8 +9,4 @@ const RightDashboard = () => (
   </div>
 );
 
-// RightDashboard.propTypes = {
-
-// };
-
 export default RightDashboard;
