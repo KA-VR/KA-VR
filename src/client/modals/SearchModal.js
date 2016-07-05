@@ -8,7 +8,7 @@ const SearchModal = (props) => (
       <ul className="collection">
         {props.modalState.search.map(result => (
           <li className="collection-item">
-            <a>{result.link}</a>
+            <a href={result.link} target="_blank">{result.link}</a>
             <p>{result.description}</p>
           </li>
         ))}
