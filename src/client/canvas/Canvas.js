@@ -153,7 +153,6 @@ class Canvas extends Component {
   mapSpheres() {
     const { labelSpheres } = this.props;
     labelSpheres.forEach((node, index) => {
-      console.log('sadjfadsfasd', index, labelSpheres.length);
       const color = this.colors[node.name];
       const innerBall = new THREE.Object3D();
       innerBall.position.x = this.mainPositions[index][0];

@@ -52,8 +52,8 @@ const fetchNodes = type => (
     })
     .then(data => data.json())
     .then(data => {
-      dispatch(receiveNodeLabel(data.type, data));
-      dispatch(addNodes({ name: data.type, values: data }));
+      dispatch(receiveNodeLabel(type, data));
+      dispatch(addNodes({ name: type, values: data }));
     })
     .catch(err => console.log('GET error:', err));
   }
