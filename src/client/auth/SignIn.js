@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const SignIn = ({ signIn, redirectSignUp }) => (
+const SignIn = ({ signIn, redirSignUp }) => (
   <div className="signin">
     <h1 className="center-align">Sign In</h1>
     <div className="row">
@@ -23,7 +23,7 @@ const SignIn = ({ signIn, redirectSignUp }) => (
         >Sign In</button>
       </form>
       <div className="col s12 offset-m3 m6 link">
-        <a onClick={redirectSignUp}>Not a user? Sign up</a>
+        <a onClick={redirSignUp}>Not a user? Sign up</a>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@ const SignIn = ({ signIn, redirectSignUp }) => (
 
 SignIn.propTypes = {
   signIn: PropTypes.func,
-  redirectSignUp: PropTypes.func,
+  redirSignUp: PropTypes.func,
 };
 
 export default SignIn;
