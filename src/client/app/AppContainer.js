@@ -12,5 +12,13 @@ import '../stylesheets/surveyModal.scss';
 import '../stylesheets/videoModal.scss';
 import '../stylesheets/imageModal.scss';
 import '../stylesheets/dashboard.scss';
+import { connect } from 'react-redux';
 
-export default App;
+const mapStateToProps = (state) => {
+  const { authState } = state;
+  return {
+    authState,
+  };
+};
+
+export default connect(mapStateToProps)(App);
