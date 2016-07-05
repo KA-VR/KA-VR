@@ -8,5 +8,6 @@ import '../stylesheets/signin.scss';
 import '../stylesheets/speechText.scss';
 import '../stylesheets/extension.scss';
 import '../stylesheets/videoModal.scss';
+import '../stylesheets/imageModal.scss';
 
 export default App;
