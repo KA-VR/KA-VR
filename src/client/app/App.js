@@ -13,7 +13,7 @@ const App = ({ authState }) => {
   if (authState.currentPage === 'signUp') {
     return <SignUpContainer />;
   }
-  if (authState.signedIn) {
+  if (authState.signedIn && authState.currentPage === 'dashboard') {
     return (
       <div>
         <CanvasContainer />
