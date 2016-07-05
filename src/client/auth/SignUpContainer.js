@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
     e.preventDefault();
     console.log('clicked');
     return dispatch(redirectSignIn());
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

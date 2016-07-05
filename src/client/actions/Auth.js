@@ -76,7 +76,7 @@ const executeSignout = () =>
 
 const redirectSignIn = () =>
   dispatch => {
-    dispatch(viewSignUp(REDIRECT_SIGNIN, 'signIn'));
+    dispatch(viewSignIn(REDIRECT_SIGNIN, 'signIn'));
   };
 
 const redirectSignUp = () =>

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Validation from 'react-validation';
 
-const SignUp = ({ signUp, redirSignIn}) => (
+const SignUp = ({ signUp, redirSignIn }) => (
   <div>
     <Validation.Form id="signup">
       <input
