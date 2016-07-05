@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import LeftDashboard from './LeftDashboard';
 
 const mapStateToProps = (state) => {
-  const { leftDashboardState } = state;
+  const { authState } = state;
   return {
-    leftDashboardState,
+    authState,
   };
 };
 

@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
+// import React, { PropTypes } from 'react';
+import React from 'react';
 
 // Import calendar, settings components
 const LeftDashboard = () => (
-  <div className="leftdashboard col s12 m6 l3">
+  <div className="leftdashboard hide-on-small-only col m4">
     <div>Calendar</div>
     <div>Settings</div>
   </div>
 );
 
-LeftDashboard.propTypes = {
+// LeftDashboard.propTypes = {
 
-};
+// };
 
 export default LeftDashboard;
