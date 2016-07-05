@@ -4,7 +4,7 @@ import RightDashboard from './RightDashboard';
 import SpeechContainer from '../speech/SpeechContainer';
 
 const DashboardLayout = () => (
-  <div className="dashboardlayout">
+  <div className="dashboardlayout row">
     <LeftDashboard />
     <SpeechContainer />
     <RightDashboard />
