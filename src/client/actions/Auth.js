@@ -81,7 +81,7 @@ const redirectSignIn = () =>
 
 const redirectSignUp = () =>
   dispatch => {
-    dispatch(viewSignUp(REDIRECT_SIGNUP, false, 'signUp'));
+    dispatch(viewSignUp(REDIRECT_SIGNUP, 'signUp'));
   };
 
 export {
