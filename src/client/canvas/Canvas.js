@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 import React, { Component, PropTypes } from 'react';
 
-
 const _MIN_DIST = 5;
 const _MAX_DIST = 50;
 
@@ -217,7 +216,7 @@ class Canvas extends Component {
   render() {
     return (
       <div>
-        <div id="kavr-canvas" className="col-xs-12"></div>
+        <div id="kavr-canvas" className="col s12"></div>
       </div>
     );
   }

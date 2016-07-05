@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 const Speech = (props) => {
   const buttonType = props.isRecording ? 'stop' : 'start';
   return (
-    <div className="row speechText">
+    <div className="speechText col s12 m4">
       <h1 className="speech-title center-align">KA-VR</h1>
       <div className="listen-buttons col s12">
         <div className="col s2 offset-s5">

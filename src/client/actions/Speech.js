@@ -84,6 +84,8 @@ const callBrain = dataObj =>
         console.log('executing function:', action);
         // Calls function from brain here!
         eval(action)($, thing, dispatch, executeModal);
+        const u = new SpeechSynthesisUtterance('Here you go!');
+        speechSynthesis.speak(u);
       }
     })
     .catch(err => console.log('Error on Text Analyzer:', err));
@@ -105,9 +107,13 @@ const callTextAnalyzer = transcript =>
       if (data.error) {
         document.getElementById('moron').play();
         Materialize.toast('Sorry! Didn\'t understand that.', 3000);
+        const u = new SpeechSynthesisUtterance('Sorry! Didn\'t understand that.');
+        speechSynthesis.speak(u);
       } else {
         dispatch(receiveAnalysis(data.text, data));
         dispatch(callBrain(data));
+        const u = new SpeechSynthesisUtterance('Okay, understood.');
+        speechSynthesis.speak(u);
       }
     })
     .catch(err => console.log('Error on Text Analyzer', err));
