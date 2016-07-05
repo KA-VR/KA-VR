@@ -2,10 +2,12 @@
   .listen-buttons {
   }
   #start, #stop {
+    padding: 0;
     position: fixed;
-    width: 10%;
+    width: 100px;
     bottom: 10%;
-    left: 45%;
+    left: 50%;
+    margin-left: -50px;
   }
   .speech-title {
     padding-top: 100px;
