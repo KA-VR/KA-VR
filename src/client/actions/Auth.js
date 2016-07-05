@@ -16,16 +16,17 @@ const userSignin = (type, userData, signedIn, currentPage) => ({
   currentPage,
 });
 
-const userSignup = (type, data, state) => ({
+const userSignup = (type, userData, signedIn, currentPage) => ({
   type,
-  data,
-  state,
+  userData,
+  signedIn,
+  currentPage,
 });
 
-const userSignout = (type, data, state) => ({
+const userSignout = (type, signedIn, currentPage) => ({
   type,
-  data,
-  state,
+  signedIn,
+  currentPage,
 });
 
 const viewSignIn = (type, currentPage) => ({
@@ -43,7 +44,6 @@ const submitSignin = () =>
   dispatch => {
     const form = document.querySelector('#signin-form');
     const formData = serialize(form, { hash: true });
-    console.log(form, formData);
     auth.signin(formData, (res) => {
       console.log('RESPONSE on SIGNIN FROM SERVER: ', res);
       if (res.response) {
@@ -59,13 +59,19 @@ const submitSignup = () =>
   dispatch => {
     const form = document.querySelector('#signup');
     const formData = serialize(form, { hash: true });
-    console.log(form, formData);
-    dispatch(userSignup());
+    auth.signup(formData, (res) => {
+      if (res.response !== '/dashboard') {
+        console.log(res.response);
+      } else {
+        dispatch(userSignup(USER_SIGNUP, formData, true, 'dashboard'));
+      }
+    });
   };
 
 const executeSignout = () =>
   dispatch => {
-    dispatch(userSignout());
+    window.localStorage.clear();
+    dispatch(userSignout(USER_SIGNOUT, false, 'signIn'));
   };
 
 const redirectSignIn = () =>
@@ -75,7 +81,7 @@ const redirectSignIn = () =>
 
 const redirectSignUp = () =>
   dispatch => {
-    dispatch(viewSignUp(REDIRECT_SIGNUP, 'signUp'));
+    dispatch(viewSignUp(REDIRECT_SIGNUP, false, 'signUp'));
   };
 
 export {
