@@ -71,7 +71,7 @@ const submitSignup = () =>
 const executeSignout = () =>
   dispatch => {
     window.localStorage.clear();
-    document.cookie = "email=; expires=Thu, 01 Jan 1900 00:00:00 UTC";
+    document.cookie = 'email=; expires=Thu, 01 Jan 1900 00:00:00 UTC';
     dispatch(userSignout(USER_SIGNOUT, false, 'signIn'));
   };
 
