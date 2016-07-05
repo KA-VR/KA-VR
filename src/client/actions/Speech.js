@@ -138,4 +138,4 @@ const updateHistory = transcription => (
   dispatch => dispatch(addTranscription(transcription))
 );
 
-export { toggleRecording, updateHistory, callTextAnalyzer, };
+export { toggleRecording, updateHistory, callTextAnalyzer };
