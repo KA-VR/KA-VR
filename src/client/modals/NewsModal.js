@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 
-const SearchModal = (props) => (
-  <div id="search" className="modal bottom-sheet">
+const NewsModal = (props) => (
+  <div id="news" className="modal bottom-sheet">
     <div className="modal-content">
-      <h4>Search</h4>
+      <h4>News</h4>
       <ul className="collection">
         {props.modalState.search.map(result => (
           <li className="collection-item">
@@ -16,8 +16,8 @@ const SearchModal = (props) => (
   </div>
 );
 
-SearchModal.propTypes = {
+NewsModal.propTypes = {
   modalState: PropTypes.object.isRequired,
 };
 
-export default SearchModal;
+export default NewsModal;

@@ -1,0 +1,8 @@
+#survey {
+  .modal-footer {
+    background-color: rgba(0,0,0, 0.7);
+    button {
+      animation: glow-text-white infinite 3s;
+    }
+  }
+}
