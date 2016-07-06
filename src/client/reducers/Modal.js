@@ -89,6 +89,7 @@ const modalState = (state = {
       return Object.assign({}, state, {
         state: action.state,
         map: action.data,
+      });
     case OPEN_YELP_MODAL:
       return Object.assign({}, state, {
         state: action.state,
