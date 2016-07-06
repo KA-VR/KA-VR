@@ -8,6 +8,7 @@ import CalculationModal from './CalculationModal';
 import NewsModal from './NewsModal';
 import WeatherModal from './WeatherModal';
 import MapsModal from './MapsModal';
+import HelpModal from './HelpModal';
 
 const Modal = (props) => (
   <div>
@@ -20,6 +21,7 @@ const Modal = (props) => (
     <CalculationModal modalState={props.modalState} />
     <WeatherModal modalState={props.modalState} />
     <MapsModal modalState={props.modalState} />
+    <HelpModal modalState={props.modalState} />
   </div>
 );
 

@@ -65,7 +65,6 @@ class SpeechContainer extends Component {
           return true;
       }
     });
-    const { dispatch } = this.props;
     dispatch(getGeo());
   }
 
