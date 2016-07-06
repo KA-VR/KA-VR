@@ -36,17 +36,13 @@ class SpeechContainer extends Component {
       };
     }
     $(document).on('mousedown', event => {
-      if (event.target !== $('#command')) {
-        $('#command').blur();
-      }
+      if (event.target !== $('#command')) $('#command').blur();
     });
     $(document).on('keydown', event => {
       const command = $('#command').val();
       switch (event.keyCode) {
         case KEY_SPACEBAR:
-          if (!$('#command').is(':focus')) {
-            this.toggleRecording();
-          }
+          if (!$('#command').is(':focus')) this.toggleRecording();
           return true;
         case KEY_ENTER:
           if ($('#command').is(':focus') && command.length) {
