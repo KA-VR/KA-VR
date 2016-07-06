@@ -1,8 +1,9 @@
 /* global Materialize, $ */
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-eval */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Speech from './Speech';
+import { executeModal } from '../actions/Modal';
 import {
   toggleRecording,
   updateHistory,
@@ -57,8 +58,24 @@ class SpeechContainer extends Component {
         case KEY_ENTER:
           if ($('#command').is(':focus') && command.length) {
             $('#command').val('');
-            dispatch(callTextAnalyzer(command));
-            dispatch(updateHistory(command));
+            if (command.toLowerCase().trim() === 'run last action' ||
+                command.toLowerCase().trim() === 'run last command') {
+              let thing;
+              console.log('actions are:', this.props.actions);
+              const actions = this.props.actions;
+              if (actions.result.contexts instanceof Array &&
+                actions.result.contexts.length !== 0) {
+                thing = actions.result.contexts.join(' ');
+              } else {
+                thing = actions.result.keyword.name;
+              }
+              console.log('running last action:', actions.result.funct.code);
+              eval(actions.result.funct.code)($, thing, dispatch, executeModal, this.props);
+            } else {
+              console.log('Going to text analyze', command);
+              dispatch(callTextAnalyzer(command));
+              dispatch(updateHistory(command));
+            }
           }
           return true;
         default:
@@ -87,9 +104,23 @@ class SpeechContainer extends Component {
     const { dispatch } = this.props;
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
-        console.log('Going to text analyze', event.results[i][0].transcript);
-        dispatch(callTextAnalyzer(event.results[i][0].transcript));
-        dispatch(updateHistory(event.results[i][0].transcript));
+        console.log('transcription is:', event.results[i][0].transcript);
+        if (event.results[i][0].transcript.toLowerCase().trim() === 'run last action' ||
+            event.results[i][0].transcript.toLowerCase().trim() === 'run last command') {
+          let thing;
+          const actions = this.props.actions;
+          if (actions.result.contexts.length !== 0) {
+            thing = actions.result.contexts.join(' ');
+          } else {
+            thing = actions.result.keyword.name;
+          }
+          console.log('running last action:', actions.result.funct.code);
+          eval(actions.result.funct.code)($, thing, dispatch, executeModal, this.props);
+        } else {
+          console.log('Going to text analyze', event.results[i][0].transcript);
+          dispatch(callTextAnalyzer(event.results[i][0].transcript));
+          dispatch(updateHistory(event.results[i][0].transcript));
+        }
       }
     }
   }
@@ -117,13 +148,15 @@ SpeechContainer.propTypes = {
   callTextAnalyzer: PropTypes.func.isRequired,
   updateHistory: PropTypes.func.isRequired,
   isRecording: PropTypes.bool.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { isRecording, geoState } = state;
+  const { isRecording, geoState, actions } = state;
   return {
     isRecording,
     geoState,
+    actions,
   };
 };
 

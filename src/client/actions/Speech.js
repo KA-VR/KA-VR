@@ -73,7 +73,7 @@ const callBrain = dataObj =>
         speechSynthesis.speak(u);
       } else {
         dispatch(receiveAction(dataObj, response));
-        document.getElementById('english').play();
+        // document.getElementById('english').play();
         console.log('Contexts are: ', response.contexts);
         let thing;
         if (response.contexts.length !== 0) {
@@ -107,15 +107,15 @@ const callTextAnalyzer = transcript =>
     .then(data => data.json())
     .then(data => {
       if (data.error) {
-        document.getElementById('moron').play();
+        // document.getElementById('moron').play();
         Materialize.toast('Sorry! Didn\'t understand that.', 3000);
         const u = new SpeechSynthesisUtterance('Sorry! Didn\'t understand that.');
         speechSynthesis.speak(u);
       } else {
         dispatch(receiveAnalysis(data.text, data));
         dispatch(callBrain(data));
-        const u = new SpeechSynthesisUtterance('Okay, understood.');
-        speechSynthesis.speak(u);
+        // const u = new SpeechSynthesisUtterance('Okay, understood.');
+        // speechSynthesis.speak(u);
       }
     })
     .catch(err => console.log('Error on Text Analyzer', err));

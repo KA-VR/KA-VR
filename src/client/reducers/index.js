@@ -47,6 +47,7 @@ const analysis = (state = {
 const actions = (state = {
   isProcessing: false,
   result: {},
+  data: {},
 }, action) => {
   switch (action.type) {
     case REQUEST_ACTION:
@@ -57,6 +58,7 @@ const actions = (state = {
       return Object.assign({}, state, {
         isProcessing: false,
         result: action.response,
+        data: action.data,
       });
     default:
       return state;
