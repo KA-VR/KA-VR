@@ -6,6 +6,8 @@ import VideoModal from './VideoModal';
 import ImageModal from './ImageModal';
 import CalculationModal from './CalculationModal';
 import NewsModal from './NewsModal';
+import WeatherModal from './WeatherModal';
+import MapsModal from './MapsModal';
 
 const Modal = (props) => (
   <div>
@@ -16,6 +18,8 @@ const Modal = (props) => (
     <SearchModal modalState={props.modalState} />
     <VideoModal modalState={props.modalState} />
     <CalculationModal modalState={props.modalState} />
+    <WeatherModal modalState={props.modalState} />
+    <MapsModal modalState={props.modalState} />
   </div>
 );
 

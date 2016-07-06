@@ -69,6 +69,8 @@ const callBrain = dataObj =>
           object: dataObj.object,
           synonyms: dataObj.synonyms,
         }));
+        const u = new SpeechSynthesisUtterance('Didn\'t understand that. Can you clarify?');
+        speechSynthesis.speak(u);
       } else {
         dispatch(receiveAction(dataObj, response));
         document.getElementById('english').play();
@@ -84,8 +86,8 @@ const callBrain = dataObj =>
         console.log('executing function:', action);
         // Calls function from brain here!
         eval(action)($, thing, dispatch, executeModal);
-        const u = new SpeechSynthesisUtterance('Here you go!');
-        speechSynthesis.speak(u);
+        // const u = new SpeechSynthesisUtterance('Okay!');
+        // speechSynthesis.speak(u);
       }
     })
     .catch(err => console.log('Error on Text Analyzer:', err));
