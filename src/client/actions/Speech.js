@@ -86,8 +86,8 @@ const callBrain = dataObj =>
         console.log('executing function:', action);
         // Calls function from brain here!
         eval(action)($, thing, dispatch, executeModal);
-        const u = new SpeechSynthesisUtterance('Okay!');
-        speechSynthesis.speak(u);
+        // const u = new SpeechSynthesisUtterance('Okay!');
+        // speechSynthesis.speak(u);
       }
     })
     .catch(err => console.log('Error on Text Analyzer:', err));

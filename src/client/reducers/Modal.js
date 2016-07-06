@@ -6,6 +6,7 @@ import {
   OPEN_IMAGE_MODAL,
   OPEN_VIDEO_MODAL,
   OPEN_NEWS_MODAL,
+  OPEN_WEATHER_MODAL,
   COMPLETE_OPEN_MODAL,
   SUBMIT_MODAL,
 } from '../actions/ActionTypes';
@@ -18,6 +19,7 @@ const modalState = (state = {
   images: [],
   video: '',
   calculation: '',
+  weather: '',
 }, action) => {
   switch (action.type) {
     case OPEN_STANDARD_MODAL:
@@ -50,6 +52,11 @@ const modalState = (state = {
       return Object.assign({}, state, {
         state: action.state,
         video: action.data,
+      });
+    case OPEN_WEATHER_MODAL:
+      return Object.assign({}, state, {
+        state: action.state,
+        weather: action.data,
       });
     case OPEN_CALCULATION_MODAL:
       return Object.assign({}, state, {
