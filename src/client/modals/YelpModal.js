@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 
 const YelpModal = (props) => {
   const shops = props.modalState.yelpsearchresults.shops;
-  console.log('SHOPS:', shops);
   return (
     <div id="yelp" className="modal">
       <div className="modal-content">
@@ -10,8 +9,8 @@ const YelpModal = (props) => {
         <ul className="collection">
           {shops.map((result, key) => (
             <li key={key} className="collection-item">
-              <a href={result.url}><h5>{result.name}</h5></a>
-              <img src={result.image} alt="image"/>
+              <a href={result.url} target="_blank"><h5>{result.name}</h5></a>
+              <img src={result.image} alt="food" />
               <h6>{result.location}</h6>
               <h6>{result.city}, {result.state} {result.zip}</h6>
               <h6>Reviews: {result.reviews}</h6>
