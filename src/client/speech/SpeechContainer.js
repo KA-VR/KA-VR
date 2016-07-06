@@ -10,38 +10,75 @@ import {
   updateSurvey,
 } from '../actions';
 const KEY_SPACEBAR = 32;
+const KEY_ENTER = 13;
 
 class SpeechContainer extends Component {
   constructor(props) {
     super(props);
     this.toggleRecording = this.toggleRecording.bind(this);
     this.recognizer = null;
+    this.debounce = this.debounce.bind(this);
+    this.autoend = this.debounce(() => {
+      if (this.props.isRecording) this.toggleRecording();
+    }, 3000);
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
     if (!window.SpeechRecognition) {
       Materialize.toast('Speech Recognition not supported', 3000);
     } else {
       this.recognizer = new window.SpeechRecognition();
       this.recognizer.continuous = true;
+      this.recognizer.interimResults = true;
       this.recognizer.onresult = (event) => {
         this.updateTranscription(event);
+        if (this.props.isRecording) this.autoend();
       };
       // Listen for errors
       this.recognizer.onerror = (event) => {
         Materialize.toast(`Recognizer Error: ${event.message}`, 3000);
       };
     }
+    $(document).on('mousedown', event => {
+      if (event.target !== $('#command')) $('#command').blur();
+    });
     $(document).on('keydown', event => {
+      const command = $('#command').val();
       switch (event.keyCode) {
         case KEY_SPACEBAR:
-          this.toggleRecording();
-          return false;
+          if (!$('#command').is(':focus')) {
+            if (!this.props.isRecording) this.autoend();
+            this.toggleRecording();
+          }
+          return true;
+        case KEY_ENTER:
+          if ($('#command').is(':focus') && command.length) {
+            $('#command').val('');
+            dispatch(callTextAnalyzer(command));
+            dispatch(updateHistory(command));
+          }
+          return true;
         default:
           return true;
       }
     });
+  }
+
+  debounce(func, wait, immediate, ...args) {
+    let timeout = null;
+    return () => {
+      const context = this;
+      const later = () => {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      const callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
   }
 
   updateTranscription(event) {
