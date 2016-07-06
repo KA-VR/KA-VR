@@ -17,6 +17,10 @@ class SpeechContainer extends Component {
     super(props);
     this.toggleRecording = this.toggleRecording.bind(this);
     this.recognizer = null;
+    this.debounce = this.debounce.bind(this);
+    this.autoend = this.debounce(() => {
+      if (this.props.isRecording) this.toggleRecording();
+    }, 3000);
   }
 
   componentDidMount() {
@@ -27,8 +31,10 @@ class SpeechContainer extends Component {
     } else {
       this.recognizer = new window.SpeechRecognition();
       this.recognizer.continuous = true;
+      this.recognizer.interimResults = true;
       this.recognizer.onresult = (event) => {
         this.updateTranscription(event);
+        if (this.props.isRecording) this.autoend();
       };
       // Listen for errors
       this.recognizer.onerror = (event) => {
@@ -42,7 +48,10 @@ class SpeechContainer extends Component {
       const command = $('#command').val();
       switch (event.keyCode) {
         case KEY_SPACEBAR:
-          if (!$('#command').is(':focus')) this.toggleRecording();
+          if (!$('#command').is(':focus')) {
+            if (!this.props.isRecording) this.autoend();
+            this.toggleRecording();
+          }
           return true;
         case KEY_ENTER:
           if ($('#command').is(':focus') && command.length) {
@@ -55,6 +64,21 @@ class SpeechContainer extends Component {
           return true;
       }
     });
+  }
+
+  debounce(func, wait, immediate, ...args) {
+    let timeout = null;
+    return () => {
+      const context = this;
+      const later = () => {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      const callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
   }
 
   updateTranscription(event) {
