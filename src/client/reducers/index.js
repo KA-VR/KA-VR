@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { modalState, modalSubmit } from './Modal';
 import { authState } from './Auth';
 import { quoteState } from './Quotes';
+import { geoState } from './GeoLocation';
 import {
   TOGGLE_RECORDING,
   ADD_TRANSCRIPTION,
@@ -131,6 +132,7 @@ const rootReducer = combineReducers({
   modalSubmit,
   authState,
   quoteState,
+  geoState,
 });
 
 export default rootReducer;

@@ -4,9 +4,10 @@ import SignIn from './SignIn';
 import { submitSignin, redirectSignUp } from '../actions/Auth';
 
 const mapStateToProps = (state) => {
-  const { authState } = state;
+  const { authState, geoState } = state;
   return {
     authState,
+    geoState,
   };
 };
 
@@ -18,7 +19,6 @@ const mapDispatchToProps = dispatch => ({
   },
   redirSignUp: e => {
     e.preventDefault();
-    console.log('clicked');
     return dispatch(redirectSignUp());
   },
 });

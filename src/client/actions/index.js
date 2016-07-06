@@ -3,3 +3,4 @@
 export { toggleRecording, updateHistory, callTextAnalyzer } from './Speech';
 export { fetchNodes, toggleGetAllLabels } from './Canvas';
 export { executeModal, submitSurvey } from './Modal';
+export { getGeo } from './GeoLocation';
