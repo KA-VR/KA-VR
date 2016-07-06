@@ -35,8 +35,10 @@ const modalState = (state = {
       ex. "search weather of San Francisco"`,
     learning: `If you say something that KAVR is unsure about,
       a survey will show up that will allow it to learn from you!`,
+    yelpSearch: `search Yelp - Lets you search Yelp for places - 
+      ex: "search yelp for coffee shops in San Francisco"`,
   },
-  yelpsearchresults: [],
+  yelpsearchresults: { shops: [] },
 }, action) => {
   switch (action.type) {
     case OPEN_STANDARD_MODAL:
