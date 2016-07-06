@@ -46,7 +46,7 @@ const receiveAction = (data, response) => ({
 });
 
 const callBrain = dataObj =>
-  dispatch => {
+  (dispatch, getState) => {
     console.log('data going into brain', dataObj);
     dispatch(requestAction(dataObj));
     return fetch('http://localhost:7750/api/think', {
@@ -85,7 +85,7 @@ const callBrain = dataObj =>
         const action = response.funct.code;
         console.log('executing function:', action);
         // Calls function from brain here!
-        eval(action)($, thing, dispatch, executeModal);
+        eval(action)($, thing, dispatch, executeModal, getState());
         // const u = new SpeechSynthesisUtterance('Okay!');
         // speechSynthesis.speak(u);
       }

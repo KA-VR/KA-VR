@@ -8,6 +8,7 @@ import {
   updateHistory,
   callTextAnalyzer,
   updateSurvey,
+  getGeo,
 } from '../actions';
 const KEY_SPACEBAR = 32;
 
@@ -42,6 +43,8 @@ class SpeechContainer extends Component {
           return true;
       }
     });
+    const { dispatch } = this.props;
+    dispatch(getGeo());
   }
 
   updateTranscription(event) {
@@ -81,9 +84,10 @@ SpeechContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { isRecording } = state;
+  const { isRecording, geoState } = state;
   return {
     isRecording,
+    geoState,
   };
 };
 
