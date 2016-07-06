@@ -7,7 +7,7 @@ import {
 } from '../actions/ActionTypes';
 
 const authState = (state = {
-  signedIn: Boolean(localStorage.getItem('KAVR')),
+  signedIn: document.cookie === 'null',
   currentPage: '',
 }, action) => {
   switch (action.type) {

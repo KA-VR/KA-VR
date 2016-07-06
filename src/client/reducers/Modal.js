@@ -9,6 +9,7 @@ import {
   OPEN_WEATHER_MODAL,
   OPEN_MAPS_MODAL,
   OPEN_HELP_MODAL,
+  OPEN_YELP_MODAL,
   COMPLETE_OPEN_MODAL,
   SUBMIT_MODAL,
 } from '../actions/ActionTypes';
@@ -34,7 +35,10 @@ const modalState = (state = {
       ex. "search weather of San Francisco"`,
     learning: `If you say something that KAVR is unsure about,
       a survey will show up that will allow it to learn from you!`,
+    yelpSearch: `search Yelp - Lets you search Yelp for places - 
+      ex: "search yelp for coffee shops in San Francisco"`,
   },
+  yelpsearchresults: { shops: [] },
 }, action) => {
   switch (action.type) {
     case OPEN_STANDARD_MODAL:
@@ -87,6 +91,11 @@ const modalState = (state = {
       return Object.assign({}, state, {
         state: action.state,
         map: action.data,
+      });
+    case OPEN_YELP_MODAL:
+      return Object.assign({}, state, {
+        state: action.state,
+        yelpsearchresults: action.data,
       });
     case COMPLETE_OPEN_MODAL:
       return action.state;

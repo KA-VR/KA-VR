@@ -12,7 +12,7 @@ const App = ({ authState }) => {
   if (authState.currentPage === 'signUp') {
     return <SignUpContainer />;
   }
-  if (authState.currentPage === 'dashboard' || localStorage.getItem('KAVR')) {
+  if (authState.currentPage === 'dashboard' || document.cookie !== 'null') {
     return (
       <div>
         <CanvasContainer />
