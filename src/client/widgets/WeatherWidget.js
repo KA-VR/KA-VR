@@ -11,7 +11,7 @@ const WeatherWidget = ({ weatherState }) => (
 );
 
 WeatherWidget.propTypes = {
-  weatherState: PropTypes.func,
+  weatherState: PropTypes.object,
 };
 
 export default WeatherWidget;
