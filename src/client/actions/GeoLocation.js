@@ -1,6 +1,7 @@
 /* global $, Materialize */
 /* eslint-disable no-console, no-eval */
 import { GET_GEO_LOCATION } from './ActionTypes';
+import { getWeather } from './Weather';
 
 const getGeoAction = data => ({
   type: GET_GEO_LOCATION,
@@ -15,7 +16,7 @@ const getGeo = () =>
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       };
-      console.log('DO IT');
+      dispatch(getWeather(coords));
       dispatch(getGeoAction(coords));
     });
   };

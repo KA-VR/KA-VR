@@ -1,5 +1,6 @@
 // import React, { PropTypes } from 'react';
 import React, { PropTypes } from 'react';
+import WeatherContainer from '../widgets/WeatherContainer';
 
 // Import calendar, settings components
 const LeftDashboard = ({ signOut }) => (
@@ -11,6 +12,9 @@ const LeftDashboard = ({ signOut }) => (
     </button>
     <div>Calendar</div>
     <div>Settings</div>
+    <div>
+      <WeatherContainer />
+    </div>
   </div>
 );
 

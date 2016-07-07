@@ -12,3 +12,4 @@ export {
   completeAll,
   clearCompleted,
 } from './Todo';
+export { getWeather } from './Weather';
