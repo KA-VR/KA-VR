@@ -4,6 +4,7 @@ import { authState } from './Auth';
 import { quoteState } from './Quotes';
 import { geoState } from './GeoLocation';
 import { todos } from './Todos';
+import { weatherState } from './Weather';
 import {
   TOGGLE_RECORDING,
   ADD_TRANSCRIPTION,
@@ -137,6 +138,7 @@ const rootReducer = combineReducers({
   quoteState,
   geoState,
   todos,
+  weatherState,
 });
 
 export default rootReducer;
