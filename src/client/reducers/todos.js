@@ -7,15 +7,7 @@ import {
   CLEAR_COMPLETED,
 } from '../actions/ActionTypes';
 
-const initialState = [
-  {
-    text: 'Use Redux',
-    completed: false,
-    id: 0,
-  },
-];
-
-const todos = (state = initialState, action) => {
+const todos = (state = [], action) => {
   switch (action.type) {
     case ADD_TODO:
       return [

@@ -41,7 +41,7 @@ class Footer extends Component {
     if (completedCount > 0) {
       return (
         <button
-          className="clear-completed"
+          className="clear-completed waves-effect waves-light btn"
           onClick={onClearCompleted}
         >
           Clear completed

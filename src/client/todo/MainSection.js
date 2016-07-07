@@ -19,6 +19,8 @@ class MainSection extends Component {
     this.state = { filter: SHOW_ALL };
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
     this.handleShow = this.handleShow.bind(this);
+    this.renderToggleAll = this.renderToggleAll.bind(this);
+    this.renderFooter = this.renderFooter.bind(this);
   }
 
   handleClearCompleted() {
@@ -31,6 +33,7 @@ class MainSection extends Component {
 
   renderToggleAll(completedCount) {
     const { todos, actions } = this.props;
+    console.log('WHAT IS', actions);
     if (todos.length > 0) {
       return (
         <input

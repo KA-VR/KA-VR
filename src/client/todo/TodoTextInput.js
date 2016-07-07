@@ -4,9 +4,7 @@ import classnames from 'classnames';
 class TodoTextInput extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      text: this.props.text || '',
-    };
+    this.state = { text: this.props.text || '' };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
