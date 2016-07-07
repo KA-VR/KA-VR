@@ -11,6 +11,7 @@ import '../stylesheets/modal.scss';
 import '../stylesheets/surveyModal.scss';
 import '../stylesheets/videoModal.scss';
 import '../stylesheets/imageModal.scss';
+import '../stylesheets/yelpModal.scss';
 import '../stylesheets/dashboard.scss';
 import { connect } from 'react-redux';
 

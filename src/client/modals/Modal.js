@@ -9,6 +9,7 @@ import NewsModal from './NewsModal';
 import WeatherModal from './WeatherModal';
 import MapsModal from './MapsModal';
 import HelpModal from './HelpModal';
+import YelpModal from './YelpModal';
 
 const Modal = (props) => (
   <div>
@@ -22,6 +23,7 @@ const Modal = (props) => (
     <WeatherModal modalState={props.modalState} />
     <MapsModal modalState={props.modalState} />
     <HelpModal modalState={props.modalState} />
+    <YelpModal modalState={props.modalState} />
   </div>
 );
 
