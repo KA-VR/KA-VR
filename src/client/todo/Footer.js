@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
-import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../actions';
+import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../actions/ActionTypes';
 
 const FILTER_TITLES = {
   [SHOW_ALL]: 'All',
@@ -23,10 +23,11 @@ class Footer extends Component {
   renderFilterLink(filter) {
     const title = FILTER_TITLES[filter];
     const { filter: selectedFilter, onShow } = this.props;
-
     return (
       <a
-        className={classnames({ selected: filter === selectedFilter })}
+        className={
+          `waves-effect waves-light btn ${classnames({ selected: filter === selectedFilter })}`
+        }
         style={{ cursor: 'pointer' }}
         onClick={() => onShow(filter)}
       >
@@ -70,7 +71,7 @@ class Footer extends Component {
 Footer.propTypes = {
   completedCount: PropTypes.number.isRequired,
   activeCount: PropTypes.number.isRequired,
-  filter: PropTypes.string.isRequired,
+  filter: PropTypes.string,
   onClearCompleted: PropTypes.func.isRequired,
   onShow: PropTypes.func.isRequired,
 };
