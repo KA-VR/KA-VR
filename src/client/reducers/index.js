@@ -3,6 +3,7 @@ import { modalState, modalSubmit } from './Modal';
 import { authState } from './Auth';
 import { quoteState } from './Quotes';
 import { geoState } from './GeoLocation';
+import { todos } from './todos';
 import {
   TOGGLE_RECORDING,
   ADD_TRANSCRIPTION,
@@ -133,6 +134,7 @@ const rootReducer = combineReducers({
   authState,
   quoteState,
   geoState,
+  todos,
 });
 
 export default rootReducer;
