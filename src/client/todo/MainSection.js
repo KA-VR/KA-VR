@@ -33,7 +33,6 @@ class MainSection extends Component {
 
   renderToggleAll(completedCount) {
     const { todos, actions } = this.props;
-    console.log('WHAT IS', actions);
     if (todos.length > 0) {
       return (
         <input

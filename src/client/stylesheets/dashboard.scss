@@ -4,10 +4,19 @@
   .leftdashboard {
     background-color: rgba(0,0,0,0.9);
     position: relative;
+    border-radius: 2px;
+    .submit-button {
+      border-radius: 5px;
+      background-color: black !important;
+      border: 1px solid white;
+      margin: 10px 0 10px 25px;
+      font-size: 15px;
+    }
   }
 
   .rightdashboard {
     background-color: rgba(0,0,0,0.9);
     position: relative;
+    border-radius: 2px;
   }
 }

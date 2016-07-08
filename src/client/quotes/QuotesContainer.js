@@ -20,11 +20,9 @@ class QuotesContainer extends Component {
     const { quoteState } = this.props;
     const quote = quoteState.state;
     return (
-      <div className="quotes">
-        <span>
-          {quote.quoteAuthor ? `${quote.quoteAuthor}: ` : null}
-          {quote.quoteText}
-        </span>
+      <div id="quotes">
+        <span>{quote.quoteText}</span>
+        <p>{quote.quoteAuthor ? `${quote.quoteAuthor}` : null}</p>
       </div>
     );
   }

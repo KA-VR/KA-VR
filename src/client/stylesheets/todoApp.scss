@@ -1,13 +1,43 @@
 #todoApp {
   .todo-list {
-    height: 300px;
+    height: 200px;
     overflow: scroll;
     position: relative;
     z-index: 1;
   }
+
   .filters {
     li {
+      &:hover {
+        background-color: 'blue';
+      }
       display: inline-block;
+      margin: 0 10px;
     }
+  }
+  input[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    left: auto;
+    margin-top: 5px;
+    width: 18px;
+    height: 18px;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .view {
+    .destroy {
+      cursor: pointer;
+    }
+    label {
+      max-width: 195px;
+      line-height: 20px;
+      word-wrap: break-word;
+    }
+  }
+  .clear-completed {
+    background-color: black;
+    border-radius: 15px;
+    border: 1px solid;
+    margin-bottom: 10px;
   }
 }
