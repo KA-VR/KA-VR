@@ -50,7 +50,7 @@ const SurveyModal = (props) => (
               <label htmlFor={`verb${index}`}>{verb}</label>
             </p>
           ))}
-        </div>;
+        </div>
       </div>
       <div className="modal-footer">
         <button

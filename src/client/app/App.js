@@ -7,12 +7,11 @@ import SignInContainer from '../auth/SignInContainer';
 import SignUpContainer from '../auth/SignUpContainer';
 
 const App = ({ authState }) => {
-  console.log('Auth State: ', authState);
   // If the sign up view is true, render
   if (authState.currentPage === 'signUp') {
     return <SignUpContainer />;
   }
-  if (authState.currentPage === 'dashboard' || document.cookie !== 'null') {
+  if (authState.currentPage === 'dashboard' || document.cookie !== '') {
     return (
       <div>
         <CanvasContainer />

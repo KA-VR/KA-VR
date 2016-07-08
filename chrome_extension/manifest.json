@@ -16,5 +16,8 @@
     "http://news.google.com/",
     "activeTab",
     "geolocation"
-  ]
+  ],
+  "icons": {
+    "128": "ce.png"
+  }
 }
