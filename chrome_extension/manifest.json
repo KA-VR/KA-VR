@@ -13,6 +13,8 @@
    "default_popup": "popup.html"
   },
   "permissions": [
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+    "https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2",
     "http://news.google.com/",
     "activeTab",
     "geolocation"
