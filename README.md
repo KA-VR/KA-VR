@@ -1,3 +1,7 @@
+##**KA-VR** - Web Assistant for the World
+
+![LOGO](http://i64.tinypic.com/63y7uw.png)
+
 ## Description
 **KA-VR** is a virtual assistant that uses natural language processing to listen to a user's voice to execute tasks. Machine learning algorithms are implemented in such a way that **KA-VR** progressively learns a user's choice of words, such as actions, verbs, and context.
 
