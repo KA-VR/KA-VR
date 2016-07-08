@@ -3,7 +3,7 @@ import Validation from 'react-validation';
 
 const SignUp = ({ signUp, redirSignIn }) => (
   <div className="signup">
-    <h1 className="center-align">Sign Up</h1>
+    <h1 className="center-align">sign up</h1>
     <div className="container">
       <div className="row">
         <Validation.Form id="signup" className="col offset-m3 m6 s12">

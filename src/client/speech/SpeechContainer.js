@@ -22,7 +22,7 @@ class SpeechContainer extends Component {
     this.debounce = this.debounce.bind(this);
     this.autoend = this.debounce(() => {
       if (this.props.isRecording) this.toggleRecording();
-    }, 3000);
+    }, 2000);
   }
 
   componentDidMount() {
@@ -116,6 +116,24 @@ class SpeechContainer extends Component {
           }
           console.log('running last action:', actions.result.funct.code);
           eval(actions.result.funct.code)($, thing, dispatch, executeModal, this.props);
+        } else if (event.results[i][0].transcript.toLowerCase().trim() === 'turn light off') {
+          $.ajax({
+            url: 'http://newreactions.io/api/v1/kavr',
+            method: 'POST',
+            data: {
+              body: 'text turn off',
+              name: 'kavr',
+            },
+          });
+        } else if (event.results[i][0].transcript.toLowerCase().trim() === 'turn light on') {
+          $.ajax({
+            url: 'http://newreactions.io/api/v1/kavr',
+            method: 'POST',
+            data: {
+              body: 'text turn on',
+              name: 'kavr',
+            },
+          });
         } else {
           console.log('Going to text analyze', event.results[i][0].transcript);
           dispatch(callTextAnalyzer(event.results[i][0].transcript));
