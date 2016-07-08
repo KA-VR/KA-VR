@@ -79,7 +79,12 @@ class Canvas extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.center_speed = nextProps.isRecording ? 0.05 : 0.01;
+    if (!nextProps.isRecording) {
+      this.center_speed = 0.05;
+      setTimeout(() => {
+        this.center_speed = 0.01;
+      }, 3000);
+    }
     const { dispatch, labelSpheres, labelsStatus, toggleLabelStatus } = nextProps;
     if (labelSpheres.length === this.state.labels.length
         && labelsStatus === false && this.initRender) {
@@ -199,8 +204,8 @@ class Canvas extends Component {
       this.state.centerSphere.scale.z = 1;
     }
 
-    this.outerBall.rotation.z += 0.01;
-    this.outerBall.rotation.x += 0.01;
+    this.outerBall.rotation.z += this.center_speed;
+    this.outerBall.rotation.x += this.center_speed;
 
     for (let i = 0; i < this.state.innerBallArray.length; i++) {
       this.state.innerBallArray[i].rotation.z -= 0.05;
@@ -228,6 +233,7 @@ Canvas.propTypes = {
   fetchNodes: PropTypes.func.isRequired,
   labelSpheres: PropTypes.array,
   toggleLabelStatus: PropTypes.func.isRequired,
+  isRecording: PropTypes.bool.isRequired,
 };
 
 export default Canvas;
