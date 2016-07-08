@@ -15,5 +15,7 @@ mysql.config.js
 dump.rdb
 npm-debug.log
 
-# Ignore Chrome Bundle JS
+# Ignore CHrome Bundle JS
 /chrome_extension/bundle.js
+/chrome_extension/*.png
+!/chrome_extension/ce.png

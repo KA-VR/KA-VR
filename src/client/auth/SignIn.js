@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const SignIn = ({ signIn, redirSignUp }) => (
   <div className="signin">
-    <h1 className="center-align">Sign In</h1>
+    <h1 className="center-align">sign in</h1>
     <div className="container">
       <div className="row">
         <form id="signin-form" className="col offset-m3 m6 s12">
