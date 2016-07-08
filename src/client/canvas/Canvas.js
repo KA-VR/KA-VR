@@ -111,6 +111,7 @@ class Canvas extends Component {
     const sphereMaterial = new THREE.MeshBasicMaterial({
       color: 'purple',
       morphTargets: true,
+      wireframe: true,
     });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = x;
@@ -120,24 +121,14 @@ class Canvas extends Component {
   }
 
   centerSphere() {
-    const sphereGeometry = new THREE.SphereGeometry(180, 10, 10, 5, 6.3, 0, 3.1);
-    const sphereMaterial = new THREE.MeshLambertMaterial(
-      { color: '#6f2f08', emissive: '#87630d', wireframeLinewidth: 3, morphTargets: true }
-    );
+    const sphereGeometry = new THREE.SphereGeometry(150, 32, 16);
+    const sphereMaterial = new THREE.MeshNormalMaterial({ wireframe: true });
+
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = 0;
     sphere.position.y = 0;
     sphere.position.z = 0;
     this.outerBall.add(sphere);
-
-    // const spriteMaterial = new THREE.SpriteMaterial({
-    //   map: new THREE.ImageUtils.loadTexture('../assets/glow.png'),
-    //   useScreenCoordinates: false, alignment: THREE.SpriteAlignment,
-    //   color: 0x0000ff, transparent: false, blending: THREE.AdditiveBlending,
-    // });
-    // const sprite = new THREE.Sprite(spriteMaterial);
-    // sprite.scale.set(200, 200, 1.0);
-    // sphere.add(sprite);
 
     return sphere;
   }

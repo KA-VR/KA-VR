@@ -8,28 +8,21 @@ import { getQuote } from '../actions/Quotes';
 class QuotesContainer extends Component {
   constructor(props) {
     super(props);
-    this.updateQuote = this.updateQuote.bind(this);
     this.render = this.render.bind(this);
   }
 
-  updateQuote(e) {
-    e.preventDefault();
+  componentWillMount() {
     const { dispatch } = this.props;
     dispatch(getQuote());
   }
+
   render() {
     const { quoteState } = this.props;
     const quote = quoteState.state;
     return (
-      <div className="quotes">
-        <input
-          className="waves-effect theme2-bg waves-light"
-          type="submit" onClick={this.updateQuote}
-        />
-        <span>
-          {quote.quoteAuthor ? `${quote.quoteAuthor}: ` : null}
-          {quote.quoteText}
-        </span>
+      <div id="quotes" className="hide-on-small-only center-align">
+        <span>{quote.quoteText}</span>
+        <p>{quote.quoteAuthor ? `${quote.quoteAuthor}` : null}</p>
       </div>
     );
   }

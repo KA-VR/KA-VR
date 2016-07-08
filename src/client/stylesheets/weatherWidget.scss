@@ -1,0 +1,11 @@
+#weather-widget {
+  background-color: rgba(50, 50, 50, 0.5);
+  border-radius: 5px;
+  height: 72px;
+  margin: 20px 0 50px 0;
+  .weather-condition {
+    position: absolute;
+    margin-top: -12px;
+    margin-left: 10px;
+  }
+}

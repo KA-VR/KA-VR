@@ -48,10 +48,10 @@ class TodoItem extends Component {
           <label onDoubleClick={this.handleDoubleClick}>
             {todo.text}
           </label>
-          <button
-            className="destroy waves-effect waves-light btn"
+          <i
+            className="destroy right material-icons dp48"
             onClick={() => deleteTodo(todo.id)}
-          />
+          >error_outline</i>
         </div>
       );
     }

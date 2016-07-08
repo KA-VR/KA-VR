@@ -1,15 +1,21 @@
 .speechText {
+  height: 100%;
   .listen-buttons {
   }
   #start, #stop {
     padding: 0;
     position: fixed;
     width: 100px;
-    bottom: 10%;
+    bottom: 25px;
     left: 50%;
     margin-left: -50px;
   }
   .speech-title {
-    padding-top: 100px;
+    padding-top: 20px;
+  }
+
+  .input-field {
+    position: absolute;
+    bottom: 70px;
   }
 }

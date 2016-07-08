@@ -18,7 +18,7 @@ const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.static('../src/client'));
+app.use(express.static(resolve(__dirname, '../../assets')));
 
 // eslint-disable-next-line new-cap
 const server = require('http').Server(app);
@@ -36,8 +36,6 @@ app
   .use(expressValidator()) // Add express validation
   .use(cookieParser())
   .use(express.static(resolve(__dirname, '../client')))
-  // .use(express.static(resolve(__dirname, '../../src/client')))
-  // .use(express.static(resolve(__dirname, '../../src/client/assets')))
   .use(session({
     secret: 'wonky',
     resave: true,
