@@ -36,9 +36,8 @@ class Canvas extends Component {
     this.scene.add(this.outerBall);
 
     this.animate = this.animate.bind(this);
-
-    this.colors = { Verb: 'green', Context: 'yellow', Action: 'red',
-      Keyword: 'orange', Function: 'blue', Native: 'pink' };
+    this.colors = { Verb: '#9F0DFF', Context: '#550CE8', Action: '#0F00FF',
+      Keyword: '#0C39E8', Function: '#0D7EFF', Native: 'white' };
 
     this.mainPositions = [
       [0, 0, 500],
@@ -109,7 +108,7 @@ class Canvas extends Component {
   labelSphereMaker(x, y, z) {
     const sphereGeometry = new THREE.SphereGeometry(15, 8, 6, 0, 6.3, 0, 3.1);
     const sphereMaterial = new THREE.MeshBasicMaterial({
-      color: 'purple',
+      color: '#9C96FA',
       morphTargets: true,
       wireframe: true,
     });
@@ -122,7 +121,7 @@ class Canvas extends Component {
 
   centerSphere() {
     const sphereGeometry = new THREE.SphereGeometry(150, 32, 16);
-    const sphereMaterial = new THREE.MeshNormalMaterial({ wireframe: true });
+    const sphereMaterial = new THREE.MeshBasicMaterial({ color: '#6A1BBF', wireframe: true });
 
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = 0;
