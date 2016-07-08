@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 const signin = (userInfo, callback) => {
   $.ajax({
-    url: '/signin',
+    url: 'http://localhost:3000/signin',
     method: 'POST',
     data: userInfo,
     success: (data) => {
@@ -21,7 +21,7 @@ const signin = (userInfo, callback) => {
 
 const signup = (userInfo, callback) => {
   $.ajax({
-    url: '/signup',
+    url: 'http://localhost:3000/signup',
     type: 'POST',
     dataType: 'json',
     data: userInfo,
