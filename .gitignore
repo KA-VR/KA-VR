@@ -15,5 +15,5 @@ mysql.config.js
 dump.rdb
 npm-debug.log
 
-# Ignore CHrome Bundle JS
+# Ignore Chrome Bundle JS
 /chrome_extension/bundle.js
