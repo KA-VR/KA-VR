@@ -19,7 +19,7 @@ const Modal = (props) => (
     <StandardModal modalState={props.modalState} />
     <SearchModal modalState={props.modalState} />
     <VideoModal modalState={props.modalState} />
-    <CalculationModal modalState={props.modalState} />
+    <CalculationModal actions={props.actions} modalState={props.modalState} />
     <WeatherModal modalState={props.modalState} />
     <MapsModal modalState={props.modalState} />
     <HelpModal modalState={props.modalState} />
@@ -30,6 +30,7 @@ const Modal = (props) => (
 
 Modal.propTypes = {
   modalState: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   modalSubmit: PropTypes.func.isRequired,
 };
 

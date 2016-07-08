@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 const SearchModal = (props) => (
   <div id="search" className="modal bottom-sheet">
     <div className="modal-content">
-      <h4>Search</h4>
+      <h4 className="center-align">Search</h4>
       <ul className="collection">
         {props.modalState.search.map((result, key) => (
           <li key={key} className="collection-item">

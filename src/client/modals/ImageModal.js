@@ -23,8 +23,6 @@ const ImageModal = (props) => {
     <div>
       <div id="image" className="modal">
         <div className="modal-content row">
-          <h4>Image Modal</h4>
-          <p>Standard</p>
           {rows}
         </div>
       </div>

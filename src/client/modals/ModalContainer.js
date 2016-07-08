@@ -3,9 +3,10 @@ import { submitSurvey } from '../actions';
 import Modal from './Modal';
 
 const mapStateToProps = (state) => {
-  const { modalState } = state;
+  const { modalState, actions } = state;
   return {
     modalState,
+    actions,
   };
 };
 
