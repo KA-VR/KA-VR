@@ -6,13 +6,19 @@
     }
     #start, #stop {
       position: fixed;
-      width: 30%;
-      left: 35%;
+      width: 100px;
+      left: 50%;
       top: 10%;
+      margin-left: -50px;
     }
     .speech-title {
       padding-top: 100px;
     }
+  }
+  #command {
+    bottom: 0;
+    width: 90%;
+    position: fixed;
   }
 }
 
