@@ -18,3 +18,4 @@ npm-debug.log
 # Ignore CHrome Bundle JS
 /chrome_extension/bundle.js
 /chrome_extension/*.png
+!/chrome_extension/ce.png
