@@ -32,7 +32,9 @@ const SignUp = ({ signUp, redirSignIn }) => (
             placeholder="email"
             validations={[{ rule: 'isEmail' }]}
           />
-          <button className="submit-button waves-effect waves-light btn" onClick={signUp}>Submit</button>
+          <button className="submit-button waves-effect waves-light btn" onClick={signUp}>
+            Submit
+          </button>
         </Validation.Form>
         <div className="col s12 offset-m3 m6 link">
           <a onClick={redirSignIn}>already have an account ? Sign in</a>
