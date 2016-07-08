@@ -111,6 +111,7 @@ class Canvas extends Component {
     const sphereMaterial = new THREE.MeshBasicMaterial({
       color: 'purple',
       morphTargets: true,
+      wireframe: true,
     });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = x;
@@ -121,9 +122,11 @@ class Canvas extends Component {
 
   centerSphere() {
     const sphereGeometry = new THREE.SphereGeometry(180, 10, 10, 5, 6.3, 0, 3.1);
-    const sphereMaterial = new THREE.MeshLambertMaterial(
-      { color: '#6f2f08', emissive: '#87630d', wireframeLinewidth: 3, morphTargets: true }
-    );
+    const sphereMaterial = new THREE.MeshLambertMaterial({
+      wireframe: true,
+      wireframeLinewidth: 3,
+      morphTargets: true,
+    });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.x = 0;
     sphere.position.y = 0;

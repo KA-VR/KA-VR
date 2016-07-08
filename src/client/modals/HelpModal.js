@@ -18,11 +18,6 @@ const HelpModal = () => (
       <p>Learning: `If you say something that KAVR is unsure about,
       a survey will show up that will allow it to learn from you!`</p>
     </div>
-    <div className="modal-footer">
-      <a href="#!" className=" modal-action modal-close waves-effect waves-green btn-flat">
-        Close
-      </a>
-    </div>
   </div>
 );
 

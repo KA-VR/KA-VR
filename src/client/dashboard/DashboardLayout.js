@@ -8,6 +8,7 @@ const DashboardLayout = () => (
     <LeftDashboardContainer />
     <SpeechContainer />
     <RightDashboardContainer />
+    <div className="logo"></div>
   </div>
 );
 

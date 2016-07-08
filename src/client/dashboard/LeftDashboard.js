@@ -5,14 +5,14 @@ import WeatherContainer from '../widgets/WeatherContainer';
 // Import calendar, settings components
 const LeftDashboard = ({ signOut }) => (
   <div className="leftdashboard hide-on-small-only col m3">
-    <button
-      className="submit-button"
-      onClick={signOut}
-    >Signout
-    </button>
-    <div>
-      <WeatherContainer />
+    <div className="container">
+      <button
+        className="submit-button"
+        onClick={signOut}
+      >Signout
+      </button>
     </div>
+    <WeatherContainer />
   </div>
 );
 
