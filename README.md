@@ -96,6 +96,8 @@ mysql.server start
 npm run seed
 ```
 
+Download Neo4j, open the directory of the database, and start the application.
+
 Go to localhost:3000 to see the application.
 
 ## Architecture
