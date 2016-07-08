@@ -7,8 +7,8 @@ const Speech = (props) => {
     <div className="speechText col s12 m6">
       <QuotesContainer />
       <div className="input-field col s6">
-        <input placeholder="Command" id="command" type="text" className="validate" />
-        <label htmlFor="command">Command</label>
+        <input id="command" type="text" className="validate" />
+        <label htmlFor="command">Type in a Command</label>
       </div>
       <div className="listen-buttons col s12">
         <div className="col s2 offset-s5">
