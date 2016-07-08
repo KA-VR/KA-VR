@@ -49,7 +49,7 @@ class TodoItem extends Component {
             {todo.text}
           </label>
           <button
-            className="destroy waves-effect waves-light btn"
+            className="destroy overlay-canvas"
             onClick={() => deleteTodo(todo.id)}
           />
         </div>

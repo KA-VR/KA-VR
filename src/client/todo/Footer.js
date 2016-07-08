@@ -26,7 +26,7 @@ class Footer extends Component {
     return (
       <a
         className={
-          `waves-effect waves-light btn ${classnames({ selected: filter === selectedFilter })}`
+          `overlay-canvas ${classnames({ selected: filter === selectedFilter })}`
         }
         style={{ cursor: 'pointer' }}
         onClick={() => onShow(filter)}
@@ -41,7 +41,7 @@ class Footer extends Component {
     if (completedCount > 0) {
       return (
         <button
-          className="clear-completed waves-effect waves-light btn"
+          className="clear-completed overlay-canvas"
           onClick={onClearCompleted}
         >
           Clear completed
