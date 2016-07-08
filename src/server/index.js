@@ -3,6 +3,7 @@ export default `
   <html>
     <head>
       <title>KAVR</title>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Black+Ops+One|Changa|Cormorant+Unicase" rel="stylesheet">
       <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
