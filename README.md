@@ -1,6 +1,3 @@
-![Landing Page]()
-![Dashboard]()
-
 ## Description
 **KA-VR** is a virtual assistant that uses natural language processing to listen to a user's voice to execute tasks. Machine learning algorithms are implemented in such a way that **KA-VR** progressively learns a user's choice of words, such as actions, verbs, and context.
 
@@ -57,16 +54,49 @@ npm install
 Create a .env file that includes the following API keys (Open Weather Map, YouTube, Yelp) in the apiserver service root directory:
 ```
 APPID=''
+```
+```
 YOUTUBE_API_KEY=''
+```
+```
 YELP_CONSUMER_KEY=''
+```
+```
 YELP_CONSUMER_SECRET=''
+```
+```
 YELP_TOKEN=''
+```
+```
 YELP_TOKEN_SECRET=''
 ```
 
+On the main start folder, run:
+
+```
+bash start.sh
+```
+
+On separate terminal windows, run:
+
+```
+mongod
+```
+```
+redis-server
+```
+```
+mysql.server start
+```
+```
+npm run seed
+```
+
+Go to localhost:3000 to see the application.
+
 ## Architecture
 ### High Level Architecture
-![Architecture](http://i63.tinypic.com/2j0h92w.png)
+![Architecture](http://i67.tinypic.com/29ntd2w.png)
 
 # Future Road Map
 - Improve machine learning algorithm
