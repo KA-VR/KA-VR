@@ -16,7 +16,7 @@ const Speech = (props) => {
       <button
         onClick={props.toggleRecording}
         id={buttonType}
-        className="waves-effect theme2-bg waves-light btn"
+        className="waves-effect waves-light btn"
       >
         {buttonType}
       </button>

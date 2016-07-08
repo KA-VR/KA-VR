@@ -10,8 +10,6 @@ const LeftDashboard = ({ signOut }) => (
       onClick={signOut}
     >Signout
     </button>
-    <div>Calendar</div>
-    <div>Settings</div>
     <div>
       <WeatherContainer />
     </div>

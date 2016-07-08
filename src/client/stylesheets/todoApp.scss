@@ -1,0 +1,13 @@
+#todoApp {
+  .todo-list {
+    height: 300px;
+    overflow: scroll;
+    position: relative;
+    z-index: 1;
+  }
+  .filters {
+    li {
+      display: inline-block;
+    }
+  }
+}
