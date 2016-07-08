@@ -20,7 +20,7 @@ class QuotesContainer extends Component {
     const { quoteState } = this.props;
     const quote = quoteState.state;
     return (
-      <div id="quotes">
+      <div id="quotes" className="center-align">
         <span>{quote.quoteText}</span>
         <p>{quote.quoteAuthor ? `${quote.quoteAuthor}` : null}</p>
       </div>

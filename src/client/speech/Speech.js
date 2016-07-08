@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import QuotesContainer from '../quotes/QuotesContainer';
 
 const Speech = (props) => {
   const buttonType = props.isRecording ? 'stop' : 'start';
   return (
     <div className="speechText col s12 m6">
-      <h1 className="speech-title center-align">KA-VR</h1>
+      <QuotesContainer />
       <div className="input-field col s6">
         <input placeholder="Command" id="command" type="text" className="validate" />
         <label htmlFor="command">Command</label>
