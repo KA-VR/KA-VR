@@ -70,7 +70,53 @@ class SpeechContainer extends Component {
                 thing = actions.result.keyword.name;
               }
               console.log('running last action:', actions.result.funct.code);
+              Materialize.toast('Running last action.', 3000);
+              const u = new SpeechSynthesisUtterance('Running last action.');
+              speechSynthesis.speak(u);
               eval(actions.result.funct.code)($, thing, dispatch, executeModal, this.props);
+            } else if (command.toLowerCase().trim() === 'turn light off' ||
+                command.toLowerCase().trim() === 'turn lights off') {
+              $.ajax({
+                url: 'http://newreactions.io/api/v1/kavr',
+                method: 'POST',
+                data: {
+                  body: 'text turn off',
+                  name: 'kavr',
+                },
+              });
+              Materialize.toast('Turning light off.', 3000);
+              const u = new SpeechSynthesisUtterance('Lights off.');
+              speechSynthesis.speak(u);
+            } else if (command.toLowerCase().trim() === 'turn light on' ||
+               command.toLowerCase().trim() === 'turn lights on') {
+              $.ajax({
+                url: 'http://newreactions.io/api/v1/kavr',
+                method: 'POST',
+                data: {
+                  body: 'text turn on',
+                  name: 'kavr',
+                },
+              });
+              Materialize.toast('Turning light on.', 3000);
+              const u = new SpeechSynthesisUtterance('Lights on.');
+              speechSynthesis.speak(u);
+            } else if (command.toLowerCase().trim() === 'caviar introduce yourself') {
+              const u = new SpeechSynthesisUtterance(`
+                Hello hack reactor. My name is caviar. I am the greatest. I am a web assistant
+                for the world. I can perform various tasks ranging from searching the web to
+                playing your favorite video. I can even turn on the light. Check it out.
+              `);
+              speechSynthesis.speak(u);
+              u.onend = () => {
+                $.ajax({
+                  url: 'http://newreactions.io/api/v1/kavr',
+                  method: 'POST',
+                  data: {
+                    body: 'text turn on',
+                    name: 'kavr',
+                  },
+                });
+              };
             } else {
               console.log('Going to text analyze', command);
               dispatch(callTextAnalyzer(command));
@@ -104,9 +150,10 @@ class SpeechContainer extends Component {
     const { dispatch } = this.props;
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
-        console.log('transcription is:', event.results[i][0].transcript);
-        if (event.results[i][0].transcript.toLowerCase().trim() === 'run last action' ||
-            event.results[i][0].transcript.toLowerCase().trim() === 'run last command') {
+        const finalTranscription = event.results[i][0].transcript;
+        console.log('transcription is:', finalTranscription);
+        if (finalTranscription.toLowerCase().trim() === 'run last action' ||
+            finalTranscription.toLowerCase().trim() === 'run last command') {
           let thing;
           const actions = this.props.actions;
           if (actions.result.contexts.length !== 0) {
@@ -115,8 +162,12 @@ class SpeechContainer extends Component {
             thing = actions.result.keyword.name;
           }
           console.log('running last action:', actions.result.funct.code);
+          Materialize.toast('Running last action.', 3000);
+          const u = new SpeechSynthesisUtterance('Running last action.');
+          speechSynthesis.speak(u);
           eval(actions.result.funct.code)($, thing, dispatch, executeModal, this.props);
-        } else if (event.results[i][0].transcript.toLowerCase().trim() === 'turn light off') {
+        } else if (finalTranscription.toLowerCase().trim() === 'turn light off' ||
+            finalTranscription.toLowerCase().trim() === 'turn lights off') {
           $.ajax({
             url: 'http://newreactions.io/api/v1/kavr',
             method: 'POST',
@@ -125,7 +176,11 @@ class SpeechContainer extends Component {
               name: 'kavr',
             },
           });
-        } else if (event.results[i][0].transcript.toLowerCase().trim() === 'turn light on') {
+          Materialize.toast('Turning light off.', 3000);
+          const u = new SpeechSynthesisUtterance('Lights off.');
+          speechSynthesis.speak(u);
+        } else if (finalTranscription.toLowerCase().trim() === 'turn light on' ||
+            finalTranscription.toLowerCase().trim() === 'turn lights on') {
           $.ajax({
             url: 'http://newreactions.io/api/v1/kavr',
             method: 'POST',
@@ -134,10 +189,30 @@ class SpeechContainer extends Component {
               name: 'kavr',
             },
           });
+          Materialize.toast('Turning light on.', 3000);
+          const u = new SpeechSynthesisUtterance('Lights on.');
+          speechSynthesis.speak(u);
+        } else if (finalTranscription.toLowerCase().trim() === 'caviar introduce yourself') {
+          const u = new SpeechSynthesisUtterance(`
+            Hello hack reactor. My name is caviar. I am the greatest. I am a web assistant
+            for the world. I can perform various tasks ranging from searching the web to
+            playing your favorite video. I can even turn on the light. Check it out.
+          `);
+          speechSynthesis.speak(u);
+          u.onend = () => {
+            $.ajax({
+              url: 'http://newreactions.io/api/v1/kavr',
+              method: 'POST',
+              data: {
+                body: 'text turn on',
+                name: 'kavr',
+              },
+            });
+          };
         } else {
-          console.log('Going to text analyze', event.results[i][0].transcript);
-          dispatch(callTextAnalyzer(event.results[i][0].transcript));
-          dispatch(updateHistory(event.results[i][0].transcript));
+          console.log('Going to text analyze', finalTranscription);
+          dispatch(callTextAnalyzer(finalTranscription));
+          dispatch(updateHistory(finalTranscription));
         }
       }
     }
