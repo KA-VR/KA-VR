@@ -13,7 +13,9 @@
     "test": "mocha test/browser.js test/**/*",
     "test:watch": "mocha tests/client/components/* --compilers js:babel-core/register --watch --reporter min",
     "lint": "eslint --quiet src/",
-    "start": "",
+    "start": "node prod",
+    "build": "webpack --progress --config webpack-prod.config.js && babel src/server -d prod/server",
+    "start:production": "node prod/server/server.js",
     "watch-server": "babel --watch src/server -d dev/server",
     "watch-client": "webpack --watch --progress"
   },
@@ -69,6 +71,7 @@
     "validator": "^5.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.10.1",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.9.0",

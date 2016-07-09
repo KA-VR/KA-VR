@@ -4,6 +4,7 @@
 # Development and Distribution Files
 /dev
 /dist
+/prod
 
 # Configuration Files
 .env

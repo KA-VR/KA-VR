@@ -6,6 +6,7 @@ package.json
 
 # Ignore Webpack Configs
 webpack.config.js
+webpack-prod.config.js
 chrome.webpack.config.js
 
 # Ignore Chrome Extension Files
@@ -21,3 +22,4 @@ README.md
 npm-debug.log
 .gitignore
 .eslintrc
+Dockerfile
