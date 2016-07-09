@@ -18,6 +18,7 @@ import '../stylesheets/dashboard.scss';
 import '../stylesheets/todoApp.scss';
 import '../stylesheets/weatherWidget.scss';
 import '../stylesheets/quotes.scss';
+import '../stylesheets/mapModal.scss';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
