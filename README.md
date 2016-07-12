@@ -1,5 +1,7 @@
 ##**KA-VR** - Web Assistant for the World
 
+![KA-VR](http://i67.tinypic.com/m9riao.png)
+
 ![LOGO](http://i64.tinypic.com/63y7uw.png)
 
 ## Description
@@ -27,6 +29,8 @@
 
 ##Example / Usage
 Sign up for an account by going through the user flow. Once an account is established, voice commands can be used to search for web images, grab a video, get the weather for a location, or bring up top restaurant recommendations.
+
+![GIF](http://i63.tinypic.com/20a31qc.gif)
 
 *Example Voice Commands:*
 
