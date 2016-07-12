@@ -30,7 +30,7 @@
 ##Example / Usage
 Sign up for an account by going through the user flow. Once an account is established, voice commands can be used to search for web images, grab a video, get the weather for a location, or bring up top restaurant recommendations.
 
-![GIF](http://gifmaker.cc/PlayGIFAnimation.php?folder=20160711044D6t7g0KVTe9OEiuwmaHdo&file=output_ujPI7z.gif)
+![GIF](http://i63.tinypic.com/20a31qc.gif)
 
 *Example Voice Commands:*
 
