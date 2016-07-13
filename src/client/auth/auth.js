@@ -1,5 +1,6 @@
 /* eslint-disable no-console*/
-import $ from 'jquery';
+/* global $ */
+// import $ from 'jquery';
 
 const signin = (userInfo, callback) => {
   $.ajax({

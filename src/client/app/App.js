@@ -3,25 +3,16 @@ import React, { PropTypes } from 'react';
 import CanvasContainer from '../canvas/CanvasContainer';
 import ModalContainer from '../modals/ModalContainer';
 import DashboardLayout from '../dashboard/DashboardLayout';
-import SignInContainer from '../auth/SignInContainer';
-import SignUpContainer from '../auth/SignUpContainer';
+// import SignInContainer from '../auth/SignInContainer';
+// import SignUpContainer from '../auth/SignUpContainer';
 
-const App = ({ authState }) => {
-  // If the sign up view is true, render
-  if (authState.currentPage === 'signUp') {
-    return <SignUpContainer />;
-  }
-  if (authState.currentPage === 'dashboard' || document.cookie !== '') {
-    return (
-      <div>
-        <CanvasContainer />
-        <DashboardLayout />
-        <ModalContainer />
-      </div>
-    );
-  }
-  return <SignInContainer />;
-};
+const App = () => (
+  <div>
+    <CanvasContainer />
+    <DashboardLayout />
+    <ModalContainer />
+  </div>
+);
 
 App.propTypes = {
   authState: PropTypes.object,

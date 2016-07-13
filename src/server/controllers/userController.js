@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable */
 import redis from 'redis';
 
 const db = redis.createClient();
