@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   USER_SIGNIN,
   USER_SIGNUP,
@@ -5,7 +6,7 @@ import {
   REDIRECT_SIGNIN,
   REDIRECT_SIGNUP,
 } from '../actions/ActionTypes';
-import serialize from 'form-serialize';
+// import serialize from 'form-serialize';
 import auth from '../auth/auth';
 
 // Create auth action creators

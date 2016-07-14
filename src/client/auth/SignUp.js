@@ -1,5 +1,6 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
-import Validation from 'react-validation';
+// import Validation from 'react-validation';
 
 const SignUp = ({ signUp, redirSignIn }) => (
   <div className="signup">

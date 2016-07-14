@@ -14,6 +14,9 @@
 dump.rdb
 npm-debug.log
 
+# Ignore authentication
+/src/server/authentication
+
 # Ignore CHrome Bundle JS
 /chrome_extension/bundle.js
 /chrome_extension/*.png
