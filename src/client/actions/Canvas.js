@@ -48,6 +48,7 @@ const fetchNodes = type => (
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Headers': '*',
       },
       body: JSON.stringify({ type }),
     })
