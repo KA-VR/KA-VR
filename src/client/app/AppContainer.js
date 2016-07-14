@@ -19,6 +19,7 @@ import '../stylesheets/todoApp.scss';
 import '../stylesheets/weatherWidget.scss';
 import '../stylesheets/quotes.scss';
 import '../stylesheets/mapModal.scss';
+import '../assets/kavr-white-05.png';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
