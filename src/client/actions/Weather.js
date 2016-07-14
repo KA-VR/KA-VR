@@ -2,6 +2,7 @@
 /* eslint-disable no-console, no-eval */
 import { GET_WEATHER } from './ActionTypes';
 import fetch from 'isomorphic-fetch';
+import url from '../url.config';
 
 const getWeatherAction = data => ({
   type: GET_WEATHER,
@@ -10,7 +11,7 @@ const getWeatherAction = data => ({
 
 const getWeather = (coords) =>
   dispatch => {
-    fetch('http://localhost:8080/api/weather', {
+    fetch(`${url.api}/api/weather`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

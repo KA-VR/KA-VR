@@ -2,6 +2,7 @@
 /* eslint-disable no-console, no-eval */
 import { GET_QUOTE } from './ActionTypes';
 import fetch from 'isomorphic-fetch';
+import url from '../url.config';
 
 const getQuoteAction = data => ({
   type: GET_QUOTE,
@@ -10,7 +11,7 @@ const getQuoteAction = data => ({
 
 const getQuote = () =>
   dispatch => (
-    fetch('http://localhost:8080/api/quote', {
+    fetch(`${url.api}/api/quote`, {
       method: 'POST',
     })
     .then(data => data.json())

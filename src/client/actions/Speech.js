@@ -97,7 +97,7 @@ const callBrain = dataObj =>
 const callTextAnalyzer = transcript =>
   dispatch => {
     dispatch(requestAnalysis(transcript));
-    return fetch(`${url.api}/api/analyze`, {
+    return fetch(`${url.text}/api/analyze`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

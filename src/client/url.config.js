@@ -1,4 +1,5 @@
 export default {
   brain: 'http://brainml.herokuapp.com',
-  api: 'http://textanalyze.herokuapp.com',
+  text: 'http://textanalyze.herokuapp.com',
+  api: 'http://kavrapi.herokuapp.com',
 };
