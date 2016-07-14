@@ -54,4 +54,4 @@ app
   // .use(apiRoute)
   .use(indexRoute);
 
-server.listen(port, host);
+server.listen(3000);
