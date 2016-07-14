@@ -1,6 +1,7 @@
 /* global $, Materialize */
 /* eslint-disable no-console, no-eval */
 import fetch from 'isomorphic-fetch';
+import url from '../url.config';
 import {
   REQUEST_NODE_LABEL,
   RECEIVE_NODE_LABEL,
@@ -42,7 +43,7 @@ const toggleGetAllLabels = status => (
 const fetchNodes = type => (
   dispatch => {
     dispatch(requestNodeLabel(type));
-    return fetch('http://localhost:7750/api/nodes', {
+    return fetch(`${url.brain}/api/nodes`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

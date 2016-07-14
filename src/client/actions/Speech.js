@@ -1,5 +1,6 @@
 /* global $, Materialize */
 /* eslint-disable no-console, no-eval */
+import url from '../url.config';
 import {
   TOGGLE_RECORDING,
   ADD_TRANSCRIPTION,
@@ -49,7 +50,7 @@ const callBrain = dataObj =>
   (dispatch, getState) => {
     console.log('data going into brain', dataObj);
     dispatch(requestAction(dataObj));
-    return fetch('http://localhost:7750/api/think', {
+    return fetch(`${url.brain}/api/think`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -96,7 +97,7 @@ const callBrain = dataObj =>
 const callTextAnalyzer = transcript =>
   dispatch => {
     dispatch(requestAnalysis(transcript));
-    return fetch('http://localhost:8000/api/analyze', {
+    return fetch(`${url.api}/api/analyze`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
