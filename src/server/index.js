@@ -22,7 +22,7 @@ export default `
       <div id="app"></div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r78/three.min.js"></script>
-      <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+      <script src="https://www.dropbox.com/s/7hpwm7jfrf0x9sj/OrbitControls.js?dl=0"></script>
       <script src="bundle.js"></script>
     </body>
   </html>
