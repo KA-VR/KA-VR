@@ -3,15 +3,8 @@ import React, { PropTypes } from 'react';
 import WeatherContainer from '../widgets/WeatherContainer';
 
 // Import calendar, settings components
-const LeftDashboard = ({ signOut }) => (
+const LeftDashboard = () => (
   <div className="leftdashboard hide-on-small-only col m3">
-    <div className="container">
-      <button
-        className="submit-button"
-        onClick={signOut}
-      >Signout
-      </button>
-    </div>
     <WeatherContainer />
   </div>
 );

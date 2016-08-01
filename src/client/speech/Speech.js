@@ -8,7 +8,7 @@ const Speech = (props) => {
       <QuotesContainer />
       <div className="input-field col s6">
         <input id="command" type="text" className="validate" />
-        <label htmlFor="command">Type in a Command</label>
+        <label htmlFor="command">Type in a Command or Press Spacebar to Speak</label>
       </div>
       <div className="listen-buttons col s12">
         <div className="col s2 offset-s5">
