@@ -18,7 +18,7 @@ const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.static(resolve(__dirname, '../../assets')));
+// app.use(express.static(resolve(__dirname, '../client/assets')));
 
 // eslint-disable-next-line new-cap
 const server = require('http').Server(app);
@@ -54,4 +54,4 @@ app
   // .use(apiRoute)
   .use(indexRoute);
 
-server.listen(port, host);
+server.listen(port);

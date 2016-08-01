@@ -5,6 +5,7 @@ module.exports = {
   entry: './src/client',
   output: { 
     path: path.join(__dirname, './dev/client'),
+    publicPath: './',
     filename: 'bundle.js'
   },
   module: {
@@ -17,15 +18,18 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       },
+      
+      {
+        test: /\.(jpe?g|png|gif|svg|ico)$/i,
+        loaders: [
+            'file?hash=sha512&digest=hex&name=[name].[ext]',
+            'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
+      },
       {
         test: /\.scss$/,
         loaders: ["style", "css", "sass"]
-      },
-      {
-        //IMAGE LOADER
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loader:'file'
-      },
+      }
     ]
   },
 };
