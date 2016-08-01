@@ -1,8 +1,8 @@
 export default {
   // Production
-  brain: 'http://brainml.herokuapp.com',
-  text: 'http://textanalyze.herokuapp.com',
-  api: 'http://kavrapi.herokuapp.com',
+  brain: 'https://brainml.herokuapp.com',
+  text: 'https://textanalyze.herokuapp.com',
+  api: 'https://kavrapi.herokuapp.com',
   // Local
   // brain: 'http://localhost:7750',
   // text: 'http://localhost:8000',
